@@ -17,11 +17,7 @@
     3. `exit`
     4. Pro Tip: Download Mongo Compass and use that to view/interact with the DB. 
     5. you're now outside the container, stop, build, and start the container 
-  * axios is handling the base url and token auth globally in the root `index.js`
-  ```javascript
-    axios.defaults.baseURL = process.env.REACT_APP_DISCOVER_API_HOST 
-    axios.defaults.headers.common['Authorization'] = bearerToken();
-  ```
+
 
 ### App Structure
 * `express` - this directory contains your express app. This is your backend (models, controllers).
