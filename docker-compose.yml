@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+  react:
+    build: 
+      context: ./react
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - ./react:/app
+      - node-modules-volume-react:/app/node_modules # this mount keeps node_modules from getting wiped when we mount the container
+    ports:
+      - 3000:3000   
+    environment:
+      REACT_APP_EXAMPLE_VAR: 'remember that react env vars look for the REACT_APP prefix'
+    stdin_open: true
+    tty: true
+  
+
+  express:
+    depends_on: 
+      - "mongo"
+    build: 
+      context: ./express
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - ./express:/app
+      - node-modules-volume-express:/app/node_modules # this mount keeps node_modules from getting wiped when we mount the container
+    ports:
+      - 8080:8080
+
+  mongo:
+    image: mongo
+    restart: always
+    ports: 
+      - 27017:27017
+    volumes:
+      - ./mongo_data:/data/db
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+volumes:
+  node-modules-volume-react:
+  node-modules-volume-express:
