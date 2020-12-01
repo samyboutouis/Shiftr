@@ -23,7 +23,7 @@ services:
     build: 
       context: ./express
       dockerfile: Dockerfile
-    command: ./starpt_app.sh
+    command: ./start_app.sh
     volumes:
       - ./express:/app
       - node-modules-volume-express:/app/node_modules # this mount keeps node_modules from getting wiped when we mount the container
