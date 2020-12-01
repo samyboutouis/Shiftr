@@ -15,15 +15,15 @@
     *  run the following code
     ```javascript
     db.createUser(
-  {
-      user: "colab",
-      pwd: "example",
-      roles: [
-        { role: "dbOwner", db: "development" },
-        { role: "readWrite", db: "development" }
-      ]
-  }
-);
+    {
+    user: "colab",
+    pwd: "example",
+    roles: [
+          { role: "dbOwner", db: "development" },
+          { role: "readWrite", db: "development" }
+    ]
+    }
+    );
     ```
   * login to mongo using compass using this new user to ensure it works.
   * add a new user document (any will do)
