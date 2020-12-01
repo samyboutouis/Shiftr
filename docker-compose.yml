@@ -23,7 +23,7 @@ services:
     build: 
       context: ./express
       dockerfile: Dockerfile
-    command: npm start
+    command: ./starpt_app.sh
     volumes:
       - ./express:/app
       - node-modules-volume-express:/app/node_modules # this mount keeps node_modules from getting wiped when we mount the container
@@ -37,7 +37,6 @@ services:
       - 27017:27017
     volumes:
       - ./mongo_data:/data/db
-      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
