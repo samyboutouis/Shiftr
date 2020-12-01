@@ -8,6 +8,26 @@
   * `docker-compose down` - tears down  the containers, run this when done
   * `docker-compose exec servicename bash` - give you a bash shell in your selected container replace *servicename* with service, e.g. react, express, mongo. 
   * `docker-compose logs -f servicename` - attach terimal to log output of a service
+  * Init Database
+    * get a shell on the db `docker-compose exec mongo bash`
+    *  login to db`mongo --username root --password example`
+    * `use development`switch to dev db
+    *  run the following code
+    ```javascript
+    db.createUser(
+  {
+      user: "colab",
+      pwd: "example",
+      roles: [
+        { role: "dbOwner", db: "development" },
+        { role: "readWrite", db: "development" }
+      ]
+  }
+);
+    ```
+  * login to mongo using compass using this new user to ensure it works.
+  * add a new user document (any will do)
+  * restart 
 
 2. Notes and GOTCHAS
   * note that all environment variables for **REACT** **MUST** be prefixed with `REACT_APP`
