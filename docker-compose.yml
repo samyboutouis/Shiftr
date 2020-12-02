@@ -36,7 +36,7 @@ services:
     ports: 
       - 27017:27017
     volumes:
-      - ./mongo_data:/data/db
+      - mongo-db-volume:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -44,3 +44,4 @@ services:
 volumes:
   node-modules-volume-react:
   node-modules-volume-express:
+  mongo-db-volume:
