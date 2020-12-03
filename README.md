@@ -29,7 +29,9 @@
   * add a new user document (any will do)
   * restart 
 
-2. Notes and GOTCHAS
+2. Environment Variables
+
+3. Notes and GOTCHAS
   * note that all environment variables for **REACT** **MUST** be prefixed with `REACT_APP`
   * adding an npm package
     1. start the continaer and run `docker-compose exec servicename bash`
