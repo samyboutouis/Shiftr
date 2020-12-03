@@ -20,17 +20,13 @@ db.connect(() => {
   app.use(upload.array()); 
   app.use(express.static('public'));
 
-
-  // const bodyParser = require('body-parser');
-  // app.use(bodyParser.urlencoded({ extended: true }));
-  // for parsing multipart/form-data
-  // app.use(upload.array()); 
-  // app.use(express.static('public'));
-  
-
   //bind the users controller
   const users = require('./routes/users_controller')
   app.use('/users', users)
+
+  //bind the oauth controller
+  const oauth = require('./routes/oauth_controller')
+  app.use('/oauth', oauth)
 
 
   const app_server = http.createServer(app); 
