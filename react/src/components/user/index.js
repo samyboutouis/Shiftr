@@ -46,7 +46,7 @@ class UserIndex extends Component {
 
   mapUsers = () => {
     let users = this.state.users
-    return users.map((user,index) => 
+    return users.map((user,index) =>
       <div key={index}>
         <p>{user.name}</p> <button onClick={this.selectUser.bind(this, user)}>Select User</button>
       </div>

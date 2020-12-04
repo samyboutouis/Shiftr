@@ -8,7 +8,7 @@ class User {
   constructor({name, age, admin}={}) {
     this.name = name.toLowerCase();
     this.age = age;
-    this.admin = admin 
+    this.admin = admin
   }
 
   //create a new user
@@ -19,7 +19,7 @@ class User {
       conole.log(err)
     }
   }
-    
+
 
   //delete
   delete = async () => {
@@ -55,7 +55,7 @@ class User {
       return new User(user)
     } catch (err) {
       console.log(err);
-    } 
+    }
   }
 
 }
