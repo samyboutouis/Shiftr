@@ -16,7 +16,7 @@ class User {
     try {
       return await usersCollection.insertOne({"name": this.name, "age": this.age, "admin": this.admin})
     } catch (err) {
-      conole.log(err)
+      console.log(err)
     }
   }
     

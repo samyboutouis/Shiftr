@@ -28,6 +28,8 @@ db.connect(() => {
   const oauth = require('./routes/oauth_controller')
   app.use('/oauth', oauth)
 
+  const shifts = require('./routes/shifts_controller')
+  app.use('/shifts', shifts)
 
   const app_server = http.createServer(app); 
     
