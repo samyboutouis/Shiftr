@@ -23,15 +23,15 @@ router.get('/', (req, res) => {
 })
 
 //find 1 user
-router.get('/find_one/:name', (req, res) => {
-  let user = User.find(req.params.name);
+router.get('/find_one/:_id', (req, res) => {
+  let user = User.find(req.params._id);
   user.then(result => { res.json(result) });
 })
 
 
 //delete one user
-router.delete('/delete/:name', (req, res) => {
-  let user = User.find(req.params.name);
+router.delete('/delete/:_id', (req, res) => {
+  let user = User.find(req.params._id);
   user.then(user => {
     let deleteUser = user.delete();
     deleteUser.then(result => res.json(result))
@@ -50,9 +50,9 @@ router.post('/', (req, res) => {
 })
 
 //update user
-router.put('/update/:name', (req, res) => {
+router.put('/update/:_id', (req, res) => {
   const body = req.body;
-  let user = User.find(req.params.name);
+  let user = User.find(req.params._id);
   user.then(user => {
     let updateUser = user.update(body)
     updateUser.then(result => res.json(result))

@@ -41,7 +41,7 @@ class UserForm extends Component {
         headers: {'content-type': 'multipart/form-data'}
       })
     }else{
-      url = "http://localhost:8080/users/update/" + this.props.user.name
+      url = "http://localhost:8080/users/update/" + this.props.user._id
       request =  axios.put(url, form_data, {
         headers: {'content-type': 'multipart/form-data'}
       })

@@ -1,20 +1,20 @@
 const db = require('../database');
+var ObjectId = require('mongodb').ObjectID;
 const usersCollection = db.get().collection('users')
 
-
-
 class User {
-  // note the "strange" {key,key,key,ect...}={} notation, that allows us to pass in a JS object to initialize
-  constructor({name, age, admin}={}) {
-    this.name = name.toLowerCase();
-    this.age = age;
-    this.admin = admin
+
+  // access user attributes through this.body.attribute
+  // for example: this.body._id & this.body.name
+  // checkout the users collection on mongodb to see which attributes are available
+  constructor(body) {
+    this.body = body;
   }
 
   //create a new user
   create = async () => {
     try {
-      return await usersCollection.insertOne({"name": this.name, "age": this.age, "admin": this.admin})
+      return await usersCollection.insertOne(this.body)
     } catch (err) {
       console.log(err)
     }
@@ -24,7 +24,7 @@ class User {
   //delete
   delete = async () => {
     try{
-      return await usersCollection.deleteOne({"name": this.name})
+      return await usersCollection.deleteOne({"_id": ObjectId(this.body._id)})
     } catch (err){
       console.log(err)
     }
@@ -33,7 +33,7 @@ class User {
   //update a user
   update = async (newValues) => {
     try{
-      return usersCollection.updateOne({"name": this.name}, {$set: newValues})
+      return usersCollection.updateOne({"_id": ObjectId(this.body._id)}, {$set: newValues})
     } catch (err) {
       console.log(err)
     }
@@ -49,9 +49,9 @@ class User {
   }
 
   //find one user
-  static find = async (name)  => {
+  static find = async (id)  => {
     try {
-      let user = await usersCollection.findOne({"name": name});
+      let user = await usersCollection.findOne({"_id": ObjectId(id)});
       return new User(user)
     } catch (err) {
       console.log(err);
@@ -59,7 +59,6 @@ class User {
   }
 
 }
-
 
 
 module.exports = User

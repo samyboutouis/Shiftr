@@ -9,7 +9,7 @@ class UserShow extends Component {
   }
 
   deleteUser = () => {
-    axios.delete("http://localhost:8080/users/delete/" + this.props.user.name).then( (response) => {
+    axios.delete("http://localhost:8080/users/delete/" + this.props.user._id).then( (response) => {
       this.props.getUsers()
       this.props.clearSelectedUser()
     })

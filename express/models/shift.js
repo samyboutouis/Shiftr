@@ -4,6 +4,9 @@ const shiftsCollection = db.get().collection('shifts')
 
 class Shift {
 
+  // access shift attributes through this.body.attribute
+  // for example: this.body._id & this.body.start_time
+  // checkout the shifts collection on mongodb to see which attributes are available
   constructor(body) {
     this.body = body;
   }
