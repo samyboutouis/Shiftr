@@ -28,7 +28,6 @@ class ShiftIndex extends Component {
     if(this.state.shifts && !this.state.selectedShift){
       return <div>
         <h1>Shifts</h1>
-        {this.mapShifts()}
         <ShiftForm getShifts={this.getShifts} clearSelectedShift={this.clearSelectedShift} reqType="create" />
       </div>
     }
@@ -46,7 +45,7 @@ class ShiftIndex extends Component {
 
   mapShifts = () => {
     let shifts = this.state.shifts
-    return shifts.map((shift,index) => 
+    return shifts.map((shift,index) =>
       <div key={index}>
         <p>{shift.start_time}</p> <button onClick={this.selectShift.bind(this, shift)}>Select Shift</button>
       </div>
@@ -62,7 +61,7 @@ class ShiftIndex extends Component {
       <div>
         {this.drawShifts()}
         {this.drawSelectedShift()}
-        
+
       </div>
     )
   }

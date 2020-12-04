@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import UserIndex from './user/index'
 import ShiftIndex from './shift/index'
 import Navbar from './navbar';
+import Pool from '../pool.png';
 
 class Home extends Component {
   constructor(props){
@@ -28,8 +29,13 @@ class Home extends Component {
             </div>
           </div>
           {/*right column*/}
-          <div style={{float:'right'}}>
-            <p> hello </p>
+          <div className="shift-pool">
+
+            <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}> <img src={Pool} style={{height:'1em', margin: '0 .2em 0 2em'}}/> Shift Pool </p>
+            {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
+            <div>
+            
+            </div>
           </div>
         </div>
         <div style={{clear:'both'}}>

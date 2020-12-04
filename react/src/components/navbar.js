@@ -6,11 +6,10 @@ class Navbar extends Component {
 
 
 
-  adminBar = () => {
-    //if(this.state.users && !this.state.selectedUser){ need to make this happen if user is admin
+  userBar = () => {
+    {/*if(this.state.users && !this.state.selectedUser){... need to make this happen if person is user vs supervisor vs admin*/}
       return (<div>
           <ul id="nav">
-
             <li><a href="javascript:void(0)">Hours</a></li>
             <li><a href="javascript:void(0)">Availability</a></li>
             <li><a href="javascript:void(0)">Schedule</a></li>
@@ -24,7 +23,7 @@ class Navbar extends Component {
   render(){
     return(
       <div>
-        {this.adminBar()}
+        {this.userBar()}
       </div>
     )
   }

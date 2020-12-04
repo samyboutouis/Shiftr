@@ -66,6 +66,11 @@ code {
   width: 35em;
   height: 12em;
 	color: white;
-	padding: 1em 0 0 2em;	
+	padding: 1em 0 0 2em;
 	margin: 0em 0em 0em 5em;
+}
+.shift-pool {
+	float: right;
+	width: 40%;
+	height: 35em;
 }
