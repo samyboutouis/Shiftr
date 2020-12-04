@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 const request = require('sync-request');
 const jwt_decode  = require("jwt-decode");
-
+const session = require('express-session');
 
 
 
@@ -20,7 +20,8 @@ router.get('/consume/code', (req, res) => {
   const code = req.query.code;
   const token = getToken(code);
   const idToken = parseIdToken(token); // TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
-  res.send("Logged in?");
+  req.session.token = idToken;
+  res.redirect('http://localhost:3000/');
 })
 
 
