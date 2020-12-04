@@ -1,7 +1,4 @@
 import React, {Component} from 'react';
-
-import axios from 'axios';
-
 class Navbar extends Component {
   constructor(props){
     super()
@@ -14,14 +11,14 @@ class Navbar extends Component {
       return (<div>
           <ul id="nav">
 
-            <li><a href="#">Hours</a></li>
-            <li><a href="#">Availability</a></li>
-            <li><a href="#">Schedule</a></li>
-            <li><a href="#">Home</a></li>
-            <li className="logo"> <a href="#">Shiftr</a> </li>
+            <li><a href="javascript:void(0)">Hours</a></li>
+            <li><a href="javascript:void(0)">Availability</a></li>
+            <li><a href="javascript:void(0)">Schedule</a></li>
+            <li><a href="javascript:void(0)">Home</a></li>
+            <li className="logo"> <a href="javascript:void(0)">Shiftr</a> </li>
           </ul>
         </div>)
-    
+
   }
 
   render(){
