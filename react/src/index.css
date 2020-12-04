@@ -21,13 +21,13 @@ code {
 	margin: 2em;
 	padding: 0;
 	list-style: none; }
-#nav li a {
-  float: right;
+#nav li {
+	float: right;
 	display: block;
-	padding: 0em 3em;
-	text-decoration: none;
+	padding: 0em 6em;
 	font-weight: bold;
-	color: #000000; }
+	color: #000000; 
+}
 .logo {
 	float: left;
   font-size: 1.5em;
@@ -68,4 +68,17 @@ code {
 	color: white;
 	padding: 1em 0 0 2em;	
 	margin: 0em 0em 0em 5em;
+}
+
+/* SCHEDULE THINGS */
+.week th {
+	background-color: #EDEDED;
+	padding: 10px 40px 10px 20px;
+	font-size: 12px;
+}
+
+table {
+	float: right;
+	border-spacing: 40px 20px;
+	margin-right: 80px;
 }
