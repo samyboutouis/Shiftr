@@ -3,35 +3,12 @@ var ObjectId = require('mongodb').ObjectID;
 const shiftsCollection = db.get().collection('shifts')
 
 class Shift {
-  // constructor({start_time, end_time, status, location, employee, group, supervisor}={}) {
-  //   this.start_time = start_time;
-  //   this.end_time = end_time;
-  //   this.status = status;
-  //   this.location = location;
-  //   this.employee = employee;
-  //   this.group = group;
-  //   this.supervisor = supervisor;
-  // }
 
   constructor(body) {
     this.body = body;
   }
 
   create = async () => {
-    // try {
-    //   return await shiftsCollection.insertOne(
-    //       {
-    //           "start_time": this.start_time, 
-    //           "end_time": this.end_time, 
-    //           "status": this.status,
-    //           "location": this.location,
-    //           "employee": this.employee,
-    //           "group": this.group,
-    //           "supervisor": this.supervisor
-    //         })
-    // } catch (err) {
-    //   console.log(err)
-    // }
     try {
       return await shiftsCollection.insertOne(this.body)
     } catch (err) {
@@ -75,7 +52,5 @@ class Shift {
   }
 
 }
-
-
 
 module.exports = Shift
