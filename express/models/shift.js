@@ -54,6 +54,14 @@ class Shift {
     } 
   }
 
+  static findByUser = async (netId)  => {
+    try {
+      return await shiftsCollection.find({"employee.netid": netId}).toArray();
+    } catch (err) {
+      console.log(err);
+    } 
+  }
+
 }
 
 module.exports = Shift

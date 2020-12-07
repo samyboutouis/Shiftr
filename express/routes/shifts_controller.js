@@ -18,6 +18,11 @@ router.get('/find_one/:_id', (req, res) => {
   shift.then(result => { res.json(result) });
 })
 
+router.get('/find_by_user/:netId', (req, res) => {
+  let shift = Shift.findByUser(req.params.netId);
+  shift.then(result => { res.json(result) });
+})
+
 
 router.delete('/delete/:_id', (req, res) => {
   let shift = Shift.find(req.params._id);
