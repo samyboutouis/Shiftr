@@ -1,6 +1,7 @@
 const db = require('../database');
 var ObjectId = require('mongodb').ObjectID;
 const shiftsCollection = db.get().collection('shifts')
+const usersCollection = db.get().collection('users')
 
 class Shift {
 
@@ -62,6 +63,25 @@ class Shift {
     } 
   }
 
+  static schedule = async () => {
+    try {
+      let openShifts = await shiftsCollection.find({"status": "open"}).toArray();
+      let users = await usersCollection.all().toArray();
+      openShifts.forEach((shift) => {
+        users.forEach((user) => {
+          for(let i = 0; i < user.availability.start_times.length; i++){
+            let startTimes = user.availability.start_times;
+            let endTimes = user.availability.end_times;
+            if(startTimes[i] <= shift.start_time && endTimes[i] >= shift.end_time){
+              await shiftsCollection.updateOne({"_id": shift._id}, {"employee": user.netid});
+            }
+          }
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 module.exports = Shift
