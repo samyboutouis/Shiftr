@@ -2,20 +2,22 @@ import React, {Component} from 'react';
 class Navbar extends Component {
   constructor(props){
     super()
+    this.state = { currentPage: 'Home'}
   }
 
-
+  changeCurrentPage = (newPage) => {
+    this.props.setNavState(newPage)
+  }
 
   adminBar = () => {
     //if(this.state.users && !this.state.selectedUser){ need to make this happen if user is admin
       return (<div>
           <ul id="nav">
-
-            <li><a href="javascript:void(0)">Hours</a></li>
-            <li><a href="javascript:void(0)">Availability</a></li>
-            <li><a href="javascript:void(0)">Schedule</a></li>
-            <li><a href="javascript:void(0)">Home</a></li>
-            <li className="logo"> <a href="javascript:void(0)">Shiftr</a> </li>
+            <li onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</li>
+            <li onClick={this.changeCurrentPage.bind(this, "Availability")}>Availability</li>
+            <li onClick={this.changeCurrentPage.bind(this, "Schedule")}>Schedule</li>
+            <li onClick={this.changeCurrentPage.bind(this, "Home")}>Home</li>
+            <li className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</li>
           </ul>
         </div>)
 

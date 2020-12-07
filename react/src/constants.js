@@ -1,0 +1,11 @@
+export const DARKBLUE = "#81A0FB"
+export const DARKPURPLE = "#9F93F7"
+export const LIGHTBLUE = "#A8BEFF"
+export const LIGHTPURPLE = "#BCB4FB"
+export const RED = "#F5737B"
+export const PINK = "#F7A7FF"
+export const PEACH = "#FFA5AA"
+export const DARKRED = '#FF1212'
+export const LIGHTORANGE = '#FEC896'
+export const YELLOW = '#F5F793'
+export const GREEN = '#8CECA1'

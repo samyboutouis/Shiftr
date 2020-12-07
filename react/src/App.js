@@ -9,7 +9,8 @@ function App() {
       <Home />
       <OauthLogin />
     </div>
+  
   );
 }
 
-export default App;
+export default App
