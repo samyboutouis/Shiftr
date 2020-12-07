@@ -15,7 +15,8 @@ router.use(function timeLog (req, res, next) {
 })
 
 router.get('/login', (req, res) => {
-  if(req.session.user){
+  console.log(req.session.token);
+  if(req.session.token){
     res.send(true);
   }
   else {
@@ -27,8 +28,9 @@ router.get('/consume/code', (req, res) => {
   const code = req.query.code;
   const token = getToken(code);
   const idToken = parseIdToken(token); // TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
-  req.session.token = idToken;
-  req.session.user = true;
+  let sess = req.session;
+  sess.token = idToken;
+  sess.user = true;
   res.redirect('http://localhost:3000/');
 })
 

@@ -2,16 +2,28 @@ import React, {Component} from 'react';
 import UserIndex from './user/index'
 import ShiftIndex from './shift/index'
 import Navbar from './navbar';
+import axios from 'axios'
+import OauthLogin from './oauth/login';
 
 class Home extends Component {
   constructor(props){
     super();
-    this.state = {name: "World"}
+    this.state = {name: "World", login: false}
+  }
+
+  componentDidMount(){
+    let self = this;
+    axios.get("http://localhost:8080/oauth/login").then( (response) => {
+        self.setState({login: response.data})
+      }).catch( (error) => {
+        console.log('error');
+    });
+    //console.log(this.state.login);
   }
 
   render(){
-    return(
-
+    const home = [];
+    home.push((
       <div>
         <Navbar />
         <br/>
@@ -40,6 +52,13 @@ class Home extends Component {
         <UserIndex />
         <ShiftIndex />
       </div>
+    ));
+    if(!this.state.login){
+      home.push(<OauthLogin />);
+    }
+    //console.log(this.state.login);
+    return(
+      <div>{home}</div>
     )
   }
 }

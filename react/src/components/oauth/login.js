@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 
 class OauthLogin extends Component {
     constructor(props){
         super()
-        this.state = {notLoggedIn : true};
+        // this.state = {notLoggedIn : true};
     }
 
     create_oauth_code_request = () => {
@@ -33,12 +33,7 @@ class OauthLogin extends Component {
 
     render(){
         let button;
-        if(this.state.notLoggedIn){
-            button = <button onClick={this.create_oauth_code_request}>Login</button>
-        }
-        else{
-            button = null;
-        }
+        button = <button onClick={this.create_oauth_code_request}>Login</button>
         return button;
     }
 }
