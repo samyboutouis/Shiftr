@@ -63,25 +63,19 @@ class Shift {
     } 
   }
 
-  static schedule = async () => {
+   static schedule = async () => {
     try {
       let openShifts = await shiftsCollection.find({"status": "open"}).toArray();
-      let users = await usersCollection.all().toArray();
-      openShifts.forEach((shift) => {
-        users.forEach((user) => {
-          for(let i = 0; i < user.availability.start_times.length; i++){
-            let startTimes = user.availability.start_times;
-            let endTimes = user.availability.end_times;
-            if(startTimes[i] <= shift.start_time && endTimes[i] >= shift.end_time){
-              await shiftsCollection.updateOne({"_id": shift._id}, {"employee": user.netid});
-            }
-          }
-        });
-      });
+      let users = new Array();
+      for (const shift of openShifts) {
+        users.push(await usersCollection.find({"group": shift.group, "availability.times": { $elemMatch: { start_time: { $lte: shift.start_time }, end_time: { $gte: shift.end_time } } }}).toArray());
+      }
+      return users;
     } catch (err) {
       console.log(err);
     }
   }
+
 }
 
 module.exports = Shift

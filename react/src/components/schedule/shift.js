@@ -5,18 +5,17 @@ class Shift extends Component {
     super()
   }
 
-  convertDate = (date) => {
-    return new Date(this.props.shift.start_time).toDateString();
+  convertDate = (mongoDate) => {
+    let date = new Date(mongoDate)
+    return date.toDateString() + ' ' + date.toLocaleTimeString();
   }
 
   render(){
-      let startTime = this.convertDate(this.props.shift.start_time)
-      console.log(startTime)
     return(
      <div>
-        <h3>START TIME: {startTime}</h3>
-        <p>END TIME:    {this.props.shift.end_time}</p>
-        <p>ID:   {this.props.shift._id}</p>
+        <h3>ID:   {this.props.shift._id}</h3>
+        <p>START TIME: {this.convertDate(this.props.shift.start_time)}</p>
+        <p>END TIME:    {this.convertDate(this.props.shift.end_time)}</p>
         <p>GROUP:   {this.props.shift.group}</p>
         <p>LOCATION:   {this.props.shift.location}</p>
         <p>SUPERVISOR:  {this.props.shift.supervisor.name}, {this.props.shift.supervisor.netid}</p>
