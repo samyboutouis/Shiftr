@@ -24,14 +24,14 @@ router.get('/login', (req, res) => {
   }
 })
 
-router.get('/consume/code', (req, res) => {
+router.get('/consume', (req, res) => {
   const code = req.query.code;
   const token = getToken(code);
   const idToken = parseIdToken(token); // TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
-  let sess = req.session;
-  sess.token = idToken;
-  sess.user = true;
-  res.redirect('http://localhost:3000/');
+  // let sess = req.session;
+  // sess.token = idToken;
+  // sess.user = true;
+  res.send({"access_token": token, "id_token": idToken});
 })
 
 
