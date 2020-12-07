@@ -18,13 +18,17 @@ router.get('/find_one/:_id', (req, res) => {
   shift.then(result => { res.json(result) });
 })
 
+router.get('/find_open/:status', (req, res) => {
+  let shift = Shift.findOther("status" , req.params.status);
+  shift.then(result => { res.json(result) });
+})
 
 router.delete('/delete/:_id', (req, res) => {
   let shift = Shift.find(req.params._id);
   shift.then(shift => {
     let deleteShift = shift.delete();
     deleteShift.then(result => res.json(result))
-  }); 
+  });
 })
 
 router.post('/', (req, res) => {

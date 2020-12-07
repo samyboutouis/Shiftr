@@ -15,7 +15,7 @@ class Shift {
       console.log(err)
     }
   }
-    
+
 
   delete = async () => {
     try{
@@ -48,7 +48,18 @@ class Shift {
       return new Shift(shift)
     } catch (err) {
       console.log(err);
-    } 
+    }
+  }
+  static findOther = async (key, value)  => {
+    try {
+      // console.log("VALUE" + value)
+      // console.log("KEY" + key)
+      return await shiftsCollection.find({[key]: value}).toArray();
+      // return new Shift(shift)
+
+    } catch (err) {
+      console.log(err);
+    }
   }
 
 }

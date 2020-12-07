@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import UserIndex from './user/index'
 import ShiftIndex from './shift/index'
 import Navbar from './navbar';
+import OpenShifts from './shift/open'
 import Pool from '../pool.png';
 
 class Home extends Component {
@@ -19,22 +20,25 @@ class Home extends Component {
         {/*begin two columned-first section*/}
         <div style={{width: '100%'}}>
           {/*left column with gradient*/}
-          <div className="background-pretty-gradient" style={{float:'left', width: '60%'}}>
-            <div>
-              <p className="greeting">Hello {this.state.name}</p>
-              <p className="landing-box">You have (an unspecified amount) shifts today</p>
+          <div style={{float:'left', width: '60%'}}>
+            <div className="background-pretty-gradient">
+              <div>
+                <p className="greeting">Hello {this.state.name}</p>
+                <p className="landing-box">You have (an unspecified amount) shifts today</p>
+              </div>
+              <div className="transparent-box">
+                <p>a bunch of text about the shift(s) that user has today</p>
+              </div>
             </div>
-            <div className="transparent-box">
-              <p>a bunch of text about the shift(s) that user has today</p>
-            </div>
+            <p style={{padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>Your Upcoming Shifts</p>
           </div>
           {/*right column*/}
           <div className="shift-pool">
 
-            <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}> <img src={Pool} style={{height:'1em', margin: '0 .2em 0 2em'}}/> Shift Pool </p>
+            <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}> <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
             {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
             <div>
-            
+            <OpenShifts />
             </div>
           </div>
         </div>
