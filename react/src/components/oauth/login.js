@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 class OauthLogin extends Component {
     constructor(props){
         super()
-        // this.state = {notLoggedIn : true};
     }
 
     create_oauth_code_request = () => {
@@ -16,20 +15,6 @@ class OauthLogin extends Component {
         console.log(request_url);    
         window.location.href = request_url;
     }
-
-    // componentDidUpdate = () => {
-    //     this.check_login();
-    // }
-
-    // check_login = () => {
-    //     let self = this;
-    //     console.log('making web call');
-    //     axios.get("http://localhost:8080/oauth/login").then( (response) => {
-    //     self.setState({notLoggedIn: response.data})
-    //     }).catch( (error) => {
-    //     console.log(error)
-    //     });
-    // }
 
     render(){
         let button;
