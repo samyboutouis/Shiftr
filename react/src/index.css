@@ -87,4 +87,11 @@ code {
 .open-shift-button {
   margin-bottom: 2em;
   margin-left: 11.5em;
+  border: none;
+  border-radius: 7px;
+  background: url('./gradient.png') no-repeat scroll 0 0 transparent;
+  color: white;
+  background-size: 150% 150%;
+  padding: .8em 2em;
+  cursor: pointer;
 }

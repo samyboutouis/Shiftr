@@ -51,7 +51,7 @@ class OpenShifts extends Component {
       <div key={index}>
         <p className='open-shift-time'>{shift.start_time} - {shift.end_time}</p>
         <p className='open-shift-text'> {shift.group} | @{shift.location}</p>
-        <button className='open-shift-button' onClick={() => {this.selectShift.bind(this, shift); this.claim(shift);}}>Select Shift</button>
+        <button className='open-shift-button' onClick={() => {this.selectShift.bind(this, shift); this.claim(shift);}}>Claim</button>
       </div>
     )
   }
