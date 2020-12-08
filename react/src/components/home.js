@@ -31,11 +31,13 @@ class Home extends Component {
               </div>
             </div>
             <p style={{padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>Your Upcoming Shifts</p>
+            <ShiftIndex />
           </div>
           {/*right column*/}
           <div className="shift-pool">
 
-            <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}> <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
+            <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>
+            <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
             {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
             <div>
             <OpenShifts />
@@ -44,11 +46,9 @@ class Home extends Component {
         </div>
         <div style={{clear:'both'}}>
         </div>
-        {/*end two column section*/}
 
 
         <UserIndex />
-        <ShiftIndex />
       </div>
     )
   }

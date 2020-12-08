@@ -95,3 +95,26 @@ code {
   padding: .8em 2em;
   cursor: pointer;
 }
+
+.upcoming-shift-time {
+  font-family: Roboto;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0 .5em .5em 3em;
+}
+.upcoming-shift-text {
+  font-family: Roboto;
+  font-size: 1em;
+  margin: 0 .5em .5em 3em;
+}
+.upcoming-shift-button {
+  margin-bottom: 2em;
+  margin-left: 4em;
+  border: none;
+  border-radius: 7px;
+  background: url('./gradient.png') no-repeat scroll 0 0 transparent;
+  color: white;
+  background-size: 150% 150%;
+  padding: .8em 2em;
+  cursor: pointer;
+}
