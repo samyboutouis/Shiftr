@@ -14,7 +14,7 @@ services:
     environment:
       REACT_APP_EXAMPLE_VAR: 'remember that react env vars look for the REACT_APP prefix'
       REACT_APP_OAUTH_CLIENT_ID: ${SHIFTR_OAUTH_CLIENT_ID}
-      _REDIRECT_URI: "http://localhost:8080/oauth/consume"
+      REACT_APP_OAUTH_REDIRECT_URI: "http://localhost:8080/oauth/consume"
     stdin_open: true
     tty: true
   

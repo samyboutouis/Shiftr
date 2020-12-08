@@ -27,11 +27,12 @@ router.get('/login', (req, res) => {
 router.get('/consume', (req, res) => {
   const code = req.query.code;
   const token = getToken(code);
-  const idToken = parseIdToken(token); // TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
+  const idToken = parseIdToken(token);
+  const accessToken = parseIdToken(token); // TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
   // let sess = req.session;
   // sess.token = idToken;
   // sess.user = true;
-  res.send({"access_token": token, "id_token": idToken});
+  res.send({"access_token": accessToken, "id_token": idToken});
 })
 
 
@@ -61,6 +62,7 @@ getToken = (code) => {
   };
 
   const res = request("POST", url, options) 
+  console.log(res);
   let body =  Buffer.from(res.getBody());
   body = body.toString()
   console.log('body');
@@ -73,6 +75,12 @@ parseIdToken = (token) => {
   let idToken = JSON.parse(token)['id_token'];
   idToken = jwt_decode(idToken);
   return (idToken)
+}
+
+parseAccessToken = (token) => {
+  let accessToken = JSON.parse(token)['access_token'];
+  accessToken = jwt_decode(accessToken);
+  return (accessToken)
 }
 
   
