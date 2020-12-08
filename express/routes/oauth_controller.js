@@ -5,9 +5,6 @@ const jwt_decode  = require("jwt-decode");
 const session = require('express-session');
 
 
-
-
-
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
@@ -18,7 +15,8 @@ router.get('/consume', (req, res) => {
   const code = req.query.code;
   const token = getToken(code);
   const idToken = parseIdToken(token);// TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
-  res.send({"access_token": JSON.parse(token).access_token, "id_token": idToken});
+  res.json({"access_token": JSON.parse(token).access_token, "id_token": idToken});
+  // res = request("POST", encodeURI(process.env.OAUTH_REDIRECT_URI), {"access_token": JSON.parse(token).access_token, "id_token": idToken});
 })
 
 
@@ -31,7 +29,7 @@ format_auth_string = () => {
 getToken = (code) => {
   const url = "https://oauth.oit.duke.edu/oidc/token"
   const auth = format_auth_string();
-  const redirect_uri = encodeURI(process.env.OAUTH_REDIRECT_URI)
+  const redirect_uri = encodeURI("http://localhost:3000/oauth/consume")
 
   console.log("SNTHSNTHSNTHSNTH")
   console.log(redirect_uri)
@@ -63,5 +61,4 @@ parseIdToken = (token) => {
   return (idToken)
 }
 
-  
 module.exports = router

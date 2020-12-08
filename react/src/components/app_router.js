@@ -6,8 +6,7 @@ import {
   Route
 } from "react-router-dom";
 import Home from './home';
-
-import OauthLogin from './oauth/login';
+import OauthConsume from './oauth/consume';
 
 
 class AppRouter extends Component {
@@ -21,7 +20,7 @@ class AppRouter extends Component {
               renders the first one that matches the current URL. */}
             <Switch>
               <Route path="/oauth/consume">
-                <OauthLogin />
+                <OauthConsume />
               </Route>
               
               {/* note that due to control flow the root path is at the bottom by design */}
