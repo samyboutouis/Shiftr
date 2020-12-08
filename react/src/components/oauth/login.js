@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-//import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 class OauthLogin extends Component {
     constructor(props){
         super()
+        this.state = { oauthCode: false, oauthAccessToken: false }
+        this.checkOauthCode()
     }
 
     create_oauth_code_request = () => {
@@ -14,6 +17,37 @@ class OauthLogin extends Component {
         console.log("Copy and paste this url into your web browser.");
         console.log(request_url);    
         window.location.href = request_url;
+    }
+
+    checkOauthCode = () => {
+        let url_string = window.location.href
+        let url = new URL(url_string);
+        let code = url.searchParams.get("code");
+        if(code){
+          this.getAccessToken(code)
+        }
+    }
+
+    getAccessToken = (code) => {
+        var self = this;
+        let url = process.env.REACT_APP_PRINT_BACKEND_HOST + "/oauth?code=" + code + "&claims=profile"
+        axios.get(url)
+          .then(function (response) {
+            console.log(response);
+            localStorage.setItem('accessToken', response.data.access_token);
+            localStorage.setItem('idToken', response.data.id_token);
+            self.setState({oauthAccessToken: true})
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+    
+    showActiveCode = () => {
+        if (this.state.oauthAccessToken) {
+            console.log(localStorage.getItem('accessToken'))
+            return <Redirect to='/' />
+        } 
     }
 
     render(){
