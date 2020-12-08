@@ -17,6 +17,7 @@ class OauthLogin extends Component {
         console.log("Copy and paste this url into your web browser.");
         console.log(request_url);    
         window.location.href = request_url;
+        this.checkOauthCode();
     }
 
     checkOauthCode = () => {
@@ -30,7 +31,7 @@ class OauthLogin extends Component {
 
     getAccessToken = (code) => {
         var self = this;
-        let url = process.env.REACT_APP_PRINT_BACKEND_HOST + "/oauth?code=" + code + "&claims=profile"
+        let url = process.env.OAUTH_REDIRECT_URI + "/oauth?code=" + code + "&claims=profile"
         axios.get(url)
           .then(function (response) {
             console.log(response);
