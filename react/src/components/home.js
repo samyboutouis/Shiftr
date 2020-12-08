@@ -4,7 +4,7 @@ import ShiftIndex from './shift/index'
 import Navbar from './navbar';
 import OpenShifts from './shift/open'
 import Pool from '../pool.png';
-
+import Clock from '../clock.png';
 class Home extends Component {
   constructor(props){
     super();
@@ -29,6 +29,7 @@ class Home extends Component {
               <div className="transparent-box">
                 <p>a bunch of text about the shift(s) that user has today</p>
               </div>
+              <button className="clock-in"> <img className="clock" src={Clock} style={{height:'2em', margin: '.5em'}}/> Clock In </button>
             </div>
             <p style={{padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>Your Upcoming Shifts</p>
             <ShiftIndex />

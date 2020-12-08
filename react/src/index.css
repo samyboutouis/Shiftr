@@ -69,6 +69,22 @@ code {
 	padding: 1em 0 0 2em;
 	margin: 0em 0em 0em 5em;
 }
+.clock-in {
+  background-color: white;
+  color: #81a0e8;
+  border: none;
+  padding: .8em 2em .8em .6em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 2em 0em 0em 7.2em;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.clock{
+  display: inline-block;
+  vertical-align: middle;
+}
 .shift-pool {
 	float: right;
 	width: 40%;
@@ -89,9 +105,9 @@ code {
   margin-left: 11.5em;
   border: none;
   border-radius: 7px;
-  background: url('./gradient.png') no-repeat scroll 0 0 transparent;
+  background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
-  background-size: 150% 150%;
+  background-size: 100% 100%;
   padding: .8em 2em;
   cursor: pointer;
 }
@@ -112,9 +128,9 @@ code {
   margin-left: 4em;
   border: none;
   border-radius: 7px;
-  background: url('./gradient.png') no-repeat scroll 0 0 transparent;
+  background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
-  background-size: 150% 150%;
+  background-size: 100% 100%;
   padding: .8em 2em;
   cursor: pointer;
 }
