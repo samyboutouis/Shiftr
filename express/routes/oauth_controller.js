@@ -29,7 +29,7 @@ format_auth_string = () => {
 getToken = (code) => {
   const url = "https://oauth.oit.duke.edu/oidc/token"
   const auth = format_auth_string();
-  const redirect_uri = encodeURI("http://localhost:3000/oauth/consume")
+  const redirect_uri = encodeURI(process.env.OAUTH_REDIRECT_URI)
 
   console.log("SNTHSNTHSNTHSNTH")
   console.log(redirect_uri)

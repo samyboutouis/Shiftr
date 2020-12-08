@@ -17,7 +17,6 @@ class OauthConsume extends Component {
         let url = new URL(url_string);
         let code = url.searchParams.get("code");
         if(code){
-            console.log("code"+code)
           this.getAccessToken(code)
         }
     }
@@ -25,8 +24,7 @@ class OauthConsume extends Component {
     getAccessToken = (code) => {
         console.log("GETTING TOKEN")
         var self = this;
-        // let url = process.env.REACT_APP_OAUTH_REDIRECT_URI + "/oauth?code=" + code + "&claims=profile"
-        let url = "http://localhost:8080/oauth/consume?code=" + code + "&claims=profile"
+        let url = process.env.REACT_APP_EXPRESS_OAUTH_UR + "?code=" + code + "&claims=profile"
         axios.get(url)
           .then(function (response) {
             console.log(response);
