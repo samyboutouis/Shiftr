@@ -7,6 +7,7 @@ import OpenShifts from './shift/open'
 import Pool from '../pool.png';
 import Clock from '../clock.png';
 import ShiftIndex from './shift/index'
+import ScheduleIndex from './schedule/index'
 
 class Home extends Component {
   constructor(props){
@@ -55,9 +56,9 @@ class Home extends Component {
     }else if(this.state.navState === "Availability"){
       return <AvailabilityIndex /> 
     }else if(this.state.navState === "Schedule"){
-      return <UserIndex /> //change these
+      return <ScheduleIndex /> //change these
     }else if(this.state.navState === "Hours") {
-      return <UserIndex /> //change these
+      return <ShiftIndex /> //change these
     }
   }else{
       return <OauthLogin />

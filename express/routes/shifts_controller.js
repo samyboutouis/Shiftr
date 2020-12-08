@@ -23,6 +23,11 @@ router.get('/find_open/:status', (req, res) => {
   shift.then(result => { res.json(result) });
 })
 
+router.get('/find_by_user/:netId', (req, res) => {
+  let shift = Shift.findByUser(req.params.netId);
+  shift.then(result => { res.json(result) });
+})
+
 router.delete('/delete/:_id', (req, res) => {
   let shift = Shift.find(req.params._id);
   shift.then(shift => {
@@ -48,6 +53,11 @@ router.put('/update/:_id', (req, res) => {
     let updateShift = shift.update(body)
     updateShift.then(result => res.json(result))
   })
+})
+
+router.get('/schedule', (req, res) => {
+  let shifts = Shift.schedule();
+  shifts.then(result => { res.json(result) });
 })
 
 module.exports = router

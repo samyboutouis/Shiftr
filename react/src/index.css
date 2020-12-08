@@ -151,3 +151,44 @@ table {
   padding: .8em 2em;
   cursor: pointer;
 }
+
+.days-of-week {
+	float: right;
+	border-spacing: 40px 20px;
+	margin-right: 80px;
+}
+
+.day-week-month {
+	float: right;
+	border-collapse: collapse;
+	margin-right: 120px;
+}
+
+.gradient {
+	background-image: radial-gradient(circle farthest-corner at 0% 15%, rgba(245,115,123,0.5), rgba(161, 149, 247, 0.5), rgba(242, 166, 255, 0.5));
+  }
+
+.dark-gradient {
+	background-image: radial-gradient(circle farthest-corner at 0% 15%, rgb(245,115,123), rgb(161, 149, 247), rgb(242, 166, 255));
+}
+
+.view th {
+	padding: 10px 30px;
+	text-align: center;
+	color: white;
+	font-size: 16px;
+}
+
+.key {
+	padding-top: 200px;
+	font-family: 'Roboto';
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.key-box {
+	height: 20px;
+	width: 20px;
+	float: left;
+	margin: 0 20px;
+}
