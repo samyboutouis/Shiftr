@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css';
-import Home from "./components/home"
-import OauthLogin from "./components/oauth/login"
+import AppRouter from "./components/app_router.js"
 
 function App() {
   return (
     <div>
-      <Home />
-      <OauthLogin />
+      <AppRouter />
     </div>
   
   );

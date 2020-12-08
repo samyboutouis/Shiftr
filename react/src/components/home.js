@@ -11,7 +11,7 @@ import ShiftIndex from './shift/index'
 class Home extends Component {
   constructor(props){
     super();
-    this.state = {name: "World", navState: "Home"}
+    this.state = {navState: "Home", oauthToken: localStorage.getItem('dukeOauthToken')}
   }
 
   setNavState = (newPage) => {
@@ -19,14 +19,14 @@ class Home extends Component {
   }
 
   showHome = () => {
-    if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
-      return <div>
-        <br/>
-        {/*begin two columned-first section*/}
-        <div style={{width: '100%'}}>
-          {/*left column with gradient*/}
-          <div style={{float:'left', width: '60%'}}>
-            <div className="background-pretty-gradient">
+    if (localStorage.getItem('accessToken') && localStorage.getItem('idToken')){
+      if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
+        return <div>
+          {/*begin two columned-first section*/}
+          <div style={{width: '100%'}}>
+            {/*left column with gradient*/}
+            <div style={{float:'left', width: '60%'}}>
+              <div className="background-pretty-gradient">
               <div>
                 <p className="greeting">Hello {this.state.name}</p>
                 <p className="landing-box">You have (an unspecified amount) shifts today</p>
@@ -49,8 +49,8 @@ class Home extends Component {
                 </div>
               </div>
             </div>
-          <div style={{clear:'both'}}>
-          </div>
+            {/* <UserIndex />
+          <ShiftIndex /> */}
         </div>
     }else if(this.state.navState === "Availability"){
       return <AvailabilityIndex /> 
@@ -59,17 +59,19 @@ class Home extends Component {
     }else if(this.state.navState === "Hours") {
       return <UserIndex /> //change these
     }
+  }else{
+      return <OauthLogin />
+    }
   }
 
   render(){
     return(
-
       <div>
         <Navbar setNavState={this.setNavState} navState={this.state.navState} />
         <br/>
         {this.showHome()}
       </div>
-    )
+      );
   }
 }
 

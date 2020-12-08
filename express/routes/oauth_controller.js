@@ -2,10 +2,7 @@ var express = require('express')
 var router = express.Router()
 const request = require('sync-request');
 const jwt_decode  = require("jwt-decode");
-
-
-
-
+const session = require('express-session');
 
 
 // middleware that is specific to this router
@@ -14,13 +11,12 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-
-
-router.get('/consume/code', (req, res) => {
+router.get('/consume', (req, res) => {
   const code = req.query.code;
   const token = getToken(code);
-  const idToken = parseIdToken(token); // TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
-  res.send("Logged in?");
+  const idToken = parseIdToken(token);// TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
+  res.json({"access_token": JSON.parse(token).access_token, "id_token": idToken});
+  // res = request("POST", encodeURI(process.env.OAUTH_REDIRECT_URI), {"access_token": JSON.parse(token).access_token, "id_token": idToken});
 })
 
 
@@ -50,6 +46,7 @@ getToken = (code) => {
   };
 
   const res = request("POST", url, options) 
+  console.log(res);
   let body =  Buffer.from(res.getBody());
   body = body.toString()
   console.log('body');
@@ -59,10 +56,9 @@ getToken = (code) => {
 }
 
 parseIdToken = (token) => {
-  let idToken = JSON.parse(token)['id_token'];
+  let idToken = JSON.parse(token).id_token;
   idToken = jwt_decode(idToken);
   return (idToken)
 }
 
-  
 module.exports = router

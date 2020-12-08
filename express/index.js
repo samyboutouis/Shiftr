@@ -12,7 +12,14 @@ db.connect(() => {
   const hostname = '0.0.0.0';  
   const port = 8080; // TODO change this in prod
   const app = express();
-;
+
+  app.use(session(
+    {
+      secret: 'ssshhhhh',
+      saveUninitialized: true,
+      resave: true
+    })
+  ); //initialize session
   
   app.use(cors()) //allow cors requests
   app.use(express.json()); //this line allows us to read JSON bodies in the request
