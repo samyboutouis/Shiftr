@@ -14,16 +14,6 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-router.get('/login', (req, res) => {
-  console.log(req.session.token);
-  if(req.session.token){
-    res.send(true);
-  }
-  else {
-    res.send(false);
-  }
-})
-
 router.get('/consume', (req, res) => {
   const code = req.query.code;
   const token = getToken(code);
