@@ -65,7 +65,7 @@ code {
   width: 35em;
   height: 12em;
 	color: white;
-	padding: 1em 0 0 2em;	
+	padding: 1em 0 0 2em;
 	margin: 0em 0em 0em 5em;
 }
 
@@ -84,5 +84,70 @@ code {
 table {
 	float: right;
 	border-spacing: 40px 20px;
-	margin-right: 80px;
+  margin-right: 80px;
+}
+.clock-in {
+  background-color: white;
+  color: #81a0e8;
+  border: none;
+  padding: .8em 2em .8em .6em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 2em 0em 0em 7.2em;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.clock{
+  display: inline-block;
+  vertical-align: middle;
+}
+.shift-pool {
+	float: right;
+	width: 40%;
+}
+.open-shift-time {
+  font-family: Roboto;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0 .5em .5em 8em;
+}
+.open-shift-text {
+  font-family: Roboto;
+  font-size: 1em;
+  margin: 0 .5em .5em 8em;
+}
+.open-shift-button {
+  margin-bottom: 2em;
+  margin-left: 11.5em;
+  border: none;
+  border-radius: 7px;
+  background: url('./button.png') no-repeat scroll 0 0 transparent;
+  color: white;
+  background-size: 100% 100%;
+  padding: .8em 2em;
+  cursor: pointer;
+}
+
+.upcoming-shift-time {
+  font-family: Roboto;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0 .5em .5em 3em;
+}
+.upcoming-shift-text {
+  font-family: Roboto;
+  font-size: 1em;
+  margin: 0 .5em .5em 3em;
+}
+.upcoming-shift-button {
+  margin-bottom: 2em;
+  margin-left: 4em;
+  border: none;
+  border-radius: 7px;
+  background: url('./button.png') no-repeat scroll 0 0 transparent;
+  color: white;
+  background-size: 100% 100%;
+  padding: .8em 2em;
+  cursor: pointer;
 }
