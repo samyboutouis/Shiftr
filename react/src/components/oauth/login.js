@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class OauthLogin extends Component {
     constructor(props){
         super()
-        this.state = { oauthCode: false, oauthAccessToken: false }
+        this.state = {}
     }
 
     create_oauth_code_request = () => {

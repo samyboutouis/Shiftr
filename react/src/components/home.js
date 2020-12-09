@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import AvailabilityIndex from './availability/index'
 import Navbar from './navbar';
+import CurrentShift from "./user/current_shift"
 import OauthLogin from "./oauth/login"
 import OpenShifts from './shift/open'
 import Pool from '../pool.png';
-import Clock from '../clock.png';
 import ShiftIndex from './shift/index'
 import ScheduleIndex from './schedule/index'
 import Container from 'react-bootstrap/Container'
@@ -29,16 +29,7 @@ class Home extends Component {
           <Row>
             {/*left column with gradient*/}
             <Col md={7}>
-              <div className="background-pretty-gradient">
-                <div>
-                  <p className="greeting">Hello {this.state.name}</p>
-                  <p className="landing-box">You have (an unspecified amount) shifts today</p>
-                </div>
-                <div className="transparent-box">
-                  <p>a bunch of text about the shift(s) that user has today</p>
-                </div>
-                <button className="clock-in"> <img className="clock" src={Clock} style={{height:'2em', margin: '.5em'}}/> Clock In </button>
-              </div>
+              <CurrentShift />
               <p style={{padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>Your Upcoming Shifts</p>
               <ShiftIndex />
             </Col>
