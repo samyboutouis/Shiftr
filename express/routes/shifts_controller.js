@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+var scheduler = require('../scheduler');
 const Shift = require('../models/shift')
 
 router.use(function timeLog (req, res, next) {
@@ -56,7 +57,7 @@ router.put('/update/:_id', (req, res) => {
 })
 
 router.get('/schedule', (req, res) => {
-  let shifts = Shift.schedule();
+  let shifts = scheduler.schedule();
   shifts.then(result => { res.json(result) });
 })
 
