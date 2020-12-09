@@ -69,16 +69,26 @@ exports.schedule3 = async function(group) {
                     { $match: { $expr: { $and: [ 
                         { $eq: [ "$group", group ] },
                         { $eq: [ "$status", "open" ] },
-                        { $lte: [ "$$start_time", "$end_time" ] },
-                        { $gte: [ "$$end_time", "$start_time" ] } ] } } }
+                        { $lt: [ "$$start_time", "$end_time" ] },
+                        { $gt: [ "$$end_time", "$start_time" ] } ] } } }
                 ],
-                "as": "matching_shifts"
-            }}
+                "as": "matching_shifts"}},
+            { $project: { name: 1, netid: 1, "availability.times": 1, rank: 1, matching_shifts: 1}}
         ]).toArray();
       } catch (err) {
         console.log(err);
       }
   }
+
+//   { $group : { _id : "$_id", 
+//             "name": { "$first": "$name"}, 
+//             "netid": { "$first": "$netid" },
+//             "rank": { "$first": "$rank" },
+//             "matching_shifts": { "$push": "$matching_shifts" },
+//             "availability": { "$push": "$availability" }
+//          } },
+
+//,{ $merge: {into: "schedules"}}
 
 //   exports.schedule4= async function(group) {
 //     try {

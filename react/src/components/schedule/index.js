@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import ScheduleKey from './key'
 import Shift from './shift'
+import CreateSchedule from './create'
 import DayWeekMonth from './dayWeekMonth'
 import * as Constants from '../../constants'
 
@@ -70,6 +71,7 @@ class ScheduleIndex extends Component {
             {group: 'West Printers', color: Constants.DARKPURPLE},
             {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
             {this.drawShifts()}
+            <CreateSchedule />
         </div>
     )
   }
