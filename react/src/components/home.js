@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import UserIndex from './user/index'
 import AvailabilityIndex from './availability/index'
 import Navbar from './navbar';
 import OauthLogin from "./oauth/login"
