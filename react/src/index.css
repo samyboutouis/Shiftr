@@ -25,7 +25,7 @@ code {
 	display: block;
 	padding: 0em 6em;
 	font-weight: bold;
-	color: #000000; 
+	color: #000000;
 }
 .logo {
 	float: left;
@@ -67,24 +67,6 @@ code {
 	color: white;
 	padding: 1em 0 0 2em;
 	margin: 0em 0em 0em 5em;
-}
-
-/* SCHEDULE THINGS */
-.week th {
-	background-color: #EDEDED;
-	padding: 10px 40px 10px 20px; 
-	font-size: 12px;
-}
-.time td{
-	background-color:  #EDEDED;
-	padding: 10px 40px 550px 20px;
-	font-size: 12px;
-}
-
-table {
-	float: right;
-	border-spacing: 40px 20px;
-  margin-right: 80px;
 }
 .clock-in {
   background-color: white;
@@ -152,43 +134,68 @@ table {
   cursor: pointer;
 }
 
+
+/* SCHEDULE THINGS */
+.week th {
+  background-color: #ededed;
+  padding: 10px 40px 10px 20px;
+  font-size: 12px;
+}
+
 .days-of-week {
-	float: right;
-	border-spacing: 40px 20px;
-	margin-right: 80px;
+  float: right;
+  border-spacing: 40px 20px;
+  margin-right: 80px;
 }
 
+.dwm {
+  float: right;
+  border-collapse: collapse;
+  margin-right: 120px;
+}
 .day-week-month {
-	float: right;
-	border-collapse: collapse;
-	margin-right: 120px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 6em;
+  color: white;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  background-image: radial-gradient(
+    104.49% 573.2% at -9.55% 10.53%,
+    rgba(245, 115, 123, 0.5) 12.98%,
+    rgba(161, 149, 247, 0.5) 52.6%,
+    rgba(242, 166, 255, 0.5) 100%
+  );
 }
 
-.gradient {
-	background-image: radial-gradient(circle farthest-corner at 0% 15%, rgba(245,115,123,0.5), rgba(161, 149, 247, 0.5), rgba(242, 166, 255, 0.5));
-  }
-
-.dark-gradient {
-	background-image: radial-gradient(circle farthest-corner at 0% 15%, rgb(245,115,123), rgb(161, 149, 247), rgb(242, 166, 255));
+.day-week-month.active {
+  background-image: radial-gradient(
+    104.49% 573.2% at -9.55% 10.53%,
+    #f5737b 12.98%,
+    #a195f7 52.6%,
+    #f2a6ff 100%
+  );
 }
 
 .view th {
-	padding: 10px 30px;
-	text-align: center;
-	color: white;
-	font-size: 16px;
+  padding: 10px 30px;
+  text-align: center;
+  color: white;
+  font-size: 16px;
 }
 
 .key {
-	padding-top: 200px;
-	font-family: 'Roboto';
-	font-weight: 600;
-	font-size: 14px;
+  padding-top: 200px;
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 14px;
 }
 
 .key-box {
-	height: 20px;
-	width: 20px;
-	float: left;
-	margin: 0 20px;
+  height: 20px;
+  width: 20px;
+  float: left;
+  margin: 0 20px;
 }

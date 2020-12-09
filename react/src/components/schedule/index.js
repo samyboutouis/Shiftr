@@ -19,7 +19,7 @@ class ScheduleIndex extends Component {
   getShifts = () => {
     let self = this;
     console.log('making web call');
-    axios.get("http://localhost:8080/shifts/find_by_user/acm105").then( (response) => {
+    axios.get("http://localhost:8080/shifts/find_by_user/sl616").then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)
@@ -48,7 +48,7 @@ class ScheduleIndex extends Component {
   drawShifts = () => {
     if(this.state.shifts){
       let shifts = this.state.shifts
-      return shifts.map((shift,index) => 
+      return shifts.map((shift,index) =>
         <div key={index}>
             <Shift shift={shift} />
         </div>
