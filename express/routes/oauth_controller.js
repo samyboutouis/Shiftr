@@ -3,10 +3,10 @@ var router = express.Router()
 const request = require('sync-request');
 const jwt_decode  = require("jwt-decode");
 const session = require('express-session');
-const ldap = require('ldapjs');
-let client = ldap.createClient({
-  url: 'ldap://ldap.duke.edu:389'
-});
+// const ldap = require('ldapjs');
+// let client = ldap.createClient({
+//   url: 'ldaps://ldap.duke.edu:636'
+// });
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -17,34 +17,39 @@ router.use(function timeLog (req, res, next) {
 router.get('/consume', (req, res) => {
   const code = req.query.code;
   const token = getToken(code);
-  const idToken = parseIdToken(token);// TODO so, what are you going to do now? IMPORTANT: idToken and the "actual" token are not the same
+  const idToken = parseIdToken(token);
+  console.log(idToken);
   res.json({"access_token": JSON.parse(token).access_token, "id_token": idToken});
-  // res = request("POST", encodeURI(process.env.OAUTH_REDIRECT_URI), {"access_token": JSON.parse(token).access_token, "id_token": idToken});
 })
 
 //ldap query for user info
-router.post('/ldap', (req, res) => {
-  const netid = req.body.netid;
-  //const name;
-  var opts = {
-    filter: '(uid='+netid+')'
-  };
-  client.search("dc=duke,dc=edu", opts, (err, res) => {
-    res.on('searchEntry', entry => {
-      console.log('entry: ' + JSON.stringify(entry.object));
-    });
-    res.on('searchReference', referral => {
-      console.log('referral: ' + referral.uris.join());
-    });
-    res.on('error', err => {
-      console.error('error');
-    });
-    res.on('end', result => {
-      console.log('status: ' + result.status);
-    });
-  });
-  res.json({"name": netid});
-});
+// router.post('/ldap', (req, res) => {
+//   console.log("START");
+//   const eppn = req.body.eppn;
+//   var opts = {
+//     filter: '(eduPersonPrincipalName='+eppn+')'
+//   };
+//   client.search("dc=duke,dc=edu", opts, (err, res) => {
+//     console.log("RESPONSE");
+//     console.log(res);
+//     console.log("END RESPONSE")
+//     res.on('searchEntry', entry => {
+//       console.log("ENTRY");
+//       console.log(entry);
+//       console.log('entry: ' + JSON.stringify(entry.object));
+//     });
+//     res.on('searchReference', referral => {
+//       console.log('referral: ' + referral.uris.join());
+//     });
+//     res.on('error', err => {
+//       console.error('error');
+//     });
+//     res.on('end', result => {
+//       console.log('status: ' + result.status);
+//     });
+//   });
+//   //res.json({"name": eppn});
+// });
 
 //helpers
 format_auth_string = () => {

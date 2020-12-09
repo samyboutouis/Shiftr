@@ -9,17 +9,7 @@ class CurrentShift extends Component {
     }
 
     getName = () => {
-        let self = this
-        let data = {netid: "sb590"}
-        axios.post("http://localhost:8080/oauth/ldap", data)
-          .then(function (response) {
-            let name = response.data.name;
-            self.setState({name: name});
-          })
-          .catch(function (error) {
-            console.log(error);
-          }
-        );
+        this.setState({name: "Samy"});
     }
 
     componentDidMount() {
@@ -36,7 +26,10 @@ class CurrentShift extends Component {
                 <div className="transparent-box">
                   <p>a bunch of text about the shift(s) that user has today</p>
                 </div>
-                <button className="clock-in"> <img className="clock" src={Clock} style={{height:'2em', margin: '.5em'}}/> Clock In </button>
+                <button className="clock-in"> 
+                    <img className="clock" src={Clock} style={{height:'2em', margin: '.5em'}}/> 
+                    Clock In 
+                </button>
             </div>
         );
     }

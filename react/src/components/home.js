@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AvailabilityIndex from './availability/index'
-import Navbar from './navbar';
+import Nbar from './navbar';
 import CurrentShift from "./user/current_shift"
 import OauthLogin from "./oauth/login"
 import OpenShifts from './shift/open'
@@ -14,7 +14,7 @@ import Col from 'react-bootstrap/Col'
 class Home extends Component {
   constructor(props){
     super();
-    this.state = {navState: "Home", oauthToken: localStorage.getItem('dukeOauthToken')}
+    this.state = {navState: "Home"}
   }
 
   setNavState = (newPage) => {
@@ -25,15 +25,12 @@ class Home extends Component {
     if (localStorage.getItem('accessToken') && localStorage.getItem('idToken')){
       if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
         return <Container fluid>
-          {/*begin two columned-first section*/}
           <Row>
-            {/*left column with gradient*/}
             <Col md={7}>
               <CurrentShift />
               <p style={{padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>Your Upcoming Shifts</p>
               <ShiftIndex />
             </Col>
-            {/*right column*/}
             <Col md={5}>
               <div className="shift-pool">
                 <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>
@@ -45,8 +42,6 @@ class Home extends Component {
               </div>
             </Col>
           </Row>
-            {/* <UserIndex />
-          <ShiftIndex /> */}
         </Container>
     }else if(this.state.navState === "Availability"){
       return <AvailabilityIndex />
@@ -63,7 +58,7 @@ class Home extends Component {
   render(){
     return(
       <div>
-        <Navbar setNavState={this.setNavState} navState={this.state.navState} />
+        <Nbar setNavState={this.setNavState} navState={this.state.navState} />
         <br/>
         {this.showHome()}
       </div>
