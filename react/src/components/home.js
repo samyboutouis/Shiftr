@@ -6,10 +6,12 @@ import OpenShifts from './shift/open'
 import Pool from '../pool.png';
 import Clock from '../clock.png';
 import ShiftIndex from './shift/index'
+import HoursIndex from './hours/index'
 import ScheduleIndex from './schedule/index'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+
 
 class Home extends Component {
   constructor(props){
@@ -62,7 +64,7 @@ class Home extends Component {
     }else if(this.state.navState === "Schedule"){
       return <ScheduleIndex />
     }else if(this.state.navState === "Hours") {
-      return <ShiftIndex /> //change these
+      return <HoursIndex /> //change these
     }
   }else{
       return <OauthLogin />
