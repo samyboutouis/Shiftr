@@ -3,7 +3,10 @@ var router = express.Router()
 const request = require('sync-request');
 const jwt_decode  = require("jwt-decode");
 const session = require('express-session');
-
+// const ldap = require('ldapjs');
+// let client = ldap.createClient({
+//   url: 'ldap.duke.edu'
+// });
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -19,6 +22,11 @@ router.get('/consume', (req, res) => {
   // res = request("POST", encodeURI(process.env.OAUTH_REDIRECT_URI), {"access_token": JSON.parse(token).access_token, "id_token": idToken});
 })
 
+//ldap query for user info
+// router.get('/ldap', (req, res) => {
+//   const netid = req.params.netid;
+//   res.json({"name": "Joe"});
+// });
 
 //helpers
 format_auth_string = () => {
