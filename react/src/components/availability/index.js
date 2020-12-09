@@ -11,7 +11,8 @@ class AvailabilityIndex extends Component {
 
   drawCalendar = () => {
     return <div>
-        <table striped>
+        <div className="gradient"></div>
+        <table className="days-of-week">
             <thead>
                 <tr className="week">
                     <th className="day">Sunday</th>

@@ -131,15 +131,20 @@ code {
   padding: .8em 2em;
   cursor: pointer;
 }
-
-
-/* SCHEDULE THINGS */
+/* AVAILABILITY THINGS */
 .week th {
   background-color: #ededed;
   padding: 10px 40px 10px 20px;
   font-size: 12px;
+  margin-right: 80px;
+}
+.time td{
+	background-color:  #EDEDED;
+	padding: 10px 40px 550px 20px;
+	font-size: 12px;
 }
 
+/* SCHEDULE THINGS */
 .days-of-week {
   float: right;
   border-spacing: 40px 20px;
