@@ -61,4 +61,9 @@ router.get('/schedule', (req, res) => {
   shifts.then(result => { res.json(result) });
 })
 
+router.get('/schedule2/:group', (req, res) => {
+  let shifts = scheduler.schedule3(req.params.group);
+  shifts.then(result => { res.json(result) });
+})
+
 module.exports = router
