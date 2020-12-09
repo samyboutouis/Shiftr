@@ -35,7 +35,6 @@ class ShiftIndex extends Component {
 
   getShifts = () => {
     let self = this;
-    console.log('making web call');
     axios.get("http://localhost:8080/shifts").then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {

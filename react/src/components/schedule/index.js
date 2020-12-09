@@ -27,7 +27,6 @@ class ScheduleIndex extends Component {
   //TODO: get shifts for specific user
   getShifts = () => {
     let self = this;
-    console.log('making web call');
     axios.get("http://localhost:8080/shifts/find_by_user/sl616").then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {

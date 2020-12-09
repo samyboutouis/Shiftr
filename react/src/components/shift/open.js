@@ -34,7 +34,6 @@ class OpenShifts extends Component {
 
   getShifts = () => {
     let self = this;
-    console.log('making web call');
     //i only want shifts with status: true
     axios.get("http://localhost:8080/shifts/find_open/true").then((response) => {
       self.setState({shifts: response.data})
@@ -45,7 +44,7 @@ class OpenShifts extends Component {
 
   mapShifts = () => {
     if (this.state.shifts) {
-      console.log(this.state.shifts)
+    //console.log(this.state.shifts)
     let shifts = this.state.shifts
     return shifts.map((shift,index) =>
       <div key={index}>

@@ -9,12 +9,12 @@ class CurrentShift extends Component {
     }
 
     getName = () => {
+        let self = this
         let data = {netid: "sb590"}
-        console.log('NAME')
         axios.post("http://localhost:8080/oauth/ldap", data)
           .then(function (response) {
             let name = response.data.name;
-            this.setState({name: name});
+            self.setState({name: name});
           })
           .catch(function (error) {
             console.log(error);
