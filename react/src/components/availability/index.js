@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import LocationKey from './LocationKey'
 import PrefKey from './PrefKey'
 import * as Constants from '../../constants'

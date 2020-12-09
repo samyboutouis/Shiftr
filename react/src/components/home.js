@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import UserIndex from './user/index'
 import AvailabilityIndex from './availability/index'
 import Navbar from './navbar';
 import OauthLogin from "./oauth/login"
@@ -35,7 +34,7 @@ class Home extends Component {
               <div className="transparent-box">
                 <p>a bunch of text about the shift(s) that user has today</p>
               </div>
-              <button className="clock-in"> <img className="clock" src={Clock} style={{height:'2em', margin: '.5em'}}/> Clock In </button>
+              <button className="clock-in"> <img className="clock" alt="Clock Icon" src={Clock} style={{height:'2em', margin: '.5em'}}/> Clock In </button>
               </div>
               <p style={{padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>Your Upcoming Shifts</p>
               <ShiftIndex />
@@ -43,7 +42,7 @@ class Home extends Component {
             {/*right column*/}
               <div className="shift-pool">
                 <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>
-                <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
+                <img src={Pool} alt="Pool Icon" style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
                 {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
                 <div>
                   <OpenShifts />

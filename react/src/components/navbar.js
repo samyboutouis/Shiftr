@@ -10,7 +10,7 @@ class Navbar extends Component {
   }
 
   userBar = () => {
-    {/*if(this.state.users && !this.state.selectedUser){... need to make this happen if person is user vs supervisor vs admin*/}
+    // {/*if(this.state.users && !this.state.selectedUser){... need to make this happen if person is user vs supervisor vs admin*/}
       return (<div>
           <ul id="nav">
             <li onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</li>
