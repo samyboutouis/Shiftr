@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import Clock from '../../clock.png';
 
 class CurrentShift extends Component {
@@ -9,7 +9,7 @@ class CurrentShift extends Component {
     }
 
     getName = () => {
-        this.setState({name: "Samy"});
+        this.setState({name: "Samy", shiftsToday: "one"});
     }
 
     componentDidMount() {
@@ -21,14 +21,14 @@ class CurrentShift extends Component {
             <div className="background-pretty-gradient">
                 <div>
                   <p className="greeting">Hello, {this.state.name}</p>
-                  <p className="landing-box">You have (an unspecified amount) shifts today</p>
+                  <p className="landing-box">You have {this.state.shiftsToday} shift today.</p>
                 </div>
                 <div className="transparent-box">
                   <p>a bunch of text about the shift(s) that user has today</p>
                 </div>
                 <button className="clock-in"> 
-                    <img className="clock" src={Clock} style={{height:'2em', margin: '.5em'}}/> 
-                    Clock In 
+                    <img className="clock" src={Clock} alt="Clock"/>
+                    <span className="clock-text">Clock In</span>
                 </button>
             </div>
         );
