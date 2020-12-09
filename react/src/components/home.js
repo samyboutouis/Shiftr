@@ -37,7 +37,7 @@ class Home extends Component {
                 <div className="transparent-box">
                   <p>a bunch of text about the shift(s) that user has today</p>
                 </div>
-                <button className="clock-in"> <img className="clock" src={Clock} style={{height:'2em', margin: '.5em'}}/> Clock In </button>
+                <button className="clock-in"> <img className="clock" src={Clock} alt="" style={{height:'2em', margin: '.5em'}}/> Clock In </button>
               </div>
               <p style={{padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>Your Upcoming Shifts</p>
               <ShiftIndex />
@@ -46,7 +46,7 @@ class Home extends Component {
             <Col md={5}>
               <div className="shift-pool">
                 <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>
-                <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
+                <img src={Pool} alt="" style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
                 {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
                 <div>
                   <OpenShifts />
@@ -60,7 +60,7 @@ class Home extends Component {
     }else if(this.state.navState === "Availability"){
       return <AvailabilityIndex />
     }else if(this.state.navState === "Schedule"){
-      return <ScheduleIndex /> 
+      return <ScheduleIndex />
     }else if(this.state.navState === "Hours") {
       return <ShiftIndex /> //change these
     }

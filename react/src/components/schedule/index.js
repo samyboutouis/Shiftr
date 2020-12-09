@@ -88,11 +88,13 @@ class ScheduleIndex extends Component {
           <DayWeekMonth setNavState={this.setNavState} navState={this.state.navState} />
           <br/>
 
-          <div> //calendar
+          <div> {/* calendar */}
+
             {this.drawCalendar()}
           </div>
 
-          <div> //legend
+          <div> {/* legend*/}
+
             <ScheduleKey groups={[
               {group: 'The Link', color: Constants.RED},
               {group: 'Lilly Library', color: Constants.PINK},
