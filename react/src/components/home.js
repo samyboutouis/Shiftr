@@ -54,9 +54,9 @@ class Home extends Component {
           <ShiftIndex /> */}
         </div>
     }else if(this.state.navState === "Availability"){
-      return <AvailabilityIndex /> 
+      return <AvailabilityIndex />
     }else if(this.state.navState === "Schedule"){
-      return <ScheduleIndex /> //change these
+      return <ScheduleIndex /> 
     }else if(this.state.navState === "Hours") {
       return <ShiftIndex /> //change these
     }

@@ -20,7 +20,6 @@ class Navbar extends Component {
             <li className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</li>
           </ul>
         </div>)
-
   }
 
   render(){
