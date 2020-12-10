@@ -38,29 +38,10 @@ class OauthConsume extends Component {
     
     showActiveCode = () => {
         if (this.state.oauthAccessToken) {
-            console.log(this.state.oauthAccessToken);
-            console.log(localStorage.getItem('accessToken'));
-            this.isUserPresent(localStorage.getItem('idToken'));
-            if(!this.state.userPresent){
-                return <Redirect to='/create/user' />
-            }
-            else {
-                return <Redirect to='/' />
-            }
+            //console.log(this.state.oauthAccessToken);
+            //console.log(localStorage.getItem('accessToken'));
+            return <Redirect to='/' />
         } 
-    }
-
-    isUserPresent = (idToken) => {
-        console.log("STARTING USER CHECK")
-        let token = JSON.parse(idToken);
-        let email = token.sub;
-        let self = this;
-        axios.get("http://localhost:8080/users/find_email/"+email).then( (response) => {
-            console.log(response)
-            self.setState({userPresent: response.data})
-        }).catch( (error) => {
-            console.log(error)
-        });
     }
 
     render(){
