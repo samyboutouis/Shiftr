@@ -26,9 +26,10 @@ class Home extends Component {
         return <ScheduleIndex /> 
       }else if(this.state.navState === "Hours") {
         return <ShiftIndex /> //change these
-      }else{
-        return <OauthLogin />
       }
+    }
+    else{
+      return <OauthLogin />
     }
   }
 

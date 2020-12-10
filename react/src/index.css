@@ -32,6 +32,7 @@ code {
   width: 100%;
   padding-bottom: 3em;
 }
+
 .greeting {
   padding-left: 10%;
   padding-right: 10%;
@@ -41,6 +42,7 @@ code {
 	font-weight: 300;
 	color: white;
 }
+
 .landing-box {
   padding-left: 10%;
   padding-right: 10%;
@@ -49,6 +51,7 @@ code {
 	font-family: 'Roboto';
 	font-weight: 400;
 }
+
 .transparent-box {
   background: rgba(255, 255, 255, 0.3);
   width: 79%;
@@ -57,6 +60,16 @@ code {
 	margin-left: 10%;
   margin-right: 10%;
   margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-shifts {
+  font-size: 40px;
+  text-align: center;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .clock-in {
@@ -86,20 +99,38 @@ code {
   font-size: 25px;
 }
 
+.upcoming-shift {
+	display: inline-block;
+  width: 100%;
+  padding-bottom: 3em;
+}
+
+.upcoming-shift-title {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 30px;
+  font-size: 2.5em;
+  font-family: Roboto;
+  font-weight: normal;
+}
+
 .shift-pool {
   
 }
+
 .open-shift-time {
   font-family: Roboto;
   font-size: 1em;
   font-weight: bold;
   margin: 0 .5em .5em 8em;
 }
+
 .open-shift-text {
   font-family: Roboto;
   font-size: 1em;
   margin: 0 .5em .5em 8em;
 }
+
 .open-shift-button {
   margin-bottom: 2em;
   margin-left: 11.5em;
@@ -118,11 +149,13 @@ code {
   font-weight: bold;
   margin: 0 .5em .5em 3em;
 }
+
 .upcoming-shift-text {
   font-family: Roboto;
   font-size: 1em;
   margin: 0 .5em .5em 3em;
 }
+
 .upcoming-shift-button {
   margin-bottom: 2em;
   margin-left: 4em;
