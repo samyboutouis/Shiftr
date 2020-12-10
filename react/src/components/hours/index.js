@@ -32,9 +32,9 @@ class HoursIndex extends Component {
   
      render() {
         return (
-           <div>
-              <Table striped bordered hover responsive>
-              <thead>
+           <div className = "margin">
+              <Table striped bordered hover responsive w-auto>
+              <thead> 
                 <tr>
                     <th>Date</th>
                     <th>Clocked In</th>
