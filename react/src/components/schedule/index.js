@@ -4,10 +4,9 @@ import ScheduleKey from './key';
 import Shift from './shift';
 import DayWeekMonth from './dayWeekMonth';
 import * as Constants from '../../constants';
-
-
-import OpenShifts from '../shift/open';
-import ShiftIndex from '../shift/index';
+import Calendar from './month.js';
+import dateFns from "date-fns";
+import WeekCalendar from './week.js'
 
 
 class ScheduleIndex extends Component {
@@ -58,15 +57,15 @@ class ScheduleIndex extends Component {
     if (this.state.navState === "Week"){
       console.log("week")
       return <div>
-          <OpenShifts />
+          <WeekCalendar />
         </div>
     }else if(this.state.navState === "Day"){
       return <div>
-          <ShiftIndex />
+          <p>DAY</p>
         </div>
     }else if(this.state.navState === "Month"){
       return <div>
-          <ShiftIndex />
+        <Calendar />
         </div>
     }
   }
@@ -87,24 +86,24 @@ class ScheduleIndex extends Component {
         <div>
           <DayWeekMonth setNavState={this.setNavState} navState={this.state.navState} />
           <br/>
+          <div > {/* the body of the page under the toggle */}
+            <div className="schedule-calendar"> {/* calendar */}
 
-          <div> {/* calendar */}
+              {this.drawCalendar()}
+            </div>
 
-            {this.drawCalendar()}
+            <div className="key"> {/* legend*/}
+
+              <ScheduleKey groups={[
+                {group: 'The Link', color: Constants.RED},
+                {group: 'Lilly Library', color: Constants.PINK},
+                {group: 'Co-Lab', color: Constants.DARKBLUE},
+                {group: 'East Printers', color: Constants.PEACH},
+                {group: 'Central Printers', color: Constants.LIGHTBLUE},
+                {group: 'West Printers', color: Constants.DARKPURPLE},
+                {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
+            </div>
           </div>
-
-          <div> {/* legend*/}
-
-            <ScheduleKey groups={[
-              {group: 'The Link', color: Constants.RED},
-              {group: 'Lilly Library', color: Constants.PINK},
-              {group: 'Co-Lab', color: Constants.DARKBLUE},
-              {group: 'East Printers', color: Constants.PEACH},
-              {group: 'Central Printers', color: Constants.LIGHTBLUE},
-              {group: 'West Printers', color: Constants.DARKPURPLE},
-              {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
-          </div>
-
             {this.drawShifts()}
         </div>
     )

@@ -6,17 +6,17 @@ class ScheduleKey extends Component {
   }
 
   mapGroups = () => {
-    return this.props.groups.map((group,index) => 
+    return this.props.groups.map((group,index) =>
       <div key={index}>
         <span style={{backgroundColor: group.color}} className="key-box"></span>
-        <p>{group.group}</p> 
+        <p>{group.group}</p>
       </div>
     )
   }
 
   render(){
     return(
-        <div className="key">
+        <div>
          {this.mapGroups()}
         </div>
     )
