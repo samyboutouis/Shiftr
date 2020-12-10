@@ -13,7 +13,7 @@ import subMonths from "date-fns/subMonths";
 
 
 
-const Calendar = () => {
+const MonthCalendar = () => {
 /* set the forward and back 1 month fxn */
 const [currentDate, setCurrentDate] = useState(new Date());
 const [selectedDate, setSelectedDate] = useState(new Date());
@@ -109,4 +109,4 @@ return (
    </div>
   );
 };
-export default Calendar;
+export default MonthCalendar;

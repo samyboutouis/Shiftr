@@ -57,7 +57,7 @@ const weekEnd = endOfWeek(currentDate);
 const rows = [];
 const startDate = weekStart;
 const endDate = weekEnd;
-const dateFormat = 'ddd';
+const dateFormat = 'dd';
 let days = [];
 let day = startDate;
 let formattedDate = "";
@@ -68,7 +68,7 @@ while (day <= endDate) {
    const cloneDay = day;
 days.push(
       <div /* double ternary operator checks if the date belongs to the month, and adds disabled if not current date */
-       className={`column cell ${!isSameWeek(day, weekStart)}`}
+       className={`column week-cell ${!isSameWeek(day, weekStart)}`}
        key={day}
        >
        <span className="number">{formattedDate}</span>

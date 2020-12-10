@@ -292,11 +292,20 @@ font-size: 70%;
 padding: .75em 0;
 border-bottom: 1px solid lightgray;
 }
+
 .calendar .body .cell {
 position: relative;
 height: 6em;
 width: 10em;
 border-right: 1px solid lightgray;
+overflow: hidden;
+cursor: pointer;
+background: transparent;
+}
+.calendar .body .week-cell {
+position: relative;
+height: 30em;
+width: 10em;
 overflow: hidden;
 cursor: pointer;
 background: transparent;

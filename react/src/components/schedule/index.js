@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import ScheduleKey from './key';
 import Shift from './shift';
 import DayWeekMonth from './dayWeekMonth';
 import * as Constants from '../../constants';
-import Calendar from './month.js';
-import dateFns from "date-fns";
+import MonthCalendar from './month.js';
 import WeekCalendar from './week.js'
-
+import DayCalendar from './day.js'
+import axios from 'axios';
 
 class ScheduleIndex extends Component {
   constructor(props){
@@ -61,11 +60,11 @@ class ScheduleIndex extends Component {
         </div>
     }else if(this.state.navState === "Day"){
       return <div>
-          <p>DAY</p>
+          <DayCalendar/>
         </div>
     }else if(this.state.navState === "Month"){
       return <div>
-        <Calendar />
+        <MonthCalendar />
         </div>
     }
   }
