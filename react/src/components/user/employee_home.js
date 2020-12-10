@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import CurrentShift from "./current_shift"
-import OpenShifts from '../shift/open'
-import Pool from '../../pool.png';
+import ShiftPool from '../shift/shift_pool'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -25,14 +24,7 @@ class EmployeeHome extends Component {
             </Row>
           </Col>
           <Col lg={5}>
-            <div className="shift-pool">
-              <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>
-              <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
-              {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
-              <div>
-                <OpenShifts />
-              </div>
-            </div>
+            <ShiftPool />
           </Col>
         </Row>
       </Container>

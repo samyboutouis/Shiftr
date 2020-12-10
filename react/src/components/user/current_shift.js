@@ -10,7 +10,7 @@ class CurrentShift extends Component {
   }
 
   getName = () => {
-    this.setState({name: "Samy", shiftsToday: 0});
+    this.setState({name: "Samy", shiftsToday: 1});
   }
 
   componentDidMount() {

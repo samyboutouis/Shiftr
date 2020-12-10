@@ -54,7 +54,13 @@ class ShiftToday extends Component {
     else {
       return (
         <div className="transparent-box">
-          <p>a bunch of text about the shift(s) that user has today</p>
+          <div>
+            <p>2:00PM -> 4:00PM</p>
+            <br />
+            <p> The LINK </p>
+            <br />
+            <p> Student | Service Worker</p>
+          </div>
         </div>
       );
     }
