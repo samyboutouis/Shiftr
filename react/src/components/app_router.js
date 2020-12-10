@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Home from './home';
 import OauthConsume from './oauth/consume';
+import UserForm from './user/form'
 
 class AppRouter extends Component {
   render(){
@@ -17,6 +18,9 @@ class AppRouter extends Component {
             <Switch>
               <Route path="/oauth/consume">
                 <OauthConsume />
+              </Route>
+              <Route path="/create/user">
+                <UserForm reqType="create"/>
               </Route>
               <Route path="/">
                 <Home />

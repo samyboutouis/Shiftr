@@ -22,6 +22,44 @@ router.get('/consume', (req, res) => {
   res.json({"access_token": JSON.parse(token).access_token, "id_token": idToken});
 })
 
+//helpers
+format_auth_string = () => {
+  const auth_string = `${process.env.OAUTH_CLIENT_ID}:${process.env.OAUTH_CLIENT_SECRET}`
+  return Buffer.from(auth_string).toString('base64')
+}
+  
+getToken = (code) => {
+  const url = "https://oauth.oit.duke.edu/oidc/token"
+  const auth = format_auth_string();
+  const redirect_uri = encodeURI(process.env.OAUTH_REDIRECT_URI)
+
+  console.log("SNTHSNTHSNTHSNTH")
+  console.log(redirect_uri)
+
+  const options = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Basic ${auth}`
+    },
+    body: `grant_type=authorization_code&redirect_uri=${redirect_uri}&code=${code}` 
+  };
+
+  const res = request("POST", url, options) 
+  console.log(res);
+  let body =  Buffer.from(res.getBody());
+  body = body.toString()
+  console.log('body');
+  console.log(body);
+
+  return body;
+}
+
+parseIdToken = (token) => {
+  let idToken = JSON.parse(token).id_token;
+  idToken = jwt_decode(idToken);
+  return (idToken)
+}
+
 //ldap query for user info
 // router.post('/ldap', (req, res) => {
 //   console.log("START");
@@ -50,46 +88,5 @@ router.get('/consume', (req, res) => {
 //   });
 //   //res.json({"name": eppn});
 // });
-
-//helpers
-format_auth_string = () => {
-  const auth_string = `${process.env.OAUTH_CLIENT_ID}:${process.env.OAUTH_CLIENT_SECRET}`
-  return Buffer.from(auth_string).toString('base64')
-}
-  
-getToken = (code) => {
-  const url = "https://oauth.oit.duke.edu/oidc/token"
-  const auth = format_auth_string();
-  const redirect_uri = encodeURI(process.env.OAUTH_REDIRECT_URI)
-
-  console.log("SNTHSNTHSNTHSNTH")
-  console.log(redirect_uri)
-
-
-
-  const options = {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${auth}`
-    },
-    body: `grant_type=authorization_code&redirect_uri=${redirect_uri}&code=${code}` 
-    
-  };
-
-  const res = request("POST", url, options) 
-  console.log(res);
-  let body =  Buffer.from(res.getBody());
-  body = body.toString()
-  console.log('body');
-  console.log(body);
-
-  return body;
-}
-
-parseIdToken = (token) => {
-  let idToken = JSON.parse(token).id_token;
-  idToken = jwt_decode(idToken);
-  return (idToken)
-}
 
 module.exports = router

@@ -13,7 +13,6 @@ class Nbar extends Component {
   }
 
   userBar = () => {
-    {/*if(this.state.users && !this.state.selectedUser){... need to make this happen if person is user vs supervisor vs admin*/}
     return (
     <Navbar expand="lg">
       <Navbar.Brand className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</Navbar.Brand>
@@ -35,7 +34,7 @@ class Nbar extends Component {
       <div>
         {this.userBar()}
       </div>
-    )
+    );
   }
 }
 

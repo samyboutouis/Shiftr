@@ -9,6 +9,7 @@ import UpcomingShifts from '../shift/upcoming_shifts';
 class EmployeeHome extends Component {
   constructor(props){
     super(props);
+    this.state = {};
   }
 
   render() {

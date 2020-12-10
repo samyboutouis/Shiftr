@@ -11,7 +11,7 @@ class ShiftPool extends Component {
     return (
       <div className="shift-pool">
         <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>
-        <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}}/> Shift Pool </p>
+        <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}} alt="Pool"/> Shift Pool </p>
         {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
         <div>
           <OpenShifts />

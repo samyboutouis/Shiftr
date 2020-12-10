@@ -14,9 +14,9 @@ class OauthLogin extends Component {
     }
 
     render(){
-        let button;
-        button = <button onClick={this.create_oauth_code_request}>Login</button>
-        return button;
+        return (
+            <button onClick={this.create_oauth_code_request}>Login</button>
+        );
     }
 }
 
