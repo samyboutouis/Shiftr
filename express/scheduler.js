@@ -82,18 +82,12 @@ exports.all_shifts = async function(group) {
       }
   }
 
-  exports.assign_shifts = async function(group) {
+  exports.assign_shifts_basic = async function(group) {
     try {
-      // matches = this.all_shifts(group);
-      // for (const match of matches) {
-      //   //check if full time shift, otherwise need to split
-      //   let user = {name: match.name, netid: match.netid}
-      //   shiftsCollection.updateOne({"_id": ObjectId(match.matching_shifts._id)}, {$set: {employee: user, status: "scheduled"}})
+      //check if full time shift, otherwise need to split
       matches = await this.all_shifts(group);
       while (matches && matches.length > 0){
-        console.log(matches);
         let match = matches[0];
-        console.log(match);
         let user = {name: match.name, netid: match.netid};
         shiftsCollection.updateOne(
           {"_id": ObjectId(match.matching_shifts[0]._id)}, 
@@ -106,6 +100,84 @@ exports.all_shifts = async function(group) {
           matches = await this.all_shifts(group);
       }
       return "hi";
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  exports.assign_shifts2 = async function(group) {
+    try {
+      //check if full time shift, otherwise need to split
+      shiftsCollection.remove( { } );
+      usersCollection.remove( { } );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  exports.assign_shifts = async function(group) {
+    try {
+      matches = await this.all_shifts(group);
+      while (matches && matches.length > 0){
+        let match = matches[0];
+        let user = {name: match.name, netid: match.netid};
+        if(match.availability.times.start_time > match.matching_shifts[0].start_time && match.availability.times.end_time < match.matching_shifts[0].end_time){
+          let first_shift =  JSON.parse(JSON.stringify(match.matching_shifts[0]));
+          delete first_shift._id;
+          first_shift["end_time"] = match.availability.times.start_time;
+          await shiftsCollection.insertOne(first_shift);
+
+          let third_shift = JSON.parse(JSON.stringify(match.matching_shifts[0]));
+          delete third_shift._id;
+          third_shift["start_time"] = match.availability.times.end_time;
+          await shiftsCollection.insertOne(third_shift);
+
+          shiftsCollection.updateOne(
+            {"_id": ObjectId(match.matching_shifts[0]._id)}, 
+            {$set: {start_time: match.availability.times.start_time, end_time: match.availability.times.end_time, employee: user, status: "scheduled" }}
+            );
+        }
+        else if(match.availability.times.start_time > match.matching_shifts[0].start_time){
+          let first_shift = JSON.parse(JSON.stringify(match.matching_shifts[0]));
+          delete first_shift._id;
+          first_shift["end_time"] = match.availability.times.start_time;
+          await shiftsCollection.insertOne(first_shift);
+
+          shiftsCollection.updateOne(
+            {"_id": ObjectId(match.matching_shifts[0]._id)}, 
+            {$set: {start_time: match.availability.times.start_time, employee: user, status: "scheduled" }}
+            );
+        }
+        else if(match.availability.times.end_time < match.matching_shifts[0].end_time) {
+          console.log("ending early: "+JSON.stringify(match));
+          let second_shift = JSON.parse(JSON.stringify(match.matching_shifts[0]));
+          delete second_shift._id;
+          second_shift["start_time"] = match.availability.times.end_time;
+          second_shift["status"] = "open";
+          console.log("second shift:"+JSON.stringify(second_shift))
+          await shiftsCollection.insertOne(second_shift);
+          // let start = new Date(match.availability.times.end_time * 1000);
+          // let end = new Date(second_shift.end_time * 1000);
+          // console.log("new shift: " + start.toLocaleDateString() + ' ' + start.toLocaleTimeString() + " to " + end.toLocaleDateString() + ' ' + end.toLocaleTimeString())
+          shiftsCollection.updateOne(
+            {"_id": ObjectId(match.matching_shifts[0]._id)}, 
+            {$set: {end_time: match.availability.times.end_time, employee: user, status: "scheduled" }}
+            );
+        }
+        else {
+          shiftsCollection.updateOne(
+            {"_id": ObjectId(match.matching_shifts[0]._id)}, 
+            {$set: {employee: user, status: "scheduled"}}
+            );
+        }
+        usersCollection.updateOne(
+          {"_id": ObjectId(match._id)}, 
+          { $push: { previous_availability: match.availability.times }, $pull: { "availability.times": match.availability.times } }, 
+          );
+          matches = await this.all_shifts(group);
+      }
+      console.log("down here")
+      return await shiftsCollection.find({"group": group } ).sort({"start_time":1}).toArray();
     } catch (err) {
       console.log(err);
     }

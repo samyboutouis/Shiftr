@@ -20,7 +20,7 @@ class ScheduleIndex extends Component {
   getShifts = () => {
     let self = this;
     console.log('making web call');
-    axios.get("http://localhost:8080/shifts/find_by_user/sl616").then( (response) => {
+    axios.put("http://localhost:8080/schedule/assign_shifts/Code+").then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)

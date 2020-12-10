@@ -6,8 +6,8 @@ class Shift extends Component {
   }
 
   convertDate = (mongoDate) => {
-    let date = new Date(mongoDate)
-    return date.toDateString() + ' ' + date.toLocaleTimeString();
+    let date = new Date(mongoDate * 1000)
+    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
   }
 
   render(){
@@ -16,9 +16,11 @@ class Shift extends Component {
         <h3>ID:   {this.props.shift._id}</h3>
         <p>START TIME: {this.convertDate(this.props.shift.start_time)}</p>
         <p>END TIME:    {this.convertDate(this.props.shift.end_time)}</p>
-        <p>GROUP:   {this.props.shift.group}</p>
+        <p>Name:   {this.props.shift.employee ? this.props.shift.employee.name : "none"}</p>
+        <p>Status:   {this.props.shift.status}</p>
+        {/* <p>GROUP:   {this.props.shift.group}</p>
         <p>LOCATION:   {this.props.shift.location}</p>
-        <p>SUPERVISOR:  {this.props.shift.supervisor.name}, {this.props.shift.supervisor.netid}</p>
+        <p>SUPERVISOR:  {this.props.shift.supervisor.name}, {this.props.shift.supervisor.netid}</p> */}
       </div>
 
     )
