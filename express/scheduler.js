@@ -1,4 +1,5 @@
 const db = require('./database');
+var ObjectId = require('mongodb').ObjectID;
 const shiftsCollection = db.get().collection('shifts')
 const usersCollection = db.get().collection('users')
 
@@ -56,7 +57,7 @@ exports.schedule = async function() {
 //       }
 //   }
 
-exports.schedule3 = async function(group) {
+exports.all_shifts = async function(group) {
     try {
         return await usersCollection.aggregate([
             { $match: {group: group} },
@@ -73,11 +74,41 @@ exports.schedule3 = async function(group) {
                         { $gt: [ "$$end_time", "$start_time" ] } ] } } }
                 ],
                 "as": "matching_shifts"}},
+            { $match: {matching_shifts: {$ne: []}}},
             { $project: { name: 1, netid: 1, "availability.times": 1, rank: 1, matching_shifts: 1}}
         ]).toArray();
       } catch (err) {
         console.log(err);
       }
+  }
+
+  exports.assign_shifts = async function(group) {
+    try {
+      // matches = this.all_shifts(group);
+      // for (const match of matches) {
+      //   //check if full time shift, otherwise need to split
+      //   let user = {name: match.name, netid: match.netid}
+      //   shiftsCollection.updateOne({"_id": ObjectId(match.matching_shifts._id)}, {$set: {employee: user, status: "scheduled"}})
+      matches = await this.all_shifts(group);
+      while (matches && matches.length > 0){
+        console.log(matches);
+        let match = matches[0];
+        console.log(match);
+        let user = {name: match.name, netid: match.netid};
+        shiftsCollection.updateOne(
+          {"_id": ObjectId(match.matching_shifts[0]._id)}, 
+          {$set: {employee: user, status: "scheduled"}}
+          );
+        usersCollection.updateOne(
+          {"_id": ObjectId(match._id)}, 
+          { $push: { previous_availability: match.availability.times }, $pull: { "availability.times": match.availability.times } }, 
+          );
+          matches = await this.all_shifts(group);
+      }
+      return "hi";
+    } catch (err) {
+      console.log(err);
+    }
   }
 
 //   { $group : { _id : "$_id", 

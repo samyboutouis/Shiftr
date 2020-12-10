@@ -39,6 +39,9 @@ db.connect(() => {
   const shifts = require('./routes/shifts_controller')
   app.use('/shifts', shifts)
 
+  const schedule = require('./routes/schedule_controller')
+  app.use('/schedule', schedule)
+
   const app_server = http.createServer(app); 
     
   app_server.listen(port, hostname, () => { 

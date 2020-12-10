@@ -20,7 +20,7 @@ class CreateSchedule extends Component {
   getShifts = () => {
     let self = this;
     console.log('making web call');
-    axios.get("http://localhost:8080/shifts/schedule2/Code+").then( (response) => {
+    axios.get("http://localhost:8080/schedule/all_matches/Code+").then( (response) => {
       self.setState({data: response.data})
     }).catch( (error) => {
       console.log(error)
