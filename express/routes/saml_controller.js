@@ -2,6 +2,8 @@ var express = require('express')
 var router = express.Router()
 var saml2 = require('saml2-js');
 var fs = require('fs');
+var jwt = require('jsonwebtoken');
+var cookie = require('cookie');
 
 //configure identity provider
 var idp_options = {
@@ -29,21 +31,20 @@ router.use(function timeLog (req, res, next) {
 
 router.post('/consume', (req, res) => {
   const options = {request_body: req.body};
-  console.log("REQUEST")
-  console.log(req.body)
-  console.log(req.params)
   sp.post_assert(idp, options, function(err, saml_response) {
     if (err != null)
       return res.send(500);
-    // https://shib.oit.duke.edu/idp/profile/SAML2/Unsolicited/SSO?providerId=https://shiftr.colab.duke.edu
-    // Save name_id and session_index for logout
-    // Note:  In practice these should be saved in the user session, not globally.
-    name_id = saml_response.user.name_id;
-    console.log(name_id)
-    session_index = saml_response.user.session_index;
-    console.log(saml_response.user.attributes)
+  
+    const attributes = mapAttrs(saml_response.user.attributes);
+    const token = jwt.sign(attributes, "make-a-real-secret");
+
+    // Set a new secure cookie for future auth
+    res.setHeader('Set-Cookie', cookie.serialize('saml', token, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 7 // 1 week
+    }));
  
-    res.json(mapAttrs(saml_response.user.attributes))
+    res.redirect('http://localhost:3000/saml/consume');
   });
 });
 

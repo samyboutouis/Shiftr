@@ -5,8 +5,6 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Home from './home';
-import OauthConsume from './oauth/consume';
 
 
 class AppRouter extends Component {
@@ -19,14 +17,14 @@ class AppRouter extends Component {
             {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
             <Switch>
-              <Route path="/oauth/consume">
-                <OauthConsume />
+              <Route path="/saml/consume">
+                <h1>Works</h1>
               </Route>
               
               {/* note that due to control flow the root path is at the bottom by design */}
-              <Route path="/">
+              {/* <Route path="/">
                 <Home />
-              </Route>
+              </Route> */}
             </Switch>
           </div>
         </Router>

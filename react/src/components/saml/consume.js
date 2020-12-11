@@ -8,19 +8,6 @@ class OauthConsume extends Component {
         this.state = { oauthCode: false, oauthAccessToken: false }
     }
 
-    componentDidMount() {
-        this.checkOauthCode()
-    }
-
-    checkOauthCode = () => {
-        let url_string = window.location.href
-        let url = new URL(url_string);
-        let code = url.searchParams.get("code");
-        if(code){
-          this.getAccessToken(code)
-        }
-    }
-
     getAccessToken = (code) => {
         console.log("GETTING TOKEN")
         var self = this;

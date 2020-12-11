@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import AvailabilityIndex from './availability/index'
 import Navbar from './navbar';
-import OauthLogin from "./oauth/login"
+// import OauthLogin from "./oauth/login"
 import OpenShifts from './shift/open'
 import Pool from '../pool.png';
 import Clock from '../clock.png';
@@ -65,7 +65,8 @@ class Home extends Component {
       return <ShiftIndex /> //change these
     }
   }else{
-      return <OauthLogin />
+      // return <OauthLogin />
+      return <h1>boo</h1>
     }
   }
 
