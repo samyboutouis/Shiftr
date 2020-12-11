@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import startOfWeek from "date-fns/startOfWeek";
 import format from "date-fns/format";
 import endOfWeek from "date-fns/endOfWeek";
-import isSameDay from "date-fns/isSameDay";
 import isSameWeek from "date-fns/isSameWeek";
-import parse from "date-fns/parse";
 import addDays from "date-fns/addDays";
 import addWeeks from "date-fns/addWeeks";
 import subWeeks from "date-fns/subWeeks";
@@ -37,10 +35,9 @@ return (
 };
 /* days of the week */
 const days = () => {
-const dateFormat = 'ddd';
 const days = [];
 const fill = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-let startDate = startOfWeek(currentDate);
+/*let startDate = startOfWeek(currentDate);*/
 for (let i = 0; i < 7; i++) {
       days.push(
          <div className="column col-center" key={i}>
@@ -65,7 +62,6 @@ let formattedDate = "";
 while (day <= endDate) {
    for (let i = 0; i < 7; i++) {
    formattedDate = format(day, dateFormat);
-   const cloneDay = day;
 days.push(
       <div /* double ternary operator checks if the date belongs to the month, and adds disabled if not current date */
        className={`column week-cell ${!isSameWeek(day, weekStart)}`}

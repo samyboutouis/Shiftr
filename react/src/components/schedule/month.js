@@ -6,7 +6,6 @@ import endOfMonth from "date-fns/endOfMonth";
 import endOfWeek from "date-fns/endOfWeek";
 import isSameMonth from "date-fns/isSameMonth";
 import isSameDay from "date-fns/isSameDay";
-import parse from "date-fns/parse";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import subMonths from "date-fns/subMonths";
@@ -40,10 +39,8 @@ return (
 };
 /* days of the week */
 const days = () => {
-const dateFormat = 'dddd';
 const days = [];
 const fill = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-let startDate = startOfWeek(currentDate);
 for (let i = 0; i < 7; i++) {
       days.push(
          <div className="column col-center" key={i}>
@@ -67,7 +64,6 @@ let formattedDate = "";
 while (day <= endDate) {
    for (let i = 0; i < 7; i++) {
    formattedDate = format(day, dateFormat);
-   const cloneDay = day;
 days.push(
       <div /* double ternary operator checks if the date belongs to the month, and adds disabled if not current date */
        className={`column cell ${!isSameMonth(day, monthStart)
