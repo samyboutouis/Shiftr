@@ -2,7 +2,6 @@ var express = require('express')
 var router = express.Router()
 const request = require('sync-request');
 const jwt_decode  = require("jwt-decode");
-const session = require('express-session');
 
 
 // middleware that is specific to this router

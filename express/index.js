@@ -24,10 +24,16 @@ db.connect(() => {
   app.use(cors()) //allow cors requests
   app.use(express.json()); //this line allows us to read JSON bodies in the request
 
+  const bodyParser = require('body-parser');
+  app.use(bodyParser.json()); // support json encoded bodies
+  app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
   // for parsing multipart/form-data
   app.use(upload.array()); 
   app.use(express.static('public'));
 
+
+  //////// CONTROLLERS ////////
   //bind the users controller
   const users = require('./routes/users_controller')
   app.use('/users', users)
@@ -35,6 +41,9 @@ db.connect(() => {
   //bind the oauth controller
   const oauth = require('./routes/oauth_controller')
   app.use('/oauth', oauth)
+
+  const saml = require('./routes/saml_controller')
+  app.use('/saml', saml)
 
   const shifts = require('./routes/shifts_controller')
   app.use('/shifts', shifts)
