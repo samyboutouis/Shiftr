@@ -12,7 +12,32 @@ class Nbar extends Component {
 
   userBar = () => {
     return (
-      <div></div>
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <p className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</p>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <div id="navbar" class="navbar-menu">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <p onClick={this.changeCurrentPage.bind(this, "Home")}>Home</p>
+            </div>
+            <div class="navbar-item">
+              <p onClick={this.changeCurrentPage.bind(this, "Schedule")}>Schedule</p>
+            </div>
+            <div class="navbar-item">
+              <p onClick={this.changeCurrentPage.bind(this, "Availability")}>Availability</p>
+            </div>
+            <div class="navbar-item">
+              <p onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</p>
+            </div>
+          </div>
+        </div>
+      </nav>
     // <Navbar expand="lg">
     //   <Navbar.Brand className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</Navbar.Brand>
     //   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
