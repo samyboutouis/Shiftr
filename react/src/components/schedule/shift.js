@@ -28,5 +28,3 @@ class Shift extends Component {
 }
 
 export default Shift;
-
-// "supervisor":{"name":"Danai","netid":"da129"}}

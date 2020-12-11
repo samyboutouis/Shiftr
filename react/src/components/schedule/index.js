@@ -7,7 +7,6 @@ import MonthCalendar from './month.js';
 import WeekCalendar from './week.js'
 import DayCalendar from './day.js'
 import axios from 'axios';
-import CreateSchedule from './create'
 
 class ScheduleIndex extends Component {
   constructor(props){
@@ -32,25 +31,6 @@ class ScheduleIndex extends Component {
       console.log(error)
     });
   }
-
-  // drawCalendar = () => {
-  //   return <div>
-  //       <div className="gradient"></div>
-  //       <table className="days-of-week">
-  //           <thead>
-  //               <tr className="week">
-  //                   <th className="day">Sunday</th>
-  //                   <th className="day">Monday</th>
-  //                   <th className="day">Tuesday</th>
-  //                   <th className="day">Wednesday</th>
-  //                   <th className="day">Thursday</th>
-  //                   <th className="day">Friday</th>
-  //                   <th className="day">Saturday</th>
-  //               </tr>
-  //           </thead>
-  //       </table>
-  //   </div>
-  // }
 
   drawCalendar = () => {
     if (this.state.navState === "Week"){
@@ -104,7 +84,6 @@ class ScheduleIndex extends Component {
             </div>
           </div>
             {/* {this.drawShifts()} */}
-            {/* <CreateSchedule /> */}
         </div>
     )
   }
