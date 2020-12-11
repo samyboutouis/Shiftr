@@ -156,21 +156,19 @@ code {
   border-collapse: collapse;
   margin-right: 120px;
 }
-.day-week-month {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  width: 6em;
-  color: white;
-  padding: 14px 16px;
-  transition: 0.3s;
+.day-week-month  /* the indiv tabs */ {
+  border: none !important;
+  outline: none !important;
+  width: 6em !important;
+  padding: 14px 16px !important;
   font-size: 17px;
   background-image: radial-gradient(
     104.49% 573.2% at -9.55% 10.53%,
     rgba(245, 115, 123, 0.5) 12.98%,
     rgba(161, 149, 247, 0.5) 52.6%,
     rgba(242, 166, 255, 0.5) 100%
-  );
+  ) ;
+  background-color: transparent !important;
 }
 
 .day-week-month.active {
@@ -179,26 +177,178 @@ code {
     #f5737b 12.98%,
     #a195f7 52.6%,
     #f2a6ff 100%
-  );
+  ) !important;
 }
 
+
+
 .view th {
-  padding: 10px 30px;
   text-align: center;
   color: white;
   font-size: 16px;
 }
 
-.key {
-  padding-top: 200px;
+.key /* div containing all keys */ {
+  margin-top: 10em;
   font-family: "Roboto";
   font-weight: 600;
   font-size: 14px;
 }
 
-.key-box {
+.key-box /* colored box */ {
   height: 20px;
   width: 20px;
   float: left;
-  margin: 0 20px;
+}
+
+.schedule-calendar /* box containing calendar */ {
+  float: right;
+  width: 80%
+}
+
+
+/* MONTH CALENDAR BEGINS HERE ----------------------------------------------------------------*/
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+.icon {
+font-family: 'Material Icons', serif;
+font-style: normal;
+display: inline-block;
+vertical-align: middle;
+line-height: 1;
+text-transform: none;
+letter-spacing: normal;
+word-wrap: normal;
+white-space: nowrap;
+direction: ltr;
+-webkit-font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+-moz-osx-font-smoothing: grayscale;
+font-feature-settings: 'liga';
+}
+/* GENERAL */
+* {
+box-sizing: border-box;
+}
+body {
+font-family: "Roboto";
+font-size: 1em;
+line-height: 1.5;
+position: relative;
+}
+header {
+display: block;
+width: 100%;
+padding: 1.75em 0;
+background: white;
+}
+/* GRID */
+
+.row {
+margin: 0;
+padding: 0;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+width: 100%;
+}
+.row-middle {
+align-items: center;
+}
+.column {
+flex-grow: 1;
+flex-basis: 0;
+max-width: 100%;
+}
+/* Calendar */
+.calendar {
+display: block;
+position: relative;
+width: 90%;
+height: auto;
+margin: auto;
+}
+.calendar .header {
+text-transform: uppercase;
+text-align: center;
+font-size: 115%;
+padding: 1.5em 0;
+}
+.calendar .header .icon {
+cursor: pointer;
+transition: .15s ease-out;
+}
+.calendar .header .icon:hover {
+transform: scale(1.75);
+transition: .25s ease-out;
+color: pink;
+}
+.calendar .header .icon:first-of-type {
+margin-left: 1em;
+}
+.calendar .header .icon:last-of-type {
+margin-right: 1em;
+}
+.calendar .days {
+text-transform: uppercase;
+text-align: center;
+font-weight: 400;
+color: gray;
+font-size: 70%;
+padding: .75em 0;
+border-bottom: 1px solid lightgray;
+}
+
+.calendar .body .cell {
+position: relative;
+height: 6em;
+width: 10em;
+border-right: 1px solid lightgray;
+overflow: hidden;
+cursor: pointer;
+background: transparent;
+}
+.calendar .body .week-cell {
+position: relative;
+height: 30em;
+width: 10em;
+overflow: hidden;
+cursor: pointer;
+background: transparent;
+}
+.calendar .body .selected {
+border-left: 1em solid transparent;
+border-image: radial-gradient(
+  104.49% 573.2% at -9.55% 10.53%,
+  #f5737b 12.98%,
+  #a195f7 52.6%,
+  #f2a6ff 100%
+);
+border-image-slice: 1;
+}
+.calendar .body .row {
+border-bottom: 1px solid lightgray;
+}
+.calendar .body .row:last-child {
+border-bottom: none;
+}
+.calendar .body .cell:last-child {
+border-right: none;
+}
+.calendar .body .cell .number {
+position: absolute;
+font-size: 85%;
+line-height: 1;
+top: .75em;
+right: .75em;
+}
+.calendar .body .disabled {
+color: lightgray;
+pointer-events: none;
+}
+
+
+.calendar .body .column {
+flex-grow: 0;
+flex-basis: calc(100%/7);
+width: calc(100%/7);
 }
