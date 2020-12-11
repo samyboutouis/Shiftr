@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/Table'
 
 class HoursIndex extends Component {
     constructor(props){
@@ -33,7 +32,7 @@ class HoursIndex extends Component {
      render() {
         return (
            <div className = "margin">
-              <Table striped bordered hover responsive w-auto>
+              <table>
               <thead> 
                 <tr>
                     <th>Date</th>
@@ -47,7 +46,7 @@ class HoursIndex extends Component {
                  <tbody>
                     {this.renderTableData()}
                  </tbody>
-              </Table>
+              </table>
            </div>
         )
      }
