@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
 
 class Nbar extends Component {
   constructor(props){
@@ -14,18 +12,19 @@ class Nbar extends Component {
 
   userBar = () => {
     return (
-    <Navbar expand="lg">
-      <Navbar.Brand className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-      <Nav className="ml-auto">
-        <Nav.Link onClick={this.changeCurrentPage.bind(this, "Home")}>Home</Nav.Link>
-        <Nav.Link onClick={this.changeCurrentPage.bind(this, "Schedule")}>Schedule</Nav.Link>
-        <Nav.Link onClick={this.changeCurrentPage.bind(this, "Availability")}>Availability</Nav.Link>
-        <Nav.Link onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</Nav.Link>
-      </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+      <div></div>
+    // <Navbar expand="lg">
+    //   <Navbar.Brand className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</Navbar.Brand>
+    //   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    //   <Navbar.Collapse id="responsive-navbar-nav">
+    //   <Nav className="ml-auto">
+    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Home")}>Home</Nav.Link>
+    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Schedule")}>Schedule</Nav.Link>
+    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Availability")}>Availability</Nav.Link>
+    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</Nav.Link>
+    //   </Nav>
+    //   </Navbar.Collapse>
+    // </Navbar>
     );
   }
 

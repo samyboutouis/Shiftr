@@ -1,10 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
 
 class UserForm extends Component {
   constructor(props){
@@ -60,37 +56,38 @@ class UserForm extends Component {
   render(){
     if(!this.state.submitted){
       return(
-        <Container>
-          <Form>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridFirstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter first name" name='firstName' onChange={this.changeHandler}/>
-              </Form.Group>
-              <Form.Group as={Col} controlId="formGridLastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter last name" name='lastName' onChange={this.changeHandler}/>
-              </Form.Group>
-            </Form.Row>
-            <Form.Group controlId="formGridEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Enter your netID email" name='email' onChange={this.changeHandler}/>
-            </Form.Group>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridRole">
-                <Form.Label>Role</Form.Label>
-                <Form.Control type="text" placeholder="Enter role" name='role' onChange={this.changeHandler}/>
-              </Form.Group>
-              <Form.Group as={Col} controlId="formGridAffiliation">
-                <Form.Label>Affiliation</Form.Label>
-                <Form.Control type="text" placeholder="Enter affiliation" name='affiliation' onChange={this.changeHandler}/>
-              </Form.Group>
-            </Form.Row>
-            <Button variant="primary" type="submit" onClick={this.submitForm}>
-              Submit
-            </Button>
-          </Form>
-        </Container>
+        <div></div>
+        // <Container>
+        //   <Form>
+        //     <Form.Row>
+        //       <Form.Group as={Col} controlId="formGridFirstName">
+        //         <Form.Label>First Name</Form.Label>
+        //         <Form.Control type="text" placeholder="Enter first name" name='firstName' onChange={this.changeHandler}/>
+        //       </Form.Group>
+        //       <Form.Group as={Col} controlId="formGridLastName">
+        //         <Form.Label>Last Name</Form.Label>
+        //         <Form.Control type="text" placeholder="Enter last name" name='lastName' onChange={this.changeHandler}/>
+        //       </Form.Group>
+        //     </Form.Row>
+        //     <Form.Group controlId="formGridEmail">
+        //       <Form.Label>Email</Form.Label>
+        //       <Form.Control type="email" placeholder="Enter your netID email" name='email' onChange={this.changeHandler}/>
+        //     </Form.Group>
+        //     <Form.Row>
+        //       <Form.Group as={Col} controlId="formGridRole">
+        //         <Form.Label>Role</Form.Label>
+        //         <Form.Control type="text" placeholder="Enter role" name='role' onChange={this.changeHandler}/>
+        //       </Form.Group>
+        //       <Form.Group as={Col} controlId="formGridAffiliation">
+        //         <Form.Label>Affiliation</Form.Label>
+        //         <Form.Control type="text" placeholder="Enter affiliation" name='affiliation' onChange={this.changeHandler}/>
+        //       </Form.Group>
+        //     </Form.Row>
+        //     <Button variant="primary" type="submit" onClick={this.submitForm}>
+        //       Submit
+        //     </Button>
+        //   </Form>
+        // </Container>
       )
     }
     else {
