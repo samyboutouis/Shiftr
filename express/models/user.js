@@ -58,6 +58,15 @@ class User {
     }
   }
 
+  //find one user by email
+  static findByEmail = async (email)  => {
+    try {
+      let user = await usersCollection.findOne({"email": email});
+      return new User(user)
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 

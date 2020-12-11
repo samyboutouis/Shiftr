@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class OauthLogin extends Component {
     constructor(props){
         super()
-        this.state = { oauthCode: false, oauthAccessToken: false }
+        this.state = {}
     }
 
     create_oauth_code_request = () => {
@@ -14,9 +14,9 @@ class OauthLogin extends Component {
     }
 
     render(){
-        let button;
-        button = <button onClick={this.create_oauth_code_request}>Login</button>
-        return button;
+        return (
+            <button onClick={this.create_oauth_code_request}>Login</button>
+        );
     }
 }
 
