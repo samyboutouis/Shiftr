@@ -1,7 +1,7 @@
 const db = require('../database');
 var ObjectId = require('mongodb').ObjectID;
 const shiftsCollection = db.get().collection('shifts')
-const usersCollection = db.get().collection('users')
+// const usersCollection = db.get().collection('users')
 
 class Shift {
 
@@ -74,18 +74,18 @@ class Shift {
     } 
   }
 
-   static schedule = async () => {
-    try {
-      let openShifts = await shiftsCollection.find({"status": "open"}).toArray();
-      let users = new Array();
-      for (const shift of openShifts) {
-        users.push(await usersCollection.find({"group": shift.group, "availability.times": { $elemMatch: { start_time: { $lte: shift.start_time }, end_time: { $gte: shift.end_time } } }}).toArray());
-      }
-      return users;
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  //  static schedule = async () => {
+  //   try {
+  //     let openShifts = await shiftsCollection.find({"status": "open"}).toArray();
+  //     let users = new Array();
+  //     for (const shift of openShifts) {
+  //       users.push(await usersCollection.find({"group": shift.group, "availability.times": { $elemMatch: { start_time: { $lte: shift.start_time }, end_time: { $gte: shift.end_time } } }}).toArray());
+  //     }
+  //     return users;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
 }
 

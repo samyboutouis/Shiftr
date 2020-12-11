@@ -7,6 +7,7 @@ import MonthCalendar from './month.js';
 import WeekCalendar from './week.js'
 import DayCalendar from './day.js'
 import axios from 'axios';
+import CreateSchedule from './create'
 
 class ScheduleIndex extends Component {
   constructor(props){
@@ -103,7 +104,8 @@ class ScheduleIndex extends Component {
                 {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
             </div>
           </div>
-            {this.drawShifts()}
+            {/* {this.drawShifts()} */}
+            {/* <CreateSchedule /> */}
         </div>
     )
   }
