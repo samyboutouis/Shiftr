@@ -115,7 +115,7 @@ code {
 }
 
 .shift-pool {
-  
+
 }
 
 .open-shift-time {
@@ -192,11 +192,11 @@ code {
   border-collapse: collapse;
   margin-right: 120px;
 }
-.day-week-month  /* the indiv tabs */ {
-  border: none !important;
-  outline: none !important;
-  width: 6em !important;
-  padding: 14px 16px !important;
+input[type="button"]  /* the indiv tabs */ {
+  border: none ;
+  outline: none ;
+  width: 6em ;
+  padding: 14px 16px ;
   font-size: 17px;
   background-image: radial-gradient(
     104.49% 573.2% at -9.55% 10.53%,
@@ -204,16 +204,18 @@ code {
     rgba(161, 149, 247, 0.5) 52.6%,
     rgba(242, 166, 255, 0.5) 100%
   ) ;
-  background-color: transparent !important;
+  color: white;
+
 }
 
-.day-week-month.active {
+input[type="button"].active {
   background-image: radial-gradient(
     104.49% 573.2% at -9.55% 10.53%,
     #f5737b 12.98%,
     #a195f7 52.6%,
     #f2a6ff 100%
-  ) !important;
+  ) ;
+  color: white;
 }
 
 
