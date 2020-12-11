@@ -28,6 +28,11 @@ router.get('/find_one/:_id', (req, res) => {
   user.then(result => { res.json(result) });
 })
 
+//find user by email
+router.get('/find_email/:email', (req, res) => {
+  let user = User.findByEmail(req.params.email);
+  user.then(res.send(true)).catch(err => {res.send(false)});
+});
 
 //delete one user
 router.delete('/delete/:_id', (req, res) => {

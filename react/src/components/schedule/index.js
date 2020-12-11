@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import ScheduleKey from './key';
 import Shift from './shift';
 import DayWeekMonth from './dayWeekMonth';
 import * as Constants from '../../constants';
-
-
-import OpenShifts from '../shift/open';
-import ShiftIndex from '../shift/index';
-
+import MonthCalendar from './month.js';
+import WeekCalendar from './week.js'
+import DayCalendar from './day.js'
+import axios from 'axios';
+import CreateSchedule from './create'
 
 class ScheduleIndex extends Component {
   constructor(props){
@@ -27,7 +26,6 @@ class ScheduleIndex extends Component {
   //TODO: get shifts for specific user
   getShifts = () => {
     let self = this;
-    console.log('making web call');
     axios.get("http://localhost:8080/shifts/find_by_user/sl616").then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
@@ -58,15 +56,15 @@ class ScheduleIndex extends Component {
     if (this.state.navState === "Week"){
       console.log("week")
       return <div>
-          <OpenShifts />
+          <WeekCalendar />
         </div>
     }else if(this.state.navState === "Day"){
       return <div>
-          <ShiftIndex />
+          <DayCalendar/>
         </div>
     }else if(this.state.navState === "Month"){
       return <div>
-          <ShiftIndex />
+        <MonthCalendar />
         </div>
     }
   }
@@ -87,25 +85,26 @@ class ScheduleIndex extends Component {
         <div>
           <DayWeekMonth setNavState={this.setNavState} navState={this.state.navState} />
           <br/>
+          <div > {/* the body of the page under the toggle */}
+            <div className="schedule-calendar"> {/* calendar */}
 
-          <div> {/* calendar */}
+              {this.drawCalendar()}
+            </div>
 
-            {this.drawCalendar()}
+            <div className="key"> {/* legend*/}
+
+              <ScheduleKey groups={[
+                {group: 'The Link', color: Constants.RED},
+                {group: 'Lilly Library', color: Constants.PINK},
+                {group: 'Co-Lab', color: Constants.DARKBLUE},
+                {group: 'East Printers', color: Constants.PEACH},
+                {group: 'Central Printers', color: Constants.LIGHTBLUE},
+                {group: 'West Printers', color: Constants.DARKPURPLE},
+                {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
+            </div>
           </div>
-
-          <div> {/* legend*/}
-
-            <ScheduleKey groups={[
-              {group: 'The Link', color: Constants.RED},
-              {group: 'Lilly Library', color: Constants.PINK},
-              {group: 'Co-Lab', color: Constants.DARKBLUE},
-              {group: 'East Printers', color: Constants.PEACH},
-              {group: 'Central Printers', color: Constants.LIGHTBLUE},
-              {group: 'West Printers', color: Constants.DARKPURPLE},
-              {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
-          </div>
-
-            {this.drawShifts()}
+            {/* {this.drawShifts()} */}
+            {/* <CreateSchedule /> */}
         </div>
     )
   }

@@ -5,26 +5,30 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-
+import Home from './home';
+import OauthConsume from './oauth/consume';
+import UserForm from './user/form'
 
 class AppRouter extends Component {
-
   render(){
     return (
       <div>
         <Router>
           <div>
-            {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
             <Switch>
+
               <Route path="/saml/consume">
                 <h1>Works</h1>
               </Route>
-              
-              {/* note that due to control flow the root path is at the bottom by design */}
-              {/* <Route path="/">
+
+              <Route path="/create/user">
+                <UserForm reqType="create"/>
+              </Route>
+
+              <Route path="/">
                 <Home />
-              </Route> */}
+              </Route> 
+              
             </Switch>
           </div>
         </Router>
@@ -34,3 +38,4 @@ class AppRouter extends Component {
 }
 
 export default AppRouter;
+

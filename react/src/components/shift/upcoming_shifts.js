@@ -3,9 +3,9 @@ import ShiftShow from './show'
 import ShiftForm from './form'
 import axios from 'axios';
 
-class ShiftIndex extends Component {
+class UpcomingShifts extends Component {
   constructor(props){
-    super()
+    super(props)
     this.state= {shifts: false, selectedShift: false}
   }
 
@@ -26,31 +26,33 @@ class ShiftIndex extends Component {
 
   drawShifts = () => {
     if(this.state.shifts && !this.state.selectedShift){
-      return <div>
-        {this.mapShifts()}
-        <ShiftForm getShifts={this.getShifts} clearSelectedShift={this.clearSelectedShift} reqType="create" />
-      </div>
+      return (
+        <div>
+          {this.mapShifts()}
+          <ShiftForm getShifts={this.getShifts} clearSelectedShift={this.clearSelectedShift} reqType="create" />
+        </div>
+      );
     }
   }
 
   getShifts = () => {
     let self = this;
     axios.get("http://localhost:8080/shifts").then( (response) => {
-      self.setState({shifts: response.data})
+    self.setState({shifts: response.data})
     }).catch( (error) => {
-      console.log(error)
+    console.log(error)
     });
   }
 
   mapShifts = () => {
     let shifts = this.state.shifts
-    return shifts.map((shift,index) =>
+      return shifts.map((shift,index) =>
       <div key={index}>
         <p className='upcoming-shift-time'>{shift.start_time} - {shift.end_time}</p>
         <p className='upcoming-shift-text'> {shift.group} | @{shift.location}</p>
-        <button className='upcoming-shift-button' onClick={this.selectShift.bind(this, shift)}>Select Shift</button>      
+        <button className='upcoming-shift-button' onClick={this.selectShift.bind(this, shift)}>Select Shift</button> 
       </div>
-    )
+    );
   }
 
   selectShift = (shift) => {
@@ -59,13 +61,13 @@ class ShiftIndex extends Component {
 
   render(){
     return(
-      <div>
-        {this.drawShifts()}
-        {this.drawSelectedShift()}
-
+      <div className="upcoming-shift">
+          <p className="upcoming-shift-title">Your upcoming shifts</p>
+          {this.drawShifts()}
+          {this.drawSelectedShift()}
       </div>
-    )
+    );
   }
 }
 
-export default ShiftIndex
+export default UpcomingShifts

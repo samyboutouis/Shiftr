@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-class Navbar extends Component {
+
+class Nbar extends Component {
   constructor(props){
     super()
     this.state = { currentPage: 'Home'}
@@ -10,16 +11,46 @@ class Navbar extends Component {
   }
 
   userBar = () => {
-    {/*if(this.state.users && !this.state.selectedUser){... need to make this happen if person is user vs supervisor vs admin*/}
-    return (<div>
-        <ul id="nav">
-          <li onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</li>
-          <li onClick={this.changeCurrentPage.bind(this, "Availability")}>Availability</li>
-          <li onClick={this.changeCurrentPage.bind(this, "Schedule")}>Schedule</li>
-          <li onClick={this.changeCurrentPage.bind(this, "Home")}>Home</li>
-          <li className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</li>
-        </ul>
-      </div>)
+    return (
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <p className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</p>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <div id="navbar" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")}>
+              Home
+            </a>
+            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")}>
+              Schedule
+            </a>
+            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")}>
+              Availability
+            </a>
+            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")}>
+              Hours
+            </a>
+          </div>
+        </div>
+      </nav>
+    // <Navbar expand="lg">
+    //   <Navbar.Brand className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</Navbar.Brand>
+    //   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    //   <Navbar.Collapse id="responsive-navbar-nav">
+    //   <Nav className="ml-auto">
+    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Home")}>Home</Nav.Link>
+    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Schedule")}>Schedule</Nav.Link>
+    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Availability")}>Availability</Nav.Link>
+    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</Nav.Link>
+    //   </Nav>
+    //   </Navbar.Collapse>
+    // </Navbar>
+    );
   }
 
   render(){
@@ -27,8 +58,8 @@ class Navbar extends Component {
       <div>
         {this.userBar()}
       </div>
-    )
+    );
   }
 }
 
-export default Navbar;
+export default Nbar;

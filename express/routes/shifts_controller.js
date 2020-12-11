@@ -55,9 +55,4 @@ router.put('/update/:_id', (req, res) => {
   })
 })
 
-router.get('/schedule', (req, res) => {
-  let shifts = Shift.schedule();
-  shifts.then(result => { res.json(result) });
-})
-
 module.exports = router
