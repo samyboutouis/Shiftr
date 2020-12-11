@@ -22,19 +22,19 @@ class Nbar extends Component {
           </a>
         </div>
         <div id="navbar" class="navbar-menu">
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <p onClick={this.changeCurrentPage.bind(this, "Home")}>Home</p>
-            </div>
-            <div class="navbar-item">
-              <p onClick={this.changeCurrentPage.bind(this, "Schedule")}>Schedule</p>
-            </div>
-            <div class="navbar-item">
-              <p onClick={this.changeCurrentPage.bind(this, "Availability")}>Availability</p>
-            </div>
-            <div class="navbar-item">
-              <p onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</p>
-            </div>
+          <div class="navbar-start">
+            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")}>
+              Home
+            </a>
+            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")}>
+              Schedule
+            </a>
+            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")}>
+              Availability
+            </a>
+            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")}>
+              Hours
+            </a>
           </div>
         </div>
       </nav>
