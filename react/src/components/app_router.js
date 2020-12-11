@@ -1,13 +1,12 @@
 import React ,{Component} from "react";
-
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
 import Home from './home';
-import OauthConsume from './oauth/consume';
 import UserForm from './user/form'
+import SamlConsume from './saml/consume'
 
 class AppRouter extends Component {
   render(){
@@ -18,7 +17,7 @@ class AppRouter extends Component {
             <Switch>
 
               <Route path="/saml/consume">
-                <h1>Works</h1>
+                <SamlConsume />
               </Route>
 
               <Route path="/create/user">
@@ -28,7 +27,7 @@ class AppRouter extends Component {
               <Route path="/">
                 <Home />
               </Route> 
-              
+
             </Switch>
           </div>
         </Router>

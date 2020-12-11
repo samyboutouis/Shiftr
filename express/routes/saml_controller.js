@@ -6,12 +6,12 @@ var jwt = require('jsonwebtoken');
 var cookie = require('cookie');
 
 //configure identity provider
-var idp_options = {
+const idp_options = {
   sso_login_url: "https://shib.oit.duke.edu/idp/profile/SAML2/Unsolicited/SSO?providerId=https://shiftr.colab.duke.edu",
   sso_logout_url: "https://oauth.oit.duke.edu/oidc/logout.jsp",
   certificates: [fs.readFileSync("saml/idp_cert.crt").toString()]
 };
-var idp = new saml2.IdentityProvider(idp_options);
+const idp = new saml2.IdentityProvider(idp_options);
 
 
 // Create service provider
@@ -29,6 +29,13 @@ router.use(function timeLog (req, res, next) {
   next()
 });
 
+router.get('/attributes', (req,res) => { 
+  let token = req.cookies["shiftr-saml"]
+  token = jwt.verify(attrs, "make-a-real-secret");
+  res.json(token)
+});
+
+//consume SAML respone from the DUKE IDP
 router.post('/consume', (req, res) => {
   const options = {request_body: req.body};
   sp.post_assert(idp, options, function(err, saml_response) {
@@ -39,13 +46,19 @@ router.post('/consume', (req, res) => {
     const token = jwt.sign(attributes, "make-a-real-secret");
 
     // Set a new secure cookie for future auth
-    res.setHeader('Set-Cookie', cookie.serialize('saml', token, {
+    res.setHeader('Set-Cookie', cookie.serialize('shiftr-saml', token, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7 // 1 week
     }));
  
     res.redirect('http://localhost:3000/saml/consume');
   });
+});
+
+
+router.get('/logout', (req,res) => {
+  res.clearCookie("shiftr-saml");
+  res.redirect('https://shib.oit.duke.edu/cgi-bin/logout.pl');
 });
 
 mapAttrs = (attrs) => {

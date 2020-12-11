@@ -43,10 +43,7 @@ db.connect(() => {
   const users = require('./routes/users_controller')
   app.use('/users', users)
 
-  //bind the oauth controller
-  const oauth = require('./routes/oauth_controller')
-  app.use('/oauth', oauth)
-
+  //bind the saml controller
   const saml = require('./routes/saml_controller')
   app.use('/saml', saml)
 

@@ -10,12 +10,23 @@ class Home extends Component {
     this.state = {navState: "Home"}
   }
 
+  samlLogin = () => {
+    let url = "https://shib.oit.duke.edu/idp/profile/SAML2/Unsolicited/SSO?providerId=https://shiftr.colab.duke.edu"
+    window.location.href = url;
+  }
+
+  samlLogout = () => {
+    localStorage.removeItem("loggedIn");
+    let url = "http://localhost:8080/saml/logout"
+    window.location.href = url;
+  }
+
   setNavState = (newPage) => {
     this.setState({navState: newPage})
   }
 
   showHome = () => {
-    if (localStorage.getItem('accessToken') && localStorage.getItem('idToken')){
+    if (localStorage.getItem('loggedIn')){
       if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
         return <EmployeeHome />
       }else if(this.state.navState === "Availability"){
@@ -26,16 +37,19 @@ class Home extends Component {
         return <HoursIndex /> //change these
       }
     }else{
-      return <h1>boo</h1>
+      return <div>
+        <button onClick={this.samlLogin}>Login</button>
+      </div>
     }
   }
 
   render(){
     return(
       <div>
-        <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+        {/* <Nbar setNavState={this.setNavState} navState={this.state.navState} /> */}
         <br/>
-        {this.showHome()}
+          {this.showHome()}
+          <button onClick={this.samlLogout}>Logout</button>
       </div>
       );
   }
