@@ -2,54 +2,55 @@ import React, {Component} from 'react';
 
 class Nbar extends Component {
   constructor(props){
-    super()
-    this.state = { currentPage: 'Home'}
+    super();
+    this.toggleBurger = this.toggleBurger.bind(this);
   }
 
   changeCurrentPage = (newPage) => {
     this.props.setNavState(newPage)
   }
 
+  toggleBurger = (e) => {
+    let classes = 'navbar-burger';
+    let els = document.getElementsByClassName('navbar-burger is-active');
+    if(els){
+      console.log(els);
+      while (els[0]) {
+        els[0].classList.remove('is-active')
+      }
+    }
+    e.target.className = classes.replace('navbar-burger','navbar-burger is-active');
+  }
+
   userBar = () => {
     return (
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
+      <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div className="navbar-brand">
           <p className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</p>
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <p role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar" onClick={(e) => (this.toggleBurger(e))}>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
-          </a>
+          </p>
         </div>
-        <div id="navbar" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")}>
+        <div id="navbar" className="navbar-menu">
+          <div className="mavbar-start"></div>
+          <div className="navbar-end">
+            <p className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")}>
               Home
-            </a>
-            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")}>
+            </p>
+            <p className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")}>
               Schedule
-            </a>
-            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")}>
+            </p>
+            <p className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")}>
               Availability
-            </a>
-            <a class="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")}>
+            </p>
+            <p className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")}>
               Hours
-            </a>
+            </p>
           </div>
         </div>
       </nav>
-    // <Navbar expand="lg">
-    //   <Navbar.Brand className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</Navbar.Brand>
-    //   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-    //   <Navbar.Collapse id="responsive-navbar-nav">
-    //   <Nav className="ml-auto">
-    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Home")}>Home</Nav.Link>
-    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Schedule")}>Schedule</Nav.Link>
-    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Availability")}>Availability</Nav.Link>
-    //     <Nav.Link onClick={this.changeCurrentPage.bind(this, "Hours")}>Hours</Nav.Link>
-    //   </Nav>
-    //   </Navbar.Collapse>
-    // </Navbar>
     );
   }
 
