@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class OauthLogin extends Component {
+class SamlLogin extends Component {
     constructor(props){
         super()
         this.state = {}
@@ -20,4 +20,4 @@ class OauthLogin extends Component {
     }
 }
 
-export default OauthLogin;
+export default SamlLogin;

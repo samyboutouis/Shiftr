@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+
 // TODO consider doing something like this to handle global host url
 // in addition to adding auth to all you requests by default
 // axios.defaults.baseURL = process.env.REACT_APP_DISCOVER_API_HOST 
