@@ -5,6 +5,7 @@ import OauthLogin from "./oauth/login"
 import HoursIndex from './hours/index'
 import ScheduleIndex from './schedule/index'
 import EmployeeHome from './user/employee_home'
+import CalIndex from './availability/indexTwo'
 
 class Home extends Component {
   constructor(props){

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import LocationKey from './LocationKey'
 import PrefKey from './PrefKey'
 import * as Constants from '../../constants'
-
+import ShiftForm from './form'
 class AvailabilityIndex extends Component {
   constructor(props){
     super();
@@ -10,7 +10,6 @@ class AvailabilityIndex extends Component {
 
   drawCalendar = () => {
     return <div>
-        <div className="gradient"></div>
         <table className="days-of-week">
             <thead>
                 <tr className="week">
@@ -50,7 +49,10 @@ class AvailabilityIndex extends Component {
             {group: 'Somewhat Preferred', color: Constants.YELLOW},
             {group: 'Least Preferred', color: Constants.LIGHTORANGE},
             {group: 'Unavailable', color: Constants.DARKRED}]}/>
+        <ShiftForm />
     </div>
+
+    
   }
 
   render(){

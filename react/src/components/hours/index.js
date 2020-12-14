@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+
 class HoursIndex extends Component {
     constructor(props){
       super();
@@ -8,6 +9,7 @@ class HoursIndex extends Component {
            {id: '12/12/20', clockIn: '8:00 am', clockOut: '11:00 am' , rHours: '3',otHours: '1', totHours: '1'  },
            {id: '12/13/20', clockIn: '8:00 am', clockOut: '12:00 pm' , rHours: '3', otHours: '1',totHours: '1' },
            {id: '12/14/20', clockIn: '8:00 am' , clockOut: '11:00 am' , rHours: '3', otHours: '0',totHours: '1'  },
+           {id: '12/15/20', clockIn: '8:00 am', clockOut: '11:00 am' , rHours: '3', otHours:  '0',totHours: '1'},
            {id: '12/15/20', clockIn: '8:00 am', clockOut: '11:00 am' , rHours: '3', otHours:  '0',totHours: '1'}
         ]
      }
