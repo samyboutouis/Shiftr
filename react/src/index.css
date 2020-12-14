@@ -63,7 +63,6 @@ code {
   margin-right: 10%;
   margin-top: 40px;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -100,6 +99,26 @@ code {
 .clock-text {
   padding-left: 10px;
   font-size: 25px;
+}
+
+.shift-time {
+  font-size: 38px;
+  margin-left: 15px;
+}
+
+.pm {
+  font-size: 26px;
+  color: #888888;
+}
+
+.shift-location {
+  font-size: 20px;
+  margin-left: 15px;
+}
+
+.shift-role {
+  font-size: 20px;
+  margin-left: 15px;
 }
 
 .upcoming-shift {
