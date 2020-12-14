@@ -194,7 +194,7 @@ code {
   border-collapse: collapse;
   margin-right: 120px;
 }
-input[type="button"]  /* the indiv tabs */ {
+.day-week-month  /* the indiv tabs input[type="button"]*/ {
   border: none ;
   outline: none ;
   width: 6em ;
@@ -210,7 +210,7 @@ input[type="button"]  /* the indiv tabs */ {
 
 }
 
-input[type="button"].active {
+.day-week-month.active  /*input[type="button"].active*/ {
   background-image: radial-gradient(
     104.49% 573.2% at -9.55% 10.53%,
     #f5737b 12.98%,
@@ -219,6 +219,7 @@ input[type="button"].active {
   ) ;
   color: white;
 }
+
 
 
 
