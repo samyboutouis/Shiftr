@@ -4,7 +4,7 @@ import OpenShifts from './open'
 
 class ShiftPool extends Component {
   constructor(props){
-      super(props);
+      super();
   }
 
   render() {

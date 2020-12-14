@@ -48,9 +48,8 @@ class Home extends Component {
     return(
       <div>
         <Nbar setNavState={this.setNavState} navState={this.state.navState} />
-        <br/>
-          {this.showHome()}
-          <button onClick={this.samlLogout}>Logout</button>
+        {this.showHome()}
+        <button onClick={this.samlLogout}>Logout</button>
       </div>
       );
   }

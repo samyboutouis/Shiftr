@@ -36,18 +36,18 @@ class Nbar extends Component {
         <div id="navbar" className="navbar-menu">
           <div className="mavbar-start"></div>
           <div className="navbar-end">
-            <p className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")}>
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")} href="#">
               Home
-            </p>
-            <p className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")}>
+            </a>
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")} href="#">
               Schedule
-            </p>
-            <p className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")}>
+            </a>
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")} href="#">
               Availability
-            </p>
-            <p className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")}>
+            </a>
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")} href="#">
               Hours
-            </p>
+            </a>
           </div>
         </div>
       </nav>
