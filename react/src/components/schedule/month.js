@@ -9,8 +9,8 @@ import isSameDay from "date-fns/isSameDay";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import subMonths from "date-fns/subMonths";
-
-
+import getShifts from "./showMonth.js";
+import ShowMonth from './showMonth.js'
 
 const MonthCalendar = () => {
 /* set the forward and back 1 month fxn */
@@ -51,6 +51,11 @@ for (let i = 0; i < 7; i++) {
    return <div className="days row">{days}</div>;
 };
 /* calendar cells */
+
+const shiftAnalysis = 'dd MM'
+
+
+
 const cells = () => {
 const monthStart = startOfMonth(currentDate);
 const monthEnd = endOfMonth(monthStart);
@@ -73,7 +78,10 @@ days.push(
        value={selectedDate}
        onClick={onDateClick}
        >
-       <span className="number">{formattedDate}</span>
+
+       <div className="number">{formattedDate}
+          <div><ShowMonth day={day}/> </div>
+       </div>
      </div>
      );
    day = addDays(day, 1);
@@ -96,6 +104,8 @@ const prevMonth = () => {
 const onDateClick = day => {
 setSelectedDate(day);
 }
+
+
 
 return (
    <div className="calendar">

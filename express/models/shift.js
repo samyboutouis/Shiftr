@@ -66,12 +66,23 @@ class Shift {
     }
   }
 
+  static findByTime = async (start, end)  => {
+    try {
+      return await shiftsCollection.find({start_time: {$gte: start}, end_time: {$lte: end}}).toArray();
+      // return new Shift(shift)
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
   static findByUser = async (netId)  => {
     try {
       return await shiftsCollection.find({"employee.netid": netId}).toArray();
     } catch (err) {
       console.log(err);
-    } 
+    }
   }
 
   //  static schedule = async () => {

@@ -7,7 +7,7 @@ import MonthCalendar from './month.js';
 import WeekCalendar from './week.js'
 import DayCalendar from './day.js'
 import axios from 'axios';
-
+import ShiftIndex from '../shift/index.js'
 class ScheduleIndex extends Component {
   constructor(props){
     super();
@@ -69,6 +69,7 @@ class ScheduleIndex extends Component {
             <div className="schedule-calendar"> {/* calendar */}
 
               {this.drawCalendar()}
+              <ShiftIndex/>
             </div>
 
             <div className="key"> {/* legend*/}

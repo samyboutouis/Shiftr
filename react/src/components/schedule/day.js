@@ -10,7 +10,7 @@ const DayCalendar = () => {
 const [currentDate, setCurrentDate] = useState(new Date());
 /* month header */
 const header = () => {
-const dateFormat = "MMMM yyyy";
+const dateFormat = "dd MMMM yyyy";
 return (
    <div className="header row flex-middle">
       <div className="column col-start">
