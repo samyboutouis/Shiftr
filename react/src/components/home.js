@@ -31,28 +31,28 @@ class Home extends Component {
       if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
         return (
           <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
             <EmployeeHome />
           </div>
         );
       }else if(this.state.navState === "Availability"){
         return (
           <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
             <AvailabilityIndex />
           </div>
         );
       }else if(this.state.navState === "Schedule"){
         return (
           <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
             <ScheduleIndex />
           </div>
         );
       }else if(this.state.navState === "Hours") {
         return (
           <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
             <HoursIndex />
           </div>
         );
@@ -68,7 +68,6 @@ class Home extends Component {
     return(
       <div>
         {this.showHome()}
-        <button onClick={this.samlLogout}>Logout</button>
       </div>
       );
   }

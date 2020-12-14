@@ -42,6 +42,9 @@ class Nbar extends Component {
             <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")} href="#">
               Hours
             </a>
+            <a className="navbar-item" onClick={this.props.logout} href="#">
+              Logout
+            </a>
           </div>
         </div>
       </nav>
