@@ -21,13 +21,13 @@ class Nbar extends Component {
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <p className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</p>
-          <p role="button" className={this.state.active ? 'navbar-burger is-active': 'navbar-burger'} onClick={this.toggleBurger} aria-label="menu" aria-expanded="false" data-target="navbar">
+          <a role="button" className={this.state.active ? 'navbar-burger is-active': 'navbar-burger'} onClick={this.toggleBurger} aria-label="menu" aria-expanded="false" data-target="navbar">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
-          </p>
+          </a>
         </div>
-        <div id="navbar" className="navbar-menu">
+        <div id="navbar" className="navbar-menu" className={this.state.active ? 'navbar-menu is-active': 'navbar-menu'} onClick={this.toggleBurger}>
           <div className="mavbar-start"></div>
           <div className="navbar-end">
             <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")} href="#">
