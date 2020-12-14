@@ -5,7 +5,7 @@ const usersCollection = db.get().collection('users')
 const schedulesCollection = db.get().collection('schedules')
 // const { usersCollection, shiftsCollection } = await cloneCollections();
 
-async function cloneCollections() {
+async function cloneCollections(group) {
   try {
     await db.get().collection('shifts').aggregate([{ $match: {group: group, status: "open"} }, { $out: "tempShifts" }]).toArray();
     await db.get().collection('users').aggregate([{ $match: {group: group} }, { $sort: {rank: 1} }, { $out: "tempUsers" }]).toArray();
@@ -23,7 +23,7 @@ exports.temp_shifts = async function(group) {
   }
 }
 
-exports.temp_users = async function(group) {
+exports.temp_users = async function() {
   try {
     let tempUsersCollection = db.get().collection('tempUsers');
     return await tempUsersCollection.find().toArray();
@@ -66,7 +66,7 @@ exports.all_shifts = async function(group) {
   }
 
   exports.assign_shifts = async function(group) {
-    await cloneCollections();
+    await cloneCollections(group);
     let tempShiftsCollection = db.get().collection('tempShifts');
 
     try {

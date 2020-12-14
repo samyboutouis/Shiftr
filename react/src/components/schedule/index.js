@@ -1,21 +1,18 @@
 import React, {Component} from 'react';
 import ScheduleKey from './key';
-import Shift from './shift';
+import GeneratedSchedule from './generator/schedule';
 import DayWeekMonth from './dayWeekMonth';
 import * as Constants from '../../constants';
 import MonthCalendar from './month.js';
 import WeekCalendar from './week.js'
 import DayCalendar from './day.js'
+import BuildSchedule from './generator/build'
 import axios from 'axios';
 
 class ScheduleIndex extends Component {
   constructor(props){
     super();
-    this.state= {shifts: false, selectedShift: false, navState: "Week" }
-  }
-
-  setNavState = (newPage) => {
-    this.setState({navState: newPage})
+    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false }
   }
 
   componentDidMount = () => {
@@ -30,6 +27,36 @@ class ScheduleIndex extends Component {
     }).catch( (error) => {
       console.log(error)
     });
+  }
+
+  displayCalendar = () => {
+    if(!this.state.buildSchedule){
+      return(
+        <div>
+          <DayWeekMonth setNavState={this.setNavState} navState={this.state.navState} />
+          <br/>
+          <div > {/* the body of the page under the toggle */}
+            <div className="schedule-calendar"> {/* calendar */}
+              {this.drawCalendar()}
+            </div>
+            <div className="key"> {/* legend*/}
+              <ScheduleKey groups={[
+                {group: 'The Link', color: Constants.RED},
+                {group: 'Lilly Library', color: Constants.PINK},
+                {group: 'Co-Lab', color: Constants.DARKBLUE},
+                {group: 'East Printers', color: Constants.PEACH},
+                {group: 'Central Printers', color: Constants.LIGHTBLUE},
+                {group: 'West Printers', color: Constants.DARKPURPLE},
+                {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  setNavState = (newPage) => {
+    this.setState({navState: newPage})
   }
 
   drawCalendar = () => {
@@ -49,41 +76,32 @@ class ScheduleIndex extends Component {
     }
   }
 
-  drawShifts = () => {
-    if(this.state.shifts){
-      let shifts = this.state.shifts
-      return shifts.map((shift,index) =>
-        <div key={index}>
-            <Shift shift={shift} />
-        </div>
-      )
+  buildSchedule = () => {
+    if(this.state.buildSchedule === true){
+      return <div>
+        <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+        <BuildSchedule toggleBuildSchedule={this.toggleBuildSchedule} />
+      </div>
     }
+    else if(this.state.buildSchedule) {
+      return <div>
+          <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+          <GeneratedSchedule shifts = {this.state.buildSchedule} />
+        </div>
+    } else {
+      return <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>      
+    }
+  }
+
+  toggleBuildSchedule = (value) => {
+    this.setState({ buildSchedule: value})
   }
 
   render(){
     return(
         <div>
-          <DayWeekMonth setNavState={this.setNavState} navState={this.state.navState} />
-          <br/>
-          <div > {/* the body of the page under the toggle */}
-            <div className="schedule-calendar"> {/* calendar */}
-
-              {this.drawCalendar()}
-            </div>
-
-            <div className="key"> {/* legend*/}
-
-              <ScheduleKey groups={[
-                {group: 'The Link', color: Constants.RED},
-                {group: 'Lilly Library', color: Constants.PINK},
-                {group: 'Co-Lab', color: Constants.DARKBLUE},
-                {group: 'East Printers', color: Constants.PEACH},
-                {group: 'Central Printers', color: Constants.LIGHTBLUE},
-                {group: 'West Printers', color: Constants.DARKPURPLE},
-                {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
-            </div>
-          </div>
-            {/* {this.drawShifts()} */}
+          {this.displayCalendar()}
+          {this.buildSchedule()}
         </div>
     )
   }
