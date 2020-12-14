@@ -11,7 +11,7 @@ class EmployeeHome extends Component {
 
   render() {
     return (
-      <div className="tile is-ancestor">
+      <div className="tile is-gapless is-ancestor">
         <div className="tile is-7 is-vertical is-parent">
           <div className="tile is-child">
             <CurrentShift />

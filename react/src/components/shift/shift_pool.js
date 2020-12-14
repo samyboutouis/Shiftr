@@ -9,9 +9,11 @@ class ShiftPool extends Component {
 
   render() {
     return (
-      <div className="shift-pool">
-        <p style={{textAlign: 'left', padding: '0 0 0 1em', fontSize: '2.5em', fontFamily:'Roboto', fontWeight:'normal'}}>
-        <img src={Pool} style={{height:'1em', margin: '0 .5em 0 2em'}} alt="Pool"/> Shift Pool </p>
+      <div className='shift-pool'>
+        <p className="shift-pool-title">
+          <img src={Pool} className='shift-pool-image' alt="Pool"/> 
+          Shift Pool 
+        </p>
         {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
         <div>
           <OpenShifts />
