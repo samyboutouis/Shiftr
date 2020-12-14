@@ -30,7 +30,7 @@ class CurrentShift extends Component {
     return (
       <div className="background-pretty-gradient">
         <div>
-          <p className="greeting">Hello, {this.state.name}</p>
+          <p className="greeting">Hello, {this.state.name}.</p>
           <p className="landing-box">{landing}</p>
         </div>
         <ShiftToday numOfShifts={this.state.shiftsToday}/>

@@ -29,13 +29,33 @@ class Home extends Component {
   showHome = () => {
     if (localStorage.getItem('loggedIn')){
       if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
-        return <EmployeeHome />
+        return (
+          <div>
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+            <EmployeeHome />
+          </div>
+        );
       }else if(this.state.navState === "Availability"){
-        return <AvailabilityIndex />
+        return (
+          <div>
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+            <AvailabilityIndex />
+          </div>
+        );
       }else if(this.state.navState === "Schedule"){
-        return <ScheduleIndex /> 
+        return (
+          <div>
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+            <ScheduleIndex />
+          </div>
+        );
       }else if(this.state.navState === "Hours") {
-        return <HoursIndex /> //change these
+        return (
+          <div>
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} />
+            <HoursIndex />
+          </div>
+        );
       }
     }else{
       return <div>
@@ -47,7 +67,6 @@ class Home extends Component {
   render(){
     return(
       <div>
-        <Nbar setNavState={this.setNavState} navState={this.state.navState} />
         {this.showHome()}
         <button onClick={this.samlLogout}>Logout</button>
       </div>
