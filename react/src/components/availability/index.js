@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import LocationKey from './LocationKey'
-import PrefKey from './PrefKey'
+import Key from './Key'
 import * as Constants from '../../constants'
-import ShiftForm from './form'
+import AvailabilityForm from './form'
+
 class AvailabilityIndex extends Component {
   constructor(props){
     super();
@@ -34,8 +34,8 @@ class AvailabilityIndex extends Component {
                 </tr>
             </tbody>
         </table>
-        <h3>Location: </h3>
-        <LocationKey groups={[
+        <div class = "ml-5">Location: </div>
+        <Key groups={[
             {group: 'The Link', color: Constants.RED},
             {group: 'Lilly Library', color: Constants.PINK},
             {group: 'Co-Lab', color: Constants.DARKBLUE},
@@ -43,13 +43,13 @@ class AvailabilityIndex extends Component {
             {group: 'Central Printers', color: Constants.LIGHTBLUE},
             {group: 'West Printers', color: Constants.DARKPURPLE},
             {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
-        <h3>Preference: </h3>
-        <PrefKey groups={[
+        <div class = "ml-5">Preference: </div>
+        <Key groups={[
             {group: 'Most Preferred', color: Constants.GREEN},
             {group: 'Somewhat Preferred', color: Constants.YELLOW},
             {group: 'Least Preferred', color: Constants.LIGHTORANGE},
             {group: 'Unavailable', color: Constants.DARKRED}]}/>
-        <ShiftForm />
+        <AvailabilityForm />
     </div>
 
     

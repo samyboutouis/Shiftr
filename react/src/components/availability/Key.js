@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class PrefKey extends Component {
+class Key extends Component {
   constructor(props){
     super();
   }
@@ -16,7 +16,7 @@ class PrefKey extends Component {
 
   render(){
     return(
-        <div style={{paddingRight: '10px'}}>
+        <div className = "key-margin" style={{paddingRight: '10px'}}>
          {this.mapGroups()}
         </div>
     )
@@ -24,4 +24,4 @@ class PrefKey extends Component {
 }
 
 
-export default PrefKey
+export default Key
