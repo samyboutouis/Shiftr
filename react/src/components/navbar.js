@@ -2,32 +2,26 @@ import React, {Component} from 'react';
 
 class Nbar extends Component {
   constructor(props){
-    super();
-    this.toggleBurger = this.toggleBurger.bind(this);
+    super(props);
+    this.toggleBurger= this.toggleBurger.bind(this);
+    this.state = {active: false};
   }
 
   changeCurrentPage = (newPage) => {
     this.props.setNavState(newPage)
   }
 
-  toggleBurger = (e) => {
-    let classes = 'navbar-burger';
-    let els = document.getElementsByClassName('navbar-burger is-active');
-    if(els){
-      console.log(els);
-      while (els[0]) {
-        els[0].classList.remove('is-active')
-      }
-    }
-    e.target.className = classes.replace('navbar-burger','navbar-burger is-active');
-  }
+  toggleBurger() {
+    const currentState = this.state.active;
+    this.setState({ active: !currentState });
+  };
 
   userBar = () => {
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <p className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</p>
-          <p role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar" onClick={(e) => (this.toggleBurger(e))}>
+          <p role="button" className={this.state.active ? 'navbar-burger is-active': 'navbar-burger'} onClick={this.toggleBurger} aria-label="menu" aria-expanded="false" data-target="navbar">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
