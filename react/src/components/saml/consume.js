@@ -1,23 +1,35 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
-//import axios from 'axios';
+import axios from 'axios';
 
 class SamlConsume extends Component {
-    constructor(props){
-        super()
-        localStorage.setItem("loggedIn", true)
-    }
+  constructor(props){
+    super()
+    this.state = ({attributes : null});
+    localStorage.setItem("loggedIn", true)
+  }
+  
+  setAttributes = () => {
+    let self = this;
+    axios.get("http://localhost:8080/saml/attributes").then( (response) => {
+      self.setState({attributes: response.data})
+    }).catch( (error) => {
+      console.log(error)
+    });
+    // localStorage.setItem("netid", this.state.attributes.netid);
+    // console.log(this.state.attributes.netid);
+  }
 
-   
-    returnToHomePage = () => {
-        return <Redirect to='/' />
-    }
+  returnToHomePage = () => {
+    this.setAttributes();
+    return <Redirect to='/' />
+  }
 
-    render(){
-        return (<div>
-            {this.returnToHomePage()}
-        </div>);
-    }
+  render(){
+    return (<div>
+      {this.returnToHomePage()}
+    </div>);
+  }
 }
 
 export default SamlConsume;
