@@ -21,6 +21,7 @@ class Shift extends Component {
         {/* <p>GROUP:   {this.props.shift.group}</p>
         <p>LOCATION:   {this.props.shift.location}</p>
         <p>SUPERVISOR:  {this.props.shift.supervisor.name}, {this.props.shift.supervisor.netid}</p> */}
+        <br/>
       </div>
 
     )
