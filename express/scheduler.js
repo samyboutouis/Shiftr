@@ -96,7 +96,8 @@ exports.all_shifts = async function(group) {
         await usersCollection.insertOne({
           name: faker.name.findName(), 
           netid: faker.random.uuid(), 
-          group: groups[Math.floor(Math.random() * groups.length)],
+          // group: groups[Math.floor(Math.random() * groups.length)],
+          group: "Code+",
           availability: {times: avail_array},
           rank: users
         });
@@ -129,7 +130,7 @@ exports.all_shifts = async function(group) {
         // let user = {name: match.name, netid: match.netid};
         let user = {name: match.name, netid: match.netid, rank: match.rank};
         await splitAndAssignShifts(match, user, count);
-        updateUserAvailability(match);
+        await updateUserAvailability(match);
         matches = await this.all_shifts(group);
         count++;
       }
@@ -142,7 +143,7 @@ exports.all_shifts = async function(group) {
     }
   }
 
- function updateUserAvailability(match) {
+ async function updateUserAvailability(match) {
   // let tempUsersCollection = db.get().collection('tempUsers');
   let shift_start = match.matching_shifts[0].start_time;
   let shift_end = match.matching_shifts[0].end_time;
@@ -155,13 +156,13 @@ exports.all_shifts = async function(group) {
     console.log("shift end: "+shift_end);
     console.log("availability start: "+availability_start);
     console.log("availability end: "+availability_end);
-    tempUsersCollection.updateOne({ "_id": ObjectId(match._id) }, {
+    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id) }, {
     $push: {
     previous_availability: { "start_time": shift_start, "end_time": shift_end },
       "availability.times": { "start_time": shift_end, "end_time": availability_end }
     }
     });
-    tempUsersCollection.updateOne({ "_id": ObjectId(match._id), "availability.times.end_time": availability_end }, { $set: { "availability.times.$.end_time": match.matching_shifts[0].start_time } });
+    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id), "availability.times.end_time": availability_end }, { $set: { "availability.times.$.end_time": match.matching_shifts[0].start_time } });
   }
   else if (availability_start < shift_start) {
     console.log("2");
@@ -169,7 +170,7 @@ exports.all_shifts = async function(group) {
     console.log("shift end: "+shift_end);
     console.log("availability start: "+availability_start);
     console.log("availability end: "+availability_end);
-    tempUsersCollection.updateOne({ "_id": ObjectId(match._id), "availability.times.end_time": availability_end }, {
+    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id), "availability.times.end_time": availability_end }, {
     $push: { previous_availability: { "start_time": shift_start, "end_time": availability_end } },
       $set: { "availability.times.$.end_time": shift_start }
     });
@@ -180,7 +181,7 @@ exports.all_shifts = async function(group) {
     console.log("shift end: "+shift_end);
     console.log("availability start: "+availability_start);
     console.log("availability end: "+availability_end);
-    tempUsersCollection.updateOne({ "_id": ObjectId(match._id), "availability.times.start_time": availability_start }, {
+    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id), "availability.times.start_time": availability_start }, {
     $push: { previous_availability: { "start_time": availability_start, "end_time": shift_end } },
       $set: { "availability.times.$.start_time": shift_end }
     });
@@ -191,7 +192,7 @@ exports.all_shifts = async function(group) {
     console.log("shift end: "+shift_end);
     console.log("availability start: "+availability_start);
     console.log("availability end: "+availability_end);
-    tempUsersCollection.updateOne({ "_id": ObjectId(match._id) }, 
+    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id) }, 
     { $push: { previous_availability: match.availability.times }, 
       $pull: { "availability.times": match.availability.times } });
   }
@@ -206,18 +207,18 @@ async function splitAndAssignShifts(match, user, count) {
   if (availability_start > shift_start && availability_end < shift_end) {
     await splitShift(match.matching_shifts[0], { "end_time": availability_start });
     await splitShift(match.matching_shifts[0], { "start_time": availability_end });
-    assignShift(match, { start_time: availability_start, end_time: availability_end, employee: user, status: "scheduled "+count });
+    await assignShift(match, { start_time: availability_start, end_time: availability_end, employee: user, status: "scheduled "+count });
   }
   else if (availability_start > shift_start) {
     await splitShift(match.matching_shifts[0], { "end_time": availability_start });
-    assignShift(match, { start_time: availability_start, employee: user, status: "scheduled "+count });
+    await assignShift(match, { start_time: availability_start, employee: user, status: "scheduled "+count });
   }
   else if (availability_end < shift_end) {
     await splitShift(match.matching_shifts[0], { "start_time": availability_end });
-    assignShift(match, { end_time: availability_end, employee: user, status: "scheduled "+count });
+    await assignShift(match, { end_time: availability_end, employee: user, status: "scheduled "+count });
   }
   else {
-    assignShift(match, { employee: user, status: "scheduled "+count });
+    await assignShift(match, { employee: user, status: "scheduled "+count });
   }
 }
 
@@ -229,9 +230,9 @@ async function splitAndAssignShifts(match, user, count) {
     await tempShiftsCollection.insertOne(split_shift);
   }
 
-  function assignShift(match, newValues) {
+  async function assignShift(match, newValues) {
     // let tempShiftsCollection = db.get().collection('tempShifts');
-    tempShiftsCollection.updateOne(
+    await tempShiftsCollection.updateOne(
       {"_id": ObjectId(match.matching_shifts[0]._id)}, 
       {$set: newValues}
       );
