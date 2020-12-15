@@ -12,11 +12,12 @@ import axios from 'axios';
 class ScheduleIndex extends Component {
   constructor(props){
     super();
-    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false }
+    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false, testing: null }
   }
 
   componentDidMount = () => {
     this.getShifts()
+    this.getTestData()
   }
 
   //TODO: get shifts for specific user
@@ -24,6 +25,16 @@ class ScheduleIndex extends Component {
     let self = this;
     axios.get("http://localhost:8080/shifts/find_by_user/sl616").then( (response) => {
       self.setState({shifts: response.data})
+    }).catch( (error) => {
+      console.log(error)
+    });
+  }
+
+  getTestData = () => {
+    let self = this;
+    axios.get("http://localhost:8080/temp_shifts/").then( (response) => {
+//    axios.get("http://localhost:8080/shifts/").then( (response) => {
+    self.setState({testing: response.data})
     }).catch( (error) => {
       console.log(error)
     });
@@ -97,11 +108,18 @@ class ScheduleIndex extends Component {
     this.setState({ buildSchedule: value})
   }
 
+  testing = () => {
+    if(this.state.testing) {
+      return <GeneratedSchedule shifts = {this.state.testing} />
+    }
+  }
+
   render(){
     return(
         <div>
           {this.displayCalendar()}
           {this.buildSchedule()}
+          {this.testing()}
         </div>
     )
   }

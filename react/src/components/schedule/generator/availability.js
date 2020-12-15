@@ -26,7 +26,8 @@ class Availability extends Component {
     let self = this;
     console.log('making web call');
     axios.get("http://localhost:8080/schedule/temp_users").then( (response) => {
-      console.log(response)
+      // axios.get("http://localhost:8080/users").then( (response) => {
+        console.log(response)
       self.setState({users: response.data})
     }).catch( (error) => {
       console.log(error)

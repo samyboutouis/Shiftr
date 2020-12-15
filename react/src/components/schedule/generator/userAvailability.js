@@ -26,7 +26,9 @@ class UserAvailability extends Component {
     return(
      <div>
         <h3>{this.props.user.name}</h3>
+        <p>Rank:   {this.props.user.rank }</p>
         <p>Availability: {this.drawAvailability()}</p>
+        <br/>
       </div>
 
     )
