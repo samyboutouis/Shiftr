@@ -147,7 +147,21 @@ flex-basis: calc(100%/7);
 width: calc(100%/7);
 }
 
+/* shift entries */
+
 .calendar-month-entry{
+  margin:2px;
+  font-size: 12px;
+  padding-left: 10px;
+  background-color: #EBE8E8;
+}
+.calendar-week-entry{
+  margin:2px;
+  font-size: 12px;
+  padding-left: 10px;
+  background-color: #EBE8E8;
+}
+.calendar-day-entry{
   margin:2px;
   font-size: 12px;
   padding-left: 10px;

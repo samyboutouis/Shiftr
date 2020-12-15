@@ -6,7 +6,7 @@ import isSameWeek from "date-fns/isSameWeek";
 import addDays from "date-fns/addDays";
 import addWeeks from "date-fns/addWeeks";
 import subWeeks from "date-fns/subWeeks";
-
+import ShowMonth from "./showMonth.js";
 
 
 const WeekCalendar = () => {
@@ -68,6 +68,7 @@ days.push(
        key={day}
        >
        <span className="number">{formattedDate}</span>
+       <div><ShowMonth day={day}/> </div>
      </div>
      );
    day = addDays(day, 1);
