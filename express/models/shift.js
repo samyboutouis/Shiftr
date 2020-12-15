@@ -66,11 +66,12 @@ class Shift {
     }
   }
 
+// finding within times for calendar view
   static findByTime = async (start, end)  => {
     try {
-      return await shiftsCollection.find({start_time: {$gte: start}, end_time: {$lte: end}}).toArray();
-      // return new Shift(shift)
 
+      return await shiftsCollection.find({"start_time": {$gte: parseInt(start)}, "end_time": {$lte: parseInt(end)}}).toArray();
+      // return await shiftsCollection.find({"start_time": {$gte: start}, "end_time": {$lte: end}}).toArray();
     } catch (err) {
       console.log(err);
     }

@@ -24,10 +24,8 @@ class ShowMonth extends Component {
     axios.get("http://localhost:8080/shifts/find_time/" + start + "/" + end ).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
-      console.log("GETSHIFTSERROR")
       console.log(error)
     });
-
   }
 
   drawShifts = () => {
@@ -39,11 +37,11 @@ class ShowMonth extends Component {
   }
   mapShifts = () => {
     let shifts = this.state.shifts
-    const dateFormat = "HH mm"
+    let dateFormat = "HH mm"
     return shifts.map((shift,index) =>
       <div key={index}>
-        <p className='upcoming-shift-time'>{format(shift.start_time, dateFormat)} - {format(shift.end_time, dateFormat)}</p>
-        // <p className='upcoming-shift-text'> {shift.group} | @{shift.location} | {shift._id}</p>
+        <p className="calendar-month-entry">{format(shift.start_time, dateFormat)} - {format(shift.end_time, dateFormat)}</p>
+        {/* <p className='upcoming-shift-text'> {shift.group} | @{shift.location} | {shift._id}</p>*/}
       </div>
     )
   }

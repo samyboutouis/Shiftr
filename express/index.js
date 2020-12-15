@@ -7,9 +7,9 @@ db.connect(() => {
   const session = require('express-session');
   const cors = require('cors')
 
-  http = require('http'); 
-    
-  const hostname = '0.0.0.0';  
+  http = require('http');
+
+  const hostname = '0.0.0.0';
   const port = 8080; // TODO change this in prod
   const app = express();
 
@@ -30,7 +30,7 @@ db.connect(() => {
   app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
   // for parsing multipart/form-data
-  app.use(upload.array()); 
+  app.use(upload.array());
   app.use(express.static('public'));
 
   //for httponly cookies
@@ -53,12 +53,10 @@ db.connect(() => {
   const schedule = require('./routes/schedule_controller')
   app.use('/schedule', schedule)
 
-  const app_server = http.createServer(app); 
-    
-  app_server.listen(port, hostname, () => { 
-    console.log(`Server running at http://${hostname}:${port}/`); 
+  const app_server = http.createServer(app);
+
+  app_server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
   });
 
 });
-
- 

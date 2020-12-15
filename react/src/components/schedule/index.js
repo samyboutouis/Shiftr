@@ -61,7 +61,6 @@ class ScheduleIndex extends Component {
 
   drawCalendar = () => {
     if (this.state.navState === "Week"){
-      console.log("week")
       return <div>
           <WeekCalendar />
         </div>
@@ -89,7 +88,7 @@ class ScheduleIndex extends Component {
           <GeneratedSchedule shifts = {this.state.buildSchedule} />
         </div>
     } else {
-      return <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>      
+      return <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>
     }
   }
 

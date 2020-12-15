@@ -24,8 +24,13 @@ router.get('/find_open/:status', (req, res) => {
 })
 
 router.get('/find_time/:start_time/:end_time', (req, res) => {
+  console.log("controller log1")
   let shift = Shift.findByTime(req.params.start_time, req.params.end_time);
-  shift.then(result => { res.json(result) });
+  shift.then(result => { res.json(result)
+  console.log(result)
+  console.log("controller log3")
+  });
+  console.log("controller log2")
 })
 
 router.get('/find_by_user/:netId', (req, res) => {

@@ -78,10 +78,11 @@ days.push(
        value={selectedDate}
        onClick={onDateClick}
        >
-
+       <div>
        <div className="number">{formattedDate}
-          <div><ShowMonth day={day}/> </div>
        </div>
+     </div>
+     <div><ShowMonth day={day}/> </div>
      </div>
      );
    day = addDays(day, 1);
