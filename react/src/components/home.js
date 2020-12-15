@@ -30,13 +30,33 @@ class Home extends Component {
   showHome = () => {
     if (localStorage.getItem('loggedIn')){
       if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
-        return <EmployeeHome />
+        return (
+          <div>
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+            <EmployeeHome />
+          </div>
+        );
       }else if(this.state.navState === "Availability"){
-        return <AvailabilityIndex />
+        return (
+          <div>
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+            <AvailabilityIndex />
+          </div>
+        );
       }else if(this.state.navState === "Schedule"){
-        return <ScheduleIndex /> 
+        return (
+          <div>
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+            <ScheduleIndex />
+          </div>
+        );
       }else if(this.state.navState === "Hours") {
-        return <HoursIndex /> //change these
+        return (
+          <div>
+            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+            <HoursIndex />
+          </div>
+        );
       }
     }else{
       return <div>
@@ -48,9 +68,7 @@ class Home extends Component {
   render(){
     return(
       <div>
-        <Nbar setNavState={this.setNavState} navState={this.state.navState} />
         {this.showHome()}
-        <button onClick={this.samlLogout}>Logout</button>
       </div>
       );
   }

@@ -55,11 +55,11 @@ class ShiftToday extends Component {
       return (
         <div className="transparent-box">
           <div>
-            <p>2:00PM -&gt; 4:00PM</p>
+            <p className="shift-time">2:00<span className="pm">PM</span> &#8594; 4:00<span className="pm">PM</span></p>
             <br />
-            <p> The LINK </p>
+            <p className="shift-location"> The LINK </p>
             <br />
-            <p> Student | Service Worker</p>
+            <p className="shift-role"> Student | Service Desk</p>
           </div>
         </div>
       );

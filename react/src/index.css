@@ -21,6 +21,7 @@ code {
   font-weight: bold;
   padding-left: 10px;
   padding-top: 10px;
+  cursor: pointer;
 }
 
 /* LANDING PAGE THINGS */
@@ -63,7 +64,6 @@ code {
   margin-right: 10%;
   margin-top: 40px;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -87,18 +87,39 @@ code {
   margin-top: 40px;
   transition-duration: 0.4s;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 
 .clock{
   display: inline-block;
   height: 30px;
-  margin-bottom: 7px;
   width: 40px;
 }
 
 .clock-text {
   padding-left: 10px;
   font-size: 25px;
+}
+
+.shift-time {
+  font-size: 35px;
+  margin-left: 15px;
+}
+
+.pm {
+  font-size: 25px;
+  color: #888888;
+}
+
+.shift-location {
+  font-size: 20px;
+  margin-left: 15px;
+}
+
+.shift-role {
+  font-size: 20px;
+  margin-left: 15px;
 }
 
 .upcoming-shift {
@@ -117,7 +138,24 @@ code {
 }
 
 .shift-pool {
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 3em;
+}
 
+.shift-pool-title {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 2.5em;
+  font-family: Roboto; 
+  font-weight: normal;
+}
+
+.shift-pool-image {
+  height: 1em;
+  margin-right: .5em;
 }
 
 .open-shift-time {
@@ -145,17 +183,30 @@ code {
   cursor: pointer;
 }
 
+.upcoming-shift-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upcoming-shift-date > p {
+  text-align: center;
+  color: darkgray;
+}
+
 .upcoming-shift-time {
   font-family: Roboto;
   font-size: 1em;
   font-weight: bold;
-  margin: 0 .5em .5em 3em;
+  margin-top: .25em;
+  margin-bottom: .25em;
 }
 
 .upcoming-shift-text {
   font-family: Roboto;
   font-size: 1em;
-  margin: 0 .5em .5em 3em;
+  margin-top: .25em;
+  margin-bottom: .25em;
 }
 
 .upcoming-shift-button {
@@ -415,4 +466,12 @@ th{
   margin-right: 10%;
 }
 
+/* BULMA */
 
+.tile.is-gapless > .tile.is-parent{
+  padding: 0;
+}
+
+.tile.is-gapless > .tile.is-vertical > .tile.is-child {
+  margin-bottom: 0 !important;
+}

@@ -11,22 +11,20 @@ class EmployeeHome extends Component {
 
   render() {
     return (
-      <div>
-        {/* <Container fluid>
-          <Row>
-            <Col lg={7}>
-              <Row> */}
-              <CurrentShift />
-                {/* </Row>
-                <Row> */}
-              <UpcomingShifts />
-            {/* </Row> */}
-            {/* </Col>
-            <Col lg={5}> */}
+      <div className="tile is-gapless is-ancestor">
+        <div className="tile is-7 is-vertical is-parent">
+          <div className="tile is-child">
+            <CurrentShift />
+          </div>
+          <div className="tile is-child">
+            <UpcomingShifts />
+          </div>
+        </div>
+        <div className="tile is-parent">
+          <div className="tile is-child">
             <ShiftPool />
-          {/* </Col>
-        </Row>
-      </Container> */}
+          </div>
+        </div>
       </div>
     );
   }
