@@ -3,11 +3,12 @@ import React, {Component} from 'react';
 class HoursIndex extends Component {
     constructor(props){
       super();
-      this.state = { //state is by default an object
+      this.state = { 
         dates: [
            {id: '12/12/20', clockIn: '8:00 am', clockOut: '11:00 am' , rHours: '3',otHours: '1', totHours: '1'  },
            {id: '12/13/20', clockIn: '8:00 am', clockOut: '12:00 pm' , rHours: '3', otHours: '1',totHours: '1' },
            {id: '12/14/20', clockIn: '8:00 am' , clockOut: '11:00 am' , rHours: '3', otHours: '0',totHours: '1'  },
+           {id: '12/15/20', clockIn: '8:00 am', clockOut: '11:00 am' , rHours: '3', otHours:  '0',totHours: '1'},
            {id: '12/15/20', clockIn: '8:00 am', clockOut: '11:00 am' , rHours: '3', otHours:  '0',totHours: '1'}
         ]
      }
@@ -31,7 +32,7 @@ class HoursIndex extends Component {
 
      render() {
         return (
-           <div className = "margin">
+           <div className = "hours-table">
               <table class = "table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
               <thead> 
                 <tr>
@@ -48,6 +49,7 @@ class HoursIndex extends Component {
                  </tbody>
               </table>
            </div>
+           
         )
      }
     }

@@ -4,6 +4,7 @@ import HoursIndex from './hours/index'
 import ScheduleIndex from './schedule/index'
 import EmployeeHome from './user/employee_home'
 import Nbar from './navbar'
+//import CalIndex from './availability/indexTwo'
 
 class Home extends Component {
   constructor(props){

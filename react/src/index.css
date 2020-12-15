@@ -182,6 +182,16 @@ code {
 	font-size: 12px;
 }
 
+.key-margin{
+  margin-left: 3%;
+}
+
+.form {
+  background-color: #EDEDED;
+  
+  margin-right: 80%;
+  margin-left: 5%;
+ }
 /* SCHEDULE THINGS */
 .days-of-week {
   float: right;
@@ -219,9 +229,6 @@ code {
   ) ;
   color: white;
 }
-
-
-
 
 .view th {
   text-align: center;
@@ -403,6 +410,9 @@ th{
   background-color: #FFA5AA
 }
 
-.margin {
-  margin: 100px 150px;
+.hours-table {
+  margin-left: 10%;
+  margin-right: 10%;
 }
+
+
