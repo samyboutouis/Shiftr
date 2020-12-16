@@ -5,6 +5,7 @@ const shiftsCollection = db.get().collection('shifts')
 const usersCollection = db.get().collection('users')
 const tempShiftsCollection = db.get().collection('tempShifts')
 const tempUsersCollection = db.get().collection('tempUsers')
+const schedulesCollection = db.get().collection('schedules')
 
 // generate automated schedule for a group
 exports.assign_shifts = async function(group) {
@@ -22,11 +23,33 @@ exports.assign_shifts = async function(group) {
     const millis = Date.now() - start;
     console.log('seconds elapsed = '+ Math.floor(millis / 1000));
     console.log('('+millis+' milliseconds)'); // run time
+    // return await createSchedule(group); 
     return await tempShiftsCollection.find({"group": group } ).sort({"start_time":1}).toArray(); // return tempShifts of group in time order
   } catch (err) {
     console.log(err);
   }
 }
+
+async function createSchedule(group) {
+  try {
+    var tempShifts = await tempShiftsCollection.aggregate([
+      { $match: {group: group} }, 
+      { $project: { group: 0 }}]).toArray();
+    var tempUsers = await tempUsersCollection.aggregate([
+      { $match: {group: group} }, 
+      { $sort: {rank: 1} },
+      { $project: { group: 0 }}]).toArray();
+    return await schedulesCollection.insertOne({
+      group: group,
+      timestamp: Date.now(),
+      shifts: tempShifts, 
+      users: tempUsers
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 
 // clone open shifts in specified group into tempShifts collection
 // clone users in specified group into tempUsers collection (sorted by ascending rank)
