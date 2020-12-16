@@ -9,8 +9,13 @@ class SamlConsume extends Component {
   }
   
   setAttributes = () => {
-    let self = this;
     axios.get("http://localhost:8080/saml/attributes").then( (response) => {
+      let name = response.data.display_name.split(" ");
+      localStorage.setItem("firstName", name[0]);
+      localStorage.setItem("lastName", name[name.length - 1]);
+      localStorage.setItem("email", response.data.eppn);
+      localStorage.setItem("affiliation", response.data.affiliaton[0]);
+      localStorage.setItem("netid", response.data.netid);
       console.log(response.data);
     }).catch( (error) => {
       console.log(error)

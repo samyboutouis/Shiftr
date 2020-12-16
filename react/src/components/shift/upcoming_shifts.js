@@ -1,27 +1,15 @@
 import React, {Component} from 'react';
-import ShiftShow from './show'
-// import ShiftForm from './form'
 import axios from 'axios';
 import format from "date-fns/format";
 
 class UpcomingShifts extends Component {
   constructor(props){
     super(props)
-    this.state= {shifts: false, selectedShift: false}
+    this.state= {shifts: false}
   }
 
   componentDidMount = () => {
     this.getShifts()
-  }
-
-  clearSelectedShift = () => {
-    this.setState({ selectedShift: false})
-  }
-
-  drawSelectedShift = () => {
-    if(this.state.selectedShift){
-      return <ShiftShow clearSelectedShift={this.clearSelectedShift} shift={this.state.selectedShift} getShifts={this.getShifts} />
-    }
   }
 
   drawShifts = () => {
@@ -40,9 +28,9 @@ class UpcomingShifts extends Component {
   getShifts = () => {
     let self = this;
     axios.get("http://localhost:8080/shifts").then( (response) => {
-    self.setState({shifts: response.data})
+      self.setState({shifts: response.data})
     }).catch( (error) => {
-    console.log(error)
+      console.log(error)
     });
   }
 
@@ -64,16 +52,11 @@ class UpcomingShifts extends Component {
     );
   }
 
-  selectShift = (shift) => {
-    this.setState({selectedShift: shift})
-  }
-
   render(){
     return(
       <div className="upcoming-shift">
           <p className="upcoming-shift-title">Your upcoming shifts</p>
           {this.drawShifts()}
-          {this.drawSelectedShift()}
       </div>
     );
   }

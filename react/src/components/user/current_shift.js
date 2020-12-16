@@ -6,15 +6,15 @@ import ShiftToday from './shift_today'
 class CurrentShift extends Component {
   constructor(props){
     super(props);
-    this.state = {name: ""};
+    this.state = {name: "", shiftsToday: 0};
   }
 
-  getName = () => {
-    this.setState({name: "Samy", shiftsToday: 1});
+  determineState = () => {
+    this.setState({name: localStorage.getItem("firstName"), shiftsToday: 1});
   }
 
   componentDidMount() {
-    this.getName();
+    this.determineState();
   }
 
   render() {
