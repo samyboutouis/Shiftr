@@ -5,14 +5,13 @@ import axios from 'axios';
 class SamlConsume extends Component {
   constructor(props){
     super()
-    this.state = ({attributes : null});
     localStorage.setItem("loggedIn", true)
   }
   
   setAttributes = () => {
     let self = this;
     axios.get("http://localhost:8080/saml/attributes").then( (response) => {
-      self.setState({attributes: response.data})
+      console.log(response.data);
     }).catch( (error) => {
       console.log(error)
     });

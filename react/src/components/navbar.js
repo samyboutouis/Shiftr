@@ -27,22 +27,21 @@ class Nbar extends Component {
             <span aria-hidden="true"></span>
           </a>
         </div>
-        <div id="navbar" className="navbar-menu" className={this.state.active ? 'navbar-menu is-active': 'navbar-menu'} onClick={this.toggleClass}>
-          <div className="mavbar-start"></div>
+        <div id="navbar" className={this.state.active ? 'navbar-menu is-active': 'navbar-menu'} onClick={this.toggleClass}>
           <div className="navbar-end">
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")} href="#">
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")} href="#top">
               Home
             </a>
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")} href="#">
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")} href="#top">
               Schedule
             </a>
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")} href="#">
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")} href="#top">
               Availability
             </a>
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")} href="#">
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")} href="#top">
               Hours
             </a>
-            <a className="navbar-item" onClick={this.props.logout} href="#">
+            <a className="navbar-item" onClick={this.props.logout} href="#top">
               Logout
             </a>
           </div>

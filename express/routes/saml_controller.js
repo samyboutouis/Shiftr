@@ -29,10 +29,16 @@ router.use(function timeLog (req, res, next) {
   next()
 });
 
-router.get('/attributes', (req,res) => { 
-  let token = req.cookies["shiftr-saml"]
-  token = jwt.verify(attrs, "make-a-real-secret");
-  res.json(token)
+router.get('/attributes', (req,res) => {
+  console.log("HEADERS");
+  console.log(req.headers);
+  let token = req.cookies["shiftr-saml"];
+  console.log("COOKIES");
+  console.log(token);
+  let decoded = jwt.verify(token, "make-a-real-secret");
+  console.log(decoded);
+  //token = jwt.verify(attrs, "make-a-real-secret");
+  res.json(decoded)
 });
 
 //consume SAML respone from the DUKE IDP
