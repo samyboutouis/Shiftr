@@ -36,15 +36,15 @@ class UpcomingShifts extends Component {
 
   mapShifts = () => {
     let shifts = this.state.shifts;
-    let dateFormat = "iii ee MMM";
+    let dateFormat = "eee dd MMM";
     let timeFormat = "hh:00aaaa";
     return shifts.map((shift,index) =>
     <div key={index} className='tile is-child columns is-mobile'>
       <div className='column is-3 upcoming-shift-date'>
-        <p>{format(new Date(shift.start_time), dateFormat)}</p>
+        <p>{format(shift.start_time * 1000, dateFormat)}</p>
       </div>
       <div className='column is-9'>
-        <p className='upcoming-shift-time'>{format(new Date(shift.start_time), timeFormat)} - {format(new Date(shift.end_time), timeFormat)}</p>
+        <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
         <p className='upcoming-shift-text'> {shift.group} </p>
         <p className='upcoming-shift-text'> @{shift.location}</p>
       </div>

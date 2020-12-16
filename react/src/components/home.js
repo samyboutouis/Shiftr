@@ -18,7 +18,7 @@ class Home extends Component {
   }
 
   samlLogout = () => {
-    localStorage.removeItem("loggedIn");
+    localStorage.clear();
     let url = "http://localhost:8080/saml/logout"
     window.location.href = url;
   }
@@ -29,40 +29,51 @@ class Home extends Component {
 
   showHome = () => {
     if (localStorage.getItem('loggedIn')){
-      if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
+      if (localStorage.getItem('affiliation') === 'student'){
+        if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
+          return (
+            <div>
+              <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+              <EmployeeHome />
+            </div>
+          );
+        }else if(this.state.navState === "Availability"){
+          return (
+            <div>
+              <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+              <AvailabilityIndex />
+            </div>
+          );
+        }else if(this.state.navState === "Schedule"){
+          return (
+            <div>
+              <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+              <ScheduleIndex />
+            </div>
+          );
+        }else if(this.state.navState === "Hours") {
+          return (
+            <div>
+              <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+              <HoursIndex />
+            </div>
+          );
+        }
+      }
+      else {
         return (
           <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
-            <EmployeeHome />
+            <h1>Supervisor</h1>
           </div>
-        );
-      }else if(this.state.navState === "Availability"){
-        return (
-          <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
-            <AvailabilityIndex />
-          </div>
-        );
-      }else if(this.state.navState === "Schedule"){
-        return (
-          <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
-            <ScheduleIndex />
-          </div>
-        );
-      }else if(this.state.navState === "Hours") {
-        return (
-          <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
-            <HoursIndex />
-          </div>
-        );
+        )
       }
     }else{
-      return <div>
-        <button onClick={this.samlLogin}>Login</button>
-      </div>
-    }
+      return (
+        <div>
+          <button onClick={this.samlLogin}>Login</button>
+        </div>
+      );
+    } 
   }
 
   render(){
