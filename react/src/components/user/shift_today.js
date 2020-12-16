@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-//import ShiftShow from '../shift/show'
 import ShiftForm from '../shift/form'
 
 class ShiftToday extends Component {
@@ -31,16 +30,6 @@ class ShiftToday extends Component {
     }).catch( (error) => {
     console.log(error)
     });
-  }
-
-  mapShifts = () => {
-    let shifts = this.state.shifts
-      return shifts.map((shift,index) =>
-      <div key={index}>
-        <p className='upcoming-shift-time'>{shift.start_time} - {shift.end_time}</p>
-        <p className='upcoming-shift-text'> {shift.group} | @{shift.location}</p> 
-      </div>
-    );
   }
 
   render() {

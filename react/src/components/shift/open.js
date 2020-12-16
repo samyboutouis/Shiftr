@@ -27,9 +27,13 @@ class OpenShifts extends Component {
 
   drawShifts = () => {
     if(this.state.shifts && !this.state.selectedShift){
-      return <div>
-        {this.mapShifts()}
-      </div>
+      return( 
+        <div className='tile is-ancestor'>
+          <div className='tile is-parent is-vertical'>
+            {this.mapShifts()}
+          </div>
+        </div>
+      );
     }
   }
 

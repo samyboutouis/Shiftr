@@ -41,7 +41,7 @@ code {
   padding-right: 10%;
   padding-top: 1em;
 	font-family: 'Roboto';
-	font-size: 3em;
+	font-size: 40px;
 	font-weight: 300;
 	color: white;
 }
@@ -49,7 +49,7 @@ code {
 .landing-box {
   padding-left: 10%;
   padding-right: 10%;
-	font-size: 3em;
+	font-size: 40px;
 	color: white;
 	font-family: 'Roboto';
 	font-weight: 400;

@@ -1,0 +1,72 @@
+import React, {Component} from 'react';
+import axios from 'axios';
+import format from 'date-fns/format'
+
+class AllShiftsToday extends Component {
+  constructor(props){
+    super(props);
+    this.state = {shifts: false};
+  }
+
+  componentDidMount = () => {
+    this.getShifts()
+  }
+
+  drawShifts = () => {
+    if(this.state.shifts){
+      return (
+        <div>
+          {this.mapShifts()}
+        </div>
+      );
+    }
+  }
+
+  getShifts = () => {
+    let self = this;
+    axios.get("http://localhost:8080/shifts").then( (response) => {
+      self.setState({shifts: response.data})
+    }).catch( (error) => {
+      console.log(error)
+    });
+  }
+
+  mapShifts = () => {
+    let shifts = this.state.shifts;
+    let timeFormat = "hh:00";
+    let pm = "a";
+    return shifts.map((shift,index) => 
+    <div key={index}>
+      <div className="transparent-box">
+        <div>
+          <p className="shift-time">{format(shift.start_time * 1000, timeFormat)}<span className="pm">{format(shift.start_time * 1000, pm)}</span> &#8594; {format(shift.end_time * 1000, timeFormat)}<span className="pm">{format(shift.end_time * 1000, pm)}</span></p>
+          <br />
+          <p className="shift-location"> {shift.location} </p>
+          <br />
+          <p className="shift-role"> {shift.group} </p>
+        </div>
+      </div>
+    </div>
+    );
+  }
+
+  render() {
+    if(this.props.numOfShifts === 0){
+      return (
+        <div className="transparent-box">
+          <p className="no-shifts">No employees are schedule today.</p>
+        </div>
+      )
+    }
+    else {
+      return (
+          <div>
+            {this.drawShifts()}
+          </div>
+      );
+    }
+  }
+
+}
+
+export default AllShiftsToday;

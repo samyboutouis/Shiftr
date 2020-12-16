@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CurrentShift from "./current_shift"
+import SupervisorShifts from "./supervisor_shifts"
 import ShiftPool from '../shift/shift_pool'
 
 class SupervisorHome extends Component {
@@ -13,7 +13,7 @@ class SupervisorHome extends Component {
       <div className="tile is-gapless is-ancestor">
         <div className="tile is-7 is-parent">
           <div className="tile is-child">
-            <CurrentShift />
+            <SupervisorShifts />
           </div>
         </div>
         <div className="tile is-parent">
