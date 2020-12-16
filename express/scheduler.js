@@ -23,28 +23,53 @@ exports.assign_shifts = async function(group) {
     const millis = Date.now() - start;
     console.log('seconds elapsed = '+ Math.floor(millis / 1000));
     console.log('('+millis+' milliseconds)'); // run time
-    // return await createSchedule(group); 
-    return await tempShiftsCollection.find({"group": group } ).sort({"start_time":1}).toArray(); // return tempShifts of group in time order
+    return await createSchedule(group); 
+    // return await tempShiftsCollection.find({"group": group } ).sort({"start_time":1}).toArray(); // return tempShifts of group in time order
   } catch (err) {
     console.log(err);
   }
+}
+
+exports.rank_users = async function() {
+  try {
+  return await usersCollection.aggregate([
+    { $project: 
+      { "availability":1, "total_available_hours": {
+        $reduce: {
+          input: "$availability.times",
+          initialValue: "$0",
+          in: { $sum: [ "$$value", { $subtract: [ "$$this.end_time", "$$this.start_time" ] } ] } } } } },
+    { $project: {"rank": { $cond: [ { $eq: [ "$availability.preferred_hours", 0 ] }, "NA", { $divide: [ "$total_available_hours", {$multiply: [ "$availability.preferred_hours", 3600] } ] }]}}},
+    { $sort: {rank: 1}} 
+    ]
+  ).toArray();
+} catch (err) {
+  console.log(err);
+}
+  // tempUsersCollection.sort()
+  // tempUsersCollection.aggregate( [ { $project: { item: 1, total_available_hours: { $sum: [ { $subtract: [ "$end_time", "$start_time" ] }, "$discount" ] } } } ] )
+
+  // { $subtract: [ "$end_time", "$start_time" ] }
 }
 
 async function createSchedule(group) {
   try {
     var tempShifts = await tempShiftsCollection.aggregate([
       { $match: {group: group} }, 
+      { $sort: {"start_time":1} },
       { $project: { group: 0 }}]).toArray();
     var tempUsers = await tempUsersCollection.aggregate([
       { $match: {group: group} }, 
       { $sort: {rank: 1} },
-      { $project: { group: 0 }}]).toArray();
-    return await schedulesCollection.insertOne({
+      { $project: { name: 1, netid: 1, availability: 1 }}]).toArray();
+    schedule = await schedulesCollection.insertOne({
       group: group,
       timestamp: Date.now(),
       shifts: tempShifts, 
       users: tempUsers
     });
+    console.log(typeof schedule);
+    return schedule["ops"][0];
   } catch (err) {
     console.log(err);
   }
@@ -215,7 +240,7 @@ exports.temp_users = async function() {
           netid: faker.random.uuid(), 
           group: groups[Math.floor(Math.random() * groups.length)], // random group (Code+, CoLab, or The Link)
           // group: "Code+",
-          availability: {times: avail_array}, 
+          availability: {times: avail_array, preferred_hours: Math.floor(Math.random()*10)}, 
           rank: users // index of for loop
         });
       }

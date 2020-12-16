@@ -17,7 +17,7 @@ class ScheduleIndex extends Component {
 
   componentDidMount = () => {
     this.getShifts()
-    this.getTestData()
+    // this.getTestData()
   }
 
   //TODO: get shifts for specific user
@@ -97,7 +97,7 @@ class ScheduleIndex extends Component {
     else if(this.state.buildSchedule) {
       return <div>
           <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
-          <GeneratedSchedule shifts = {this.state.buildSchedule} />
+          <GeneratedSchedule data = {this.state.buildSchedule} />
         </div>
     } else {
       return <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>      
@@ -110,7 +110,7 @@ class ScheduleIndex extends Component {
 
   testing = () => {
     if(this.state.testing) {
-      return <GeneratedSchedule shifts = {this.state.testing} />
+      return <GeneratedSchedule data = {this.state.testing} />
     }
   }
 
