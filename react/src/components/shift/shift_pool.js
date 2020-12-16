@@ -14,7 +14,6 @@ class ShiftPool extends Component {
           <img src={Pool} className='shift-pool-image' alt="Pool"/> 
           Shift Pool 
         </p>
-        {/*FOR EACH OPEN/PENDING SHIFT IN POOL*/}
         <div>
           <OpenShifts />
         </div>

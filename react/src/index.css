@@ -162,7 +162,7 @@ code {
   font-family: Roboto;
   font-size: 1em;
   font-weight: bold;
-  margin: 0 .5em .5em 8em;
+  margin: 0 .3em .3em 8em;
 }
 
 .open-shift-text {
@@ -172,10 +172,8 @@ code {
 }
 
 .open-shift-button {
-  margin-bottom: 2em;
-  margin-left: 11.5em;
+  margin-top: 25px;
   border: none;
-  border-radius: 7px;
   background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
   background-size: 100% 100%;
@@ -199,15 +197,15 @@ code {
   font-family: Roboto;
   font-size: 1em;
   font-weight: bold;
-  margin-top: .25em;
-  margin-bottom: .25em;
+  margin-top: .1em;
+  margin-bottom: .1em;
 }
 
 .upcoming-shift-text {
   font-family: Roboto;
   font-size: 1em;
-  margin-top: .25em;
-  margin-bottom: .25em;
+  margin-top: .1em;
+  margin-bottom: .1em;
 }
 
 .upcoming-shift-button {

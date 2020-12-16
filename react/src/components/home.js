@@ -3,6 +3,7 @@ import AvailabilityIndex from './availability/index'
 import HoursIndex from './hours/index'
 import ScheduleIndex from './schedule/index'
 import EmployeeHome from './user/employee_home'
+import SupervisorHome from './user/supervisor_home'
 import Nbar from './navbar'
 //import CalIndex from './availability/indexTwo'
 
@@ -61,11 +62,35 @@ class Home extends Component {
         }
       }
       else {
-        return (
-          <div>
-            <h1>Supervisor</h1>
-          </div>
-        )
+        if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
+          return (
+            <div>
+              <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+              <SupervisorHome />
+            </div>
+          );
+        }else if(this.state.navState === "Availability"){
+          return (
+            <div>
+              <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+              <AvailabilityIndex />
+            </div>
+          );
+        }else if(this.state.navState === "Schedule"){
+          return (
+            <div>
+              <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+              <ScheduleIndex />
+            </div>
+          );
+        }else if(this.state.navState === "Hours") {
+          return (
+            <div>
+              <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
+              <HoursIndex />
+            </div>
+          );
+        }
       }
     }else{
       return (
