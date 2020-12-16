@@ -176,16 +176,18 @@ width: calc(100%/7);
 }
 
 /* time based shift location */
-/* :root{
+:root{
   --padbottom: 0em;
   --marg: 2px;
   --color: pink;
-} */
+}
 
 .calendar-week-entry{
-  margin: 2px;
+  margin: var(--marg);
   font-size: 12px;
+  color: var(--color);
   padding-left: 10px;
+  padding-bottom: var(--padbottom);
   background-color: #EBE8E8;
   border-left: 5px solid yellow;
 }

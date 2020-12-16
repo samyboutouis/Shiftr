@@ -65,21 +65,25 @@ while (day <= endDate) {
    for (let i = 0; i < 7; i++) {
    formattedDate = format(day, dateFormat);
 days.push(
-      <div /* double ternary operator checks if the date belongs to the month, and adds disabled if not current date */
+      <div
        className={`column week-cell ${!isSameWeek(day, weekStart)}`}
        key={day}
        >
        <span className="number">{formattedDate}</span>
        <div><ShowWeek day={day}/> </div>
+
      </div>
      );
    day = addDays(day, 1);
   }
+
   for (let i = 0; i < 24; i++){
   rows.push(
+      <div>
         <div className="hour-row" key={i}> .</div>
-      )};
 
+      </div>
+      )};
    }
 
    return(  <div>
