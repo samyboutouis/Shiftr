@@ -6,7 +6,7 @@ import isSameWeek from "date-fns/isSameWeek";
 import addDays from "date-fns/addDays";
 import addWeeks from "date-fns/addWeeks";
 import subWeeks from "date-fns/subWeeks";
-import ShowMonth from "./showMonth.js";
+import ShowWeek from "./showWeek.js";
 
 
 const WeekCalendar = () => {
@@ -55,6 +55,8 @@ const rows = [];
 const startDate = weekStart;
 const endDate = weekEnd;
 const dateFormat = 'dd';
+const hours = ["0000", "0100", "0200", "0300", "0400", "0500", "0600", "0700", "0800", "0900", "1000", "1100", "1200",
+"1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"]
 let days = [];
 let day = startDate;
 let formattedDate = "";
@@ -68,17 +70,22 @@ days.push(
        key={day}
        >
        <span className="number">{formattedDate}</span>
-       <div><ShowMonth day={day}/> </div>
+       <div><ShowWeek day={day}/> </div>
      </div>
      );
    day = addDays(day, 1);
   }
+  for (let i = 0; i < 24; i++){
   rows.push(
-        <div className="row" key={day}> {days} </div>
-      );
-     days = [];
+        <div className="hour-row" key={i}> .</div>
+      )};
+
    }
-   return <div className="body">{rows}</div>;
+
+   return(  <div>
+      <div className="row" key={day}> {days} </div>
+      <div className="body">{rows}</div>
+    </div>)
  }
 
  const nextWeek = () => {

@@ -5,6 +5,9 @@ import startOfDay from "date-fns/startOfDay";
 import endOfDay from "date-fns/endOfDay";
 import getUnixTime from "date-fns/getUnixTime"
 
+// var styles = getComputedStyle(document.documentElement);
+// var marg = styles.getPropertyValue('--marg');
+
 class ShowWeek extends Component {
   constructor(props){
     super()
@@ -35,14 +38,22 @@ class ShowWeek extends Component {
       </div>
     }
   }
+
+
+
+
   mapShifts = () => {
     let shifts = this.state.shifts
     let dateFormat = "HH mm"
+
     return shifts.map((shift,index) =>
-      <div key={index}>
-        <p className="calendar-week-entry">{format(shift.start_time, dateFormat)} - {format(shift.end_time, dateFormat)}</p>
-        {/* <p className='upcoming-shift-text'> {shift.group} | @{shift.location} | {shift._id}</p>*/}
-      </div>
+      // if ((shift.start_time - shift.end_time) >0 && (shift.start_time - shift.end_time) <1){
+        <div key={index}>
+          {/*{document.documentElement.style.setProperty("--padbottom", 10 * (shift.start_time - shift.end_time))}*/}
+          <p className="calendar-week-entry" >{format(shift.start_time, dateFormat)} - {format(shift.end_time, dateFormat)}</p>
+          {/* <p className='upcoming-shift-text'> {shift.group} | @{shift.location} | {shift._id}</p>*/}
+        </div>
+      // }
     )
   }
 

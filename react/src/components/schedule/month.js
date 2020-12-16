@@ -82,7 +82,7 @@ days.push(
        <div className="number">{formattedDate}
        </div>
      </div>
-     <div><ShowMonth day={day}/> </div>
+     <div className="month-shift-box"><ShowMonth day={day}/> </div>
      </div>
      );
    day = addDays(day, 1);

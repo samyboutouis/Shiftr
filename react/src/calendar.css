@@ -94,8 +94,8 @@ border-bottom: 1px solid lightgray;
 
 .calendar .body .cell {
 position: relative;
-height: 6em;
-width: 10em;
+width: 6em;
+height: 8em;
 border-right: 1px solid lightgray;
 overflow: hidden;
 cursor: pointer;
@@ -103,7 +103,7 @@ background: transparent;
 }
 .calendar .body .week-cell {
 position: relative;
-height: 30em;
+height: 40em;
 width: 10em;
 overflow: hidden;
 cursor: pointer;
@@ -154,16 +154,38 @@ width: calc(100%/7);
   font-size: 12px;
   padding-left: 10px;
   background-color: #EBE8E8;
+  border-left: 5px solid pink;
+  /* change the borders into var(--location) from js */
 }
-.calendar-week-entry{
-  margin:2px;
-  font-size: 12px;
-  padding-left: 10px;
-  background-color: #EBE8E8;
-}
+
 .calendar-day-entry{
   margin:2px;
   font-size: 12px;
   padding-left: 10px;
   background-color: #EBE8E8;
+  border-left: 5px solid pink;
+}
+.month-shift-box {
+  margin-top: 2em;
+
+}
+.hour-row{
+  height: 30px;
+  margin-top: 4px;
+  background-color: lavender;
+}
+
+/* time based shift location */
+/* :root{
+  --padbottom: 0em;
+  --marg: 2px;
+  --color: pink;
+} */
+
+.calendar-week-entry{
+  margin: 2px;
+  font-size: 12px;
+  padding-left: 10px;
+  background-color: #EBE8E8;
+  border-left: 5px solid yellow;
 }
