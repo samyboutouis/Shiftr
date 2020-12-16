@@ -16,12 +16,9 @@ class SamlConsume extends Component {
       localStorage.setItem("email", response.data.eppn);
       localStorage.setItem("affiliation", response.data.affiliaton[0]);
       localStorage.setItem("netid", response.data.netid);
-      console.log(response.data);
     }).catch( (error) => {
       console.log(error)
     });
-    // localStorage.setItem("netid", this.state.attributes.netid);
-    // console.log(this.state.attributes.netid);
   }
 
   returnToHomePage = () => {

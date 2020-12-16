@@ -20,10 +20,6 @@ class AppRouter extends Component {
                 <SamlConsume />
               </Route>
 
-              <Route path="/create/user">
-                <UserForm reqType="create"/>
-              </Route>
-
               <Route path="/">
                 <Home />
               </Route> 

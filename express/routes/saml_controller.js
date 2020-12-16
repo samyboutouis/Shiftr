@@ -4,6 +4,7 @@ var saml2 = require('saml2-js');
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var cookie = require('cookie');
+const User = require('../models/user');
 
 //configure identity provider
 const idp_options = {
@@ -30,14 +31,8 @@ router.use(function timeLog (req, res, next) {
 });
 
 router.get('/attributes', (req,res) => {
-  console.log("HEADERS");
-  console.log(req.headers);
   let token = req.cookies["shiftr-saml"];
-  console.log("COOKIES");
-  console.log(token);
   let decoded = jwt.verify(token, "make-a-real-secret");
-  console.log(decoded);
-  //token = jwt.verify(attrs, "make-a-real-secret");
   res.json(decoded)
 });
 
@@ -56,11 +51,12 @@ router.post('/consume', (req, res) => {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7 // 1 week
     }));
- 
+    
+    User.createIfAbsent(attributes);
+    
     res.redirect('http://localhost:3000/saml/consume');
   });
 });
-
 
 router.get('/logout', (req,res) => {
   res.clearCookie("shiftr-saml");

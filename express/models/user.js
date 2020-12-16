@@ -20,7 +20,6 @@ class User {
     }
   }
 
-
   //delete
   delete = async () => {
     try{
@@ -54,6 +53,19 @@ class User {
       let user = await usersCollection.findOne({"_id": ObjectId(id)});
       return new User(user)
     } catch (err) {
+      console.log(err);
+    }
+  }
+
+  //create user if absent
+  static createIfAbsent = async (values) => {
+    try {
+      let user = await usersCollection.findOne({"netid": values.netid});
+      if(user == null){
+        return await usersCollection.insertOne(values);
+      }
+      return new User(user)
+    } catch(err) {
       console.log(err);
     }
   }
