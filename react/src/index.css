@@ -403,3 +403,15 @@ th{
 .margin {
   margin: 100px 150px;
 }
+
+.build-schedule-button {
+  margin-bottom: 2em;
+  margin-right: 1em;
+  border: none;
+  border-radius: 7px;
+  background: url('./button.png') no-repeat scroll 0 0 transparent;
+  color: white;
+  background-size: 100% 100%;
+  padding: .8em 2em;
+  cursor: pointer;
+}

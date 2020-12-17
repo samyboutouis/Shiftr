@@ -26,11 +26,18 @@ class BuildSchedule extends Component {
 
   render(){
     return(
-    <div>
-        <form>
-            <label>Group</label>
-            <input name='group' type="text" onChange={this.changeHandler} />
-            <input onClick={this.submitForm} type='submit' />
+    <div className="tile is-vertical ml-4">
+        <h4 className="tile title is-4">Generate a Schedule</h4>
+        <form className="tile is-vertical is-4">
+          <div className="field">
+            <label className="label">Group</label>
+            <div className="control">
+              <input className='input is-small' name='group' type="text" placeholder="e.g CoLab" onChange={this.changeHandler} />
+            </div>
+          </div>
+          <div className="control">
+            <input className="button" onClick={this.submitForm} type='submit' />
+          </div>
         </form>
 
     </div>
