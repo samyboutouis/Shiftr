@@ -8,8 +8,6 @@ import getHours from "date-fns/getHours"
 import getMinutes from "date-fns/getMinutes"
 import parse from "date-fns/parse"
 import differenceInMinutes from "date-fns/differenceInMinutes"
-// var styles = getComputedStyle(document.documentElement);
-// var marg = styles.getPropertyValue('--marg');
 
 class ShowWeek extends Component {
   constructor(props){
@@ -50,13 +48,8 @@ class ShowWeek extends Component {
   setLengths = (e, start, end) => {
     let shiftlength = differenceInMinutes(end, start)
     let classes = "calendar-week-entry"
-    // height: (shiftlength/6) + "px"
     console.log(shiftlength)
     let blockk = document.getElementsByClassName('calendar-week-entry');
-    // if(shiftlength > 0){
-    //     e.target.classList.add('add')
-    //  }
-     // e.target.classList.add('add');
      e.target.style.setProperty("--padbottom", (shiftlength/3) + "px");
   }
 
@@ -70,9 +63,7 @@ class ShowWeek extends Component {
 
 
     return shifts.map((shift,index) =>
-      // if ((shift.start_time - shift.end_time) >0 && (shift.start_time - shift.end_time) <1){
         <div key={index}>
-          {/*{document.documentElement.style.setProperty("--color", "yellow")}*/}
           <p className="calendar-week-entry" onMouseMove={(e) => {this.setLengths(e, shift.start_time*1000, shift.end_time*1000)}}>{format(shift.start_time*1000, dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
         </div>
       // }
@@ -84,9 +75,8 @@ class ShowWeek extends Component {
 
 
     return(
-     <div>
+      <div>
         {this.drawShifts()}
-
       </div>
 
     )
