@@ -76,6 +76,14 @@ class Shift {
       console.log(err);
     }
   }
+  static findByStart = async (start, end)  => {
+    try {
+      return await shiftsCollection.find({"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }).toArray();
+      // return await shiftsCollection.find({"start_time": {$gte: start}, "end_time": {$lte: end}}).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
 
   static findByUser = async (netId)  => {

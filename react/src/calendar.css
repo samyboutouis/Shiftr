@@ -169,11 +169,7 @@ width: calc(100%/7);
   margin-top: 2em;
 
 }
-.hour-row{
-  height: 30px;
-  margin-top: 4px;
-  background-color: lavender;
-}
+
 
 /* time based shift location */
 :root{
@@ -182,6 +178,9 @@ width: calc(100%/7);
   --color: pink;
 }
 
+.twelve {
+  height: 20px;
+}
 .calendar-week-entry{
   margin: var(--marg);
   font-size: 12px;

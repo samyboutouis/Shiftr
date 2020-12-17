@@ -76,12 +76,15 @@ days.push(
        ? "selected" : "" }`}
        key={day}
        value={selectedDate}
-       onClick={onDateClick}
-       >
+       onClick={onDateClick}>
+
        <div>
+
        <div className="number">{formattedDate}
        </div>
+
      </div>
+
      <div className="month-shift-box"><ShowMonth day={day}/> </div>
      </div>
      );

@@ -51,12 +51,12 @@ for (let i = 0; i < 7; i++) {
 const cells = () => {
 const weekStart = startOfWeek(currentDate);
 const weekEnd = endOfWeek(currentDate);
-const rows = [];
+// const rows = [];
 const startDate = weekStart;
 const endDate = weekEnd;
 const dateFormat = 'dd';
-const hours = ["0000", "0100", "0200", "0300", "0400", "0500", "0600", "0700", "0800", "0900", "1000", "1100", "1200",
-"1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"]
+// const hours = ["0000", "0100", "0200", "0300", "0400", "0500", "0600", "0700", "0800", "0900", "1000", "1100", "1200",
+// "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"]
 let days = [];
 let day = startDate;
 let formattedDate = "";
@@ -67,28 +67,57 @@ while (day <= endDate) {
 days.push(
       <div
        className={`column week-cell ${!isSameWeek(day, weekStart)}`}
-       key={day}
-       >
-       <span className="number">{formattedDate}</span>
-       <div><ShowWeek day={day}/> </div>
+       key={day}>
+
+       <div className="number">{formattedDate}</div>
+       {/*<div><ShowWeek day={day}/> </div>*/}
+
+       <div>
+          <div className="twelve"> <ShowWeek day={day} hour={0}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={1}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={2}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={3}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={4}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={5}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={6}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={7}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={8}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={9}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={10}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={11}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={12}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={13}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={14}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={15}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={16}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={17}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={18}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={19}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={20}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={21}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={22}/></div>
+          <div className="twelve">. <ShowWeek day={day} hour={23}/></div>
+
+       </div>
+
+
 
      </div>
      );
    day = addDays(day, 1);
   }
 
-  for (let i = 0; i < 24; i++){
+  {/*for (let i = 0; i < 24; i++){
   rows.push(
       <div>
         <div className="hour-row" key={i}> .</div>
 
       </div>
-      )};
+    )};*/}
    }
 
    return(  <div>
       <div className="row" key={day}> {days} </div>
-      <div className="body">{rows}</div>
     </div>)
  }
 

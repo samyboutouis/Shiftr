@@ -29,6 +29,12 @@ router.get('/find_time/:start_time/:end_time', (req, res) => {
   });
 })
 
+router.get('/find_start/:start_time/:end_time', (req, res) => {
+  let shift = Shift.findByStart(req.params.start_time, req.params.end_time);
+  shift.then(result => { res.json(result)
+  });
+})
+
 router.get('/find_by_user/:netId', (req, res) => {
   let shift = Shift.findByUser(req.params.netId);
   shift.then(result => { res.json(result) });
