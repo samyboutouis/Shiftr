@@ -44,8 +44,8 @@ router.delete('/delete_data', (req, res) => {
   shifts.then(result => { res.json(result) });
 })
 
-router.get('/rank_users', (req, res) => {
-  let shifts = scheduler.rank_users();
+router.get('/rank_users/:group', (req, res) => {
+  let shifts = scheduler.rank_users(req.params.group);
   shifts.then(result => { res.json(result) });
 })
 

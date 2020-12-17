@@ -30,45 +30,45 @@ exports.assign_shifts = async function(group) {
   }
 }
 
-exports.rank_users = async function() {
+// rank users in ascending order of total available hours divided by preferred hours
+exports.rank_users = async function(group) {
   try {
-  return await usersCollection.aggregate([
-    { $project: 
-      { "availability":1, "total_available_hours": {
-        $reduce: {
-          input: "$availability.times",
-          initialValue: "$0",
-          in: { $sum: [ "$$value", { $subtract: [ "$$this.end_time", "$$this.start_time" ] } ] } } } } },
-    { $project: {"rank": { $cond: [ { $eq: [ "$availability.preferred_hours", 0 ] }, "NA", { $divide: [ "$total_available_hours", {$multiply: [ "$availability.preferred_hours", 3600] } ] }]}}},
-    { $sort: {rank: 1}} 
-    ]
-  ).toArray();
-} catch (err) {
-  console.log(err);
-}
-  // tempUsersCollection.sort()
-  // tempUsersCollection.aggregate( [ { $project: { item: 1, total_available_hours: { $sum: [ { $subtract: [ "$end_time", "$start_time" ] }, "$discount" ] } } } ] )
-
-  // { $subtract: [ "$end_time", "$start_time" ] }
+    return await usersCollection.aggregate([
+      { $match: {group: group} }, 
+      { $project: 
+        { "availability":1, "netid":1, "name":1, "group":1, "total_available_hours": {
+          $reduce: {
+            input: "$availability.times",
+            initialValue: "$0",
+            in: { $sum: [ "$$value", { $subtract: [ "$$this.end_time", "$$this.start_time" ] } ] } } } } }, // add up all availability windows (sum each: end time - start time)
+      { $project: {"total_available_hours":1, "availability":1, "netid":1, "name":1, "group":1, 
+        "rank": { $cond: [ { $eq: [ "$availability.preferred_hours", 0 ] }, "NA", // handles divide by 0: if prefers 0 hours, rank = NA
+        { $divide: [ "$total_available_hours", {$multiply: [ "$availability.preferred_hours", 3600] } ] }]}}}, // rank = available/preferred hours
+      { $sort: {rank: 1} }]).toArray();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function createSchedule(group) {
   try {
+    // get all tempShifts matching group in time order
     var tempShifts = await tempShiftsCollection.aggregate([
       { $match: {group: group} }, 
       { $sort: {"start_time":1} },
       { $project: { group: 0 }}]).toArray();
+    // get all tempUsers matching group in rank order
     var tempUsers = await tempUsersCollection.aggregate([
       { $match: {group: group} }, 
       { $sort: {rank: 1} },
       { $project: { name: 1, netid: 1, availability: 1 }}]).toArray();
+    // insert document in schedulesCollection
     schedule = await schedulesCollection.insertOne({
       group: group,
       timestamp: Date.now(),
       shifts: tempShifts, 
       users: tempUsers
     });
-    console.log(typeof schedule);
     return schedule["ops"][0];
   } catch (err) {
     console.log(err);
@@ -81,7 +81,17 @@ async function createSchedule(group) {
 async function cloneCollections(group) {
   try {
     await shiftsCollection.aggregate([{ $match: {group: group, status: "open"} }, { $out: "tempShifts" }]).toArray();
-    await usersCollection.aggregate([{ $match: {group: group} }, { $sort: {rank: 1} }, { $out: "tempUsers" }]).toArray();
+    await usersCollection.aggregate([
+      { $match: {group: group} }, 
+      { $project: 
+        { "availability":1, "netid":1, "name":1, "group":1, "total_available_hours": {
+          $reduce: {
+            input: "$availability.times",
+            initialValue: "$0",
+            in: { $sum: [ "$$value", { $subtract: [ "$$this.end_time", "$$this.start_time" ] } ] } } } } },
+      { $project: {"availability":1, "netid":1, "name":1, "group":1, "rank": { $cond: [ { $eq: [ "$availability.preferred_hours", 0 ] }, "NA", { $divide: [ "$total_available_hours", {$multiply: [ "$availability.preferred_hours", 3600] } ] }]}}},
+      { $sort: {rank: 1} }, 
+      { $out: "tempUsers" }]).toArray();
   } catch (err) {
     console.log(err);
   }
