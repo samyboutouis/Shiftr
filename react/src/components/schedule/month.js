@@ -9,7 +9,6 @@ import isSameDay from "date-fns/isSameDay";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import subMonths from "date-fns/subMonths";
-import getShifts from "./showMonth.js";
 import ShowMonth from './showMonth.js'
 
 const MonthCalendar = () => {

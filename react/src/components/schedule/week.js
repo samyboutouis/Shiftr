@@ -80,23 +80,23 @@ days.push(
           <div className="twelve"> <ShowWeek day={day} hour={4}/></div>
           <div className="twelve"> <ShowWeek day={day} hour={5}/></div>
           <div className="twelve"> <ShowWeek day={day} hour={6}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={7}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={8}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={9}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={10}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={11}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={12}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={13}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={14}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={15}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={16}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={17}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={18}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={19}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={20}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={21}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={22}/></div>
-          <div className="twelve">. <ShowWeek day={day} hour={23}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={7}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={8}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={9}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={10}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={11}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={12}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={13}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={14}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={15}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={16}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={17}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={18}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={19}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={20}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={21}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={22}/></div>
+          <div className="twelve"> <ShowWeek day={day} hour={23}/></div>
 
        </div>
 
@@ -107,13 +107,13 @@ days.push(
    day = addDays(day, 1);
   }
 
-  {/*for (let i = 0; i < 24; i++){
+  /*for (let i = 0; i < 24; i++){
   rows.push(
       <div>
         <div className="hour-row" key={i}> .</div>
 
       </div>
-    )};*/}
+    )};*/
    }
 
    return(  <div>
