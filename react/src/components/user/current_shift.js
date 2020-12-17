@@ -13,8 +13,6 @@ class CurrentShift extends Component {
     let self = this;
     axios.get("http://localhost:8080/shifts").then( (response) => {
       self.setState({shifts: response.data.length});
-      console.log(response.data.length);
-      console.log("HII")
       this.determineState();
     }).catch( (error) => {
       console.log(error)
@@ -54,18 +52,25 @@ class CurrentShift extends Component {
         }
       }
     }
-
-    return (
-      <div className="background-pretty-gradient">
-        <div>
-          <p className="greeting">Hello, {this.state.name}.</p>
-          <p className="landing-box">{landing}</p>
-        </div>
-        <AllShiftsToday numOfShifts={this.state.shiftsToday} affiliation={this.props.affiliation}/>
-        <button className="clock-in"> 
+    let shift = []
+    shift.push(
+      <div key="greeting">
+        <p className="greeting">Hello, {this.state.name}.</p>
+        <p className="landing-box">{landing}</p>
+      </div>
+    );
+    shift.push(<AllShiftsToday numOfShifts={this.state.shiftsToday} affiliation={this.props.affiliation} key="shifts"/>);
+    if(this.props.affiliation === 'student'){
+      shift.push(
+        <button className="clock-in" key="button"> 
           <img className="clock" src={Clock} alt="Clock"/>
           <span className="clock-text">Clock In</span>
         </button>
+      );
+    }
+    return (
+      <div className="background-pretty-gradient">
+        {shift}
       </div>
     );
   }

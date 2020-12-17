@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import format from 'date-fns/format'
+import startOfToday from 'date-fns/startOfToday';
+import endOfToday from 'date-fns/endOfToday';
+import getUnixTime from 'date-fns/getUnixTime'
 
 class AllShiftsToday extends Component {
   constructor(props){
@@ -24,11 +27,22 @@ class AllShiftsToday extends Component {
 
   getShifts = () => {
     let self = this;
-    axios.get("http://localhost:8080/shifts").then( (response) => {
-      self.setState({shifts: response.data})
-    }).catch( (error) => {
-      console.log(error)
-    });
+    let startTime = getUnixTime(startOfToday());
+    let endTime = getUnixTime(endOfToday());
+    if(this.props.affiliation === 'student'){
+      axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
+        self.setState({shifts: response.data})
+      }).catch( (error) => {
+        console.log(error)
+      });
+    }
+    else {
+      axios.get("http://localhost:8080/shifts/find_time/" + startTime + "/" + endTime).then( (response) => {
+        self.setState({shifts: response.data})
+      }).catch( (error) => {
+        console.log(error)
+      });
+    }
   }
 
   mapShifts = () => {
@@ -51,18 +65,22 @@ class AllShiftsToday extends Component {
   }
 
   render() {
+    let zeroShifts = "No employees are scheduled today."
+    if(this.props.affiliation === 'student'){
+      zeroShifts = "Enjoy the day off!";
+    }
     if(this.props.numOfShifts === 0){
       return (
         <div className="transparent-box">
-          <p className="no-shifts">No employees are schedule today.</p>
+          <p className="no-shifts">{zeroShifts}</p>
         </div>
-      )
+      );
     }
     else {
       return (
-          <div>
-            {this.drawShifts()}
-          </div>
+        <div>
+          {this.drawShifts()}
+        </div>
       );
     }
   }
