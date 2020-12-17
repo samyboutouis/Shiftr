@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CurrentShift from "./current_shift"
 import ShiftPool from '../shift/shift_pool'
 import UpcomingShifts from '../shift/upcoming_shifts';
+import SupervisorShifts from "./supervisor_shifts"
 
 class EmployeeHome extends Component {
   constructor(props){
@@ -10,8 +11,9 @@ class EmployeeHome extends Component {
   }
 
   render() {
-    return (
-      <div className="tile is-gapless is-ancestor">
+    let home = []
+    if(this.props.affiliation === 'student'){
+      home.push(
         <div className="tile is-7 is-vertical is-parent">
           <div className="tile is-child">
             <CurrentShift />
@@ -20,11 +22,27 @@ class EmployeeHome extends Component {
             <UpcomingShifts />
           </div>
         </div>
-        <div className="tile is-parent">
+      );
+    }
+    else {
+      home.push(
+        <div className="tile is-7 is-parent">
           <div className="tile is-child">
-            <ShiftPool />
+            <SupervisorShifts />
           </div>
         </div>
+      );
+    }
+    home.push(
+      <div className="tile is-parent">
+        <div className="tile is-child">
+          <ShiftPool />
+        </div>
+      </div>
+    );
+    return (
+      <div className="tile is-gapless is-ancestor">
+        {home}
       </div>
     );
   }

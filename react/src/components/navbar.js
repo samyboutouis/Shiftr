@@ -17,6 +17,13 @@ class Nbar extends Component {
   };
 
   userBar = () => {
+    let third = null;
+    if(this.props.affiliation === 'student'){
+      third = "Availability";
+    }
+    else {
+      third = "Employees"
+    }
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
@@ -35,8 +42,8 @@ class Nbar extends Component {
             <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")} href="#schedule">
               Schedule
             </a>
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")} href="#availability">
-              Availability
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, third)} href="#employee" >
+              {third}
             </a>
             <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")} href="#hours">
               Hours
