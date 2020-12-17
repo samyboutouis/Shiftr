@@ -190,12 +190,3 @@ width: calc(100%/7);
   background-color: #EBE8E8;
   border-left: 5px solid yellow;
 }
-.add{
-  margin: var(--marg);
-  font-size: 12px;
-  color: var(--color);
-  padding-left: 10px;
-  padding-bottom: 50px;
-  background-color: #EBE8E8;
-  border-left: 5px solid yellow;
-}

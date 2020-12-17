@@ -66,7 +66,6 @@ class ShowWeek extends Component {
         <div key={index}>
           <p className="calendar-week-entry" onMouseMove={(e) => {this.setLengths(e, shift.start_time*1000, shift.end_time*1000)}}>{format(shift.start_time*1000, dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
         </div>
-      // }
     )
   }
 
