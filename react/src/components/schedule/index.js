@@ -12,11 +12,12 @@ import ShiftIndex from '../shift/index.js'
 class ScheduleIndex extends Component {
   constructor(props){
     super();
-    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false }
+    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false, testing: null }
   }
 
   componentDidMount = () => {
     this.getShifts()
+    // this.getTestData()
   }
 
   //TODO: get shifts for specific user
@@ -24,6 +25,16 @@ class ScheduleIndex extends Component {
     let self = this;
     axios.get("http://localhost:8080/shifts/find_by_user/sl616").then( (response) => {
       self.setState({shifts: response.data})
+    }).catch( (error) => {
+      console.log(error)
+    });
+  }
+
+  getTestData = () => {
+    let self = this;
+    axios.get("http://localhost:8080/temp_shifts/").then( (response) => {
+//    axios.get("http://localhost:8080/shifts/").then( (response) => {
+    self.setState({testing: response.data})
     }).catch( (error) => {
       console.log(error)
     });
@@ -78,17 +89,17 @@ class ScheduleIndex extends Component {
   buildSchedule = () => {
     if(this.state.buildSchedule === true){
       return <div>
-        <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+        <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
         <BuildSchedule toggleBuildSchedule={this.toggleBuildSchedule} />
       </div>
     }
     else if(this.state.buildSchedule) {
       return <div>
-          <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
-          <GeneratedSchedule shifts = {this.state.buildSchedule} />
+          <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+          <GeneratedSchedule data = {this.state.buildSchedule} />
         </div>
     } else {
-      return <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>
+      return <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>   
     }
   }
 
@@ -96,11 +107,18 @@ class ScheduleIndex extends Component {
     this.setState({ buildSchedule: value})
   }
 
+  testing = () => {
+    if(this.state.testing) {
+      return <GeneratedSchedule data = {this.state.testing} />
+    }
+  }
+
   render(){
     return(
         <div>
           {this.displayCalendar()}
           {this.buildSchedule()}
+          {this.testing()}
         </div>
     )
   }

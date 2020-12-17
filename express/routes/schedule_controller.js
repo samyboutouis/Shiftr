@@ -18,6 +18,11 @@ router.get('/', (req, res) => {
     shifts.then(result => { res.json(result) });
   })
 
+  router.put('/set_data', (req, res) => {
+    let shifts = scheduler.set_data();
+    shifts.then(result => { res.json(result) });
+  })
+
   router.get('/temp_users', (req, res) => {
     console.log('Getting Users')
     let shifts = scheduler.temp_users();
@@ -32,6 +37,16 @@ router.get('/all_matches/:group', (req, res) => {
 router.put('/assign_shifts/:group', (req, res) => {
     let schedule = scheduler.assign_shifts(req.params.group);
     schedule.then(result => { res.json(result) });
+})
+
+router.delete('/delete_data', (req, res) => {
+  let shifts = scheduler.delete_data();
+  shifts.then(result => { res.json(result) });
+})
+
+router.get('/rank_users/:group', (req, res) => {
+  let shifts = scheduler.rank_users(req.params.group);
+  shifts.then(result => { res.json(result) });
 })
 
 module.exports = router

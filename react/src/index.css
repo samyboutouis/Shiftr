@@ -331,3 +331,15 @@ th{
 .tile.is-gapless > .tile.is-vertical > .tile.is-child {
   margin-bottom: 0 !important;
 }
+
+.build-schedule-button {
+  margin: 1rem;
+  padding: .8rem 3rem;
+  border: none;
+  border-radius: 7px;
+  background: url('./button.png') no-repeat scroll 0 0 transparent;
+  color: white;
+  background-size: 100% 100%;
+  cursor: pointer;
+
+}
