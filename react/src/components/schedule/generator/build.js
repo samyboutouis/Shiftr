@@ -31,7 +31,7 @@ class BuildSchedule extends Component {
   }
 
   componentDidMount() {
-    var calendars = bulmaCalendar.attach('[type="date"]', {isRange: true, labelFrom: 'Start Date', labelTo: 'End Date'});
+    var calendars = bulmaCalendar.attach('[type="date"]', {isRange: true, labelFrom: 'Start', labelTo: 'End'});
     for(var i = 0; i < calendars.length; i++) {
       calendars[i].on('select', date => {
         this.dateHandler(date);
@@ -48,7 +48,7 @@ class BuildSchedule extends Component {
           <div className="field">
             <label className="label">Group</label>
             <div className="control">
-              <input className='input is-small' name='group' type="text" placeholder="e.g CoLab" onChange={this.changeHandler} />
+              <input className='input' name='group' type="text" placeholder="e.g CoLab" onChange={this.changeHandler} />
             </div>
           </div>
 
