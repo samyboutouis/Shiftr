@@ -405,13 +405,13 @@ th{
 }
 
 .build-schedule-button {
-  margin-bottom: 2em;
-  margin-right: 1em;
+  margin: 1rem;
+  padding: .8rem 3rem;
   border: none;
   border-radius: 7px;
   background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
   background-size: 100% 100%;
-  padding: .8em 2em;
   cursor: pointer;
+
 }

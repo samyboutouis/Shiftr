@@ -90,17 +90,17 @@ class ScheduleIndex extends Component {
   buildSchedule = () => {
     if(this.state.buildSchedule === true){
       return <div>
-        <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+        <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
         <BuildSchedule toggleBuildSchedule={this.toggleBuildSchedule} />
       </div>
     }
     else if(this.state.buildSchedule) {
       return <div>
-          <button className='open-shift-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+          <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
           <GeneratedSchedule data = {this.state.buildSchedule} />
         </div>
     } else {
-      return <button className='is-pulled-right mr-6 px-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>   
+      return <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>   
     }
   }
 
