@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
-const Shift = require('../models/shift')
+const Shift = require('../models/shift');
+var jwt = require('jsonwebtoken');
 
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
@@ -11,27 +12,35 @@ router.get('/', (req, res) => {
   console.log('Getting Shifts')
   let shifts = Shift.all()
   shifts.then(result => { res.json(result) });
-})
+});
 
 router.get('/find_one/:_id', (req, res) => {
   let shift = Shift.find(req.params._id);
   shift.then(result => { res.json(result) });
-})
+});
 
 router.get('/find_open/:status', (req, res) => {
   let shift = Shift.findOther("status" , req.params.status);
   shift.then(result => { res.json(result) });
-})
+});
 
 router.get('/find_time/:start_time/:end_time', (req, res) => {
   let shift = Shift.findByTime(req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result) });
-})
+});
 
 router.get('/find_by_user/:netId', (req, res) => {
   let shift = Shift.findByUser(req.params.netId);
   shift.then(result => { res.json(result) });
-})
+});
+
+router.get('/find_by_time_and_user/:start_time/:end_time', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  console.log(token);
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  let shift = Shift.findByTimeAndUser(attributes.netid, req.params.start_time, req.params.end_time);
+  shift.then(result => { res.json(result)});
+});
 
 router.delete('/delete/:_id', (req, res) => {
   let shift = Shift.find(req.params._id);

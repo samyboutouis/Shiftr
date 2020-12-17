@@ -20,7 +20,6 @@ class Shift {
     }
   }
 
-
   delete = async () => {
     try{
       return await shiftsCollection.deleteOne({"_id": ObjectId(this.body._id)})
@@ -76,28 +75,21 @@ class Shift {
     }
   }
 
-
-  static findByUser = async (netId)  => {
+  static findByUser = async (netID)  => {
     try {
-      return await shiftsCollection.find({"employee.netid": netId}).toArray();
+      return await shiftsCollection.find({"employee.netid": netID}).toArray();
     } catch (err) {
       console.log(err);
     }
   }
 
-  //  static schedule = async () => {
-  //   try {
-  //     let openShifts = await shiftsCollection.find({"status": "open"}).toArray();
-  //     let users = new Array();
-  //     for (const shift of openShifts) {
-  //       users.push(await usersCollection.find({"group": shift.group, "availability.times": { $elemMatch: { start_time: { $lte: shift.start_time }, end_time: { $gte: shift.end_time } } }}).toArray());
-  //     }
-  //     return users;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
+  static findByTimeAndUser = async (netID, start, end) => {
+    try {
+      return await shiftsCollection.find({start_time: {$gte: start}, end_time: {$lte: end}, "employee.netid": netID}).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 module.exports = Shift

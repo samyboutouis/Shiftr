@@ -1,19 +1,29 @@
 import React, {Component} from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import AllShiftsToday from '../shift/all_shifts_today'
 
 class SupervisorShifts extends Component {
   constructor(props){
     super(props);
-    this.state = {name: "", shiftsToday: 0};
+    this.state = {name: "", shiftsToday: 0, shifts: false};
+  }
+
+  getShifts = () => {
+    let self = this;
+    axios.get("http://localhost:8080/shifts").then( (response) => {
+      self.setState({shifts: response.data.length});
+      this.determineState();
+    }).catch( (error) => {
+      console.log(error)
+    });
   }
 
   determineState = () => {
-    this.setState({name: localStorage.getItem("firstName"), shiftsToday: 1});
+    this.setState({name: localStorage.getItem("firstName"), shiftsToday: this.state.shifts});
   }
 
   componentDidMount() {
-    this.determineState();
+    this.getShifts();
   }
 
   render() {
@@ -23,7 +33,7 @@ class SupervisorShifts extends Component {
         landing = "You have one employee working today."
       }
       else{
-        landing = "You have " + this.state.shiftsToday + " shifts today."
+        landing = "You have " + this.state.shiftsToday + " employees working today."
       }
     }
     return (

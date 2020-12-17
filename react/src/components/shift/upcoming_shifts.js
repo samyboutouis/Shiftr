@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import format from "date-fns/format";
+import startOfTomorrow from 'date-fns/startOfTomorrow'
+import endOfWeek from 'date-fns/endOfWeek'
+import getUnixTime from 'date-fns/getUnixTime'
 
 class UpcomingShifts extends Component {
   constructor(props){
@@ -27,7 +30,9 @@ class UpcomingShifts extends Component {
 
   getShifts = () => {
     let self = this;
-    axios.get("http://localhost:8080/shifts").then( (response) => {
+    let startTime = getUnixTime(startOfTomorrow());
+    let endTime = getUnixTime(endOfWeek(Date.now()));
+    axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)

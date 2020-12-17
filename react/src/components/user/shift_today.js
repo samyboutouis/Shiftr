@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import format from 'date-fns/format'
+import format from 'date-fns/format';
+import startOfToday from 'date-fns/startOfToday';
+import endOfToday from 'date-fns/endOfToday';
+import getUnixTime from 'date-fns/getUnixTime'
 
 class ShiftToday extends Component {
   constructor(props){
@@ -33,7 +36,9 @@ class ShiftToday extends Component {
 
   getShifts = () => {
     let self = this;
-    axios.get("http://localhost:8080/shifts").then( (response) => {
+    let startTime = getUnixTime(startOfToday());
+    let endTime = getUnixTime(endOfToday());
+    axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)
