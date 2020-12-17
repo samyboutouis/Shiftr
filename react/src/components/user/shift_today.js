@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import ShiftForm from '../shift/form'
+import format from 'date-fns/format'
 
 class ShiftToday extends Component {
   constructor(props){
     super(props);
-    this.state = {shifts:{}};
+    this.state = {shifts:false};
   }
 
   componentDidMount = () => {
@@ -13,11 +13,19 @@ class ShiftToday extends Component {
   }
 
   drawShifts = () => {
+    let shifts = this.state.shifts;
+    let timeFormat = "hh:00";
+    let pm = "a";
     if(this.state.shifts){
       return (
-        <div>
-          {this.mapShifts()}
-          <ShiftForm getShifts={this.getShifts} clearSelectedShift={this.clearSelectedShift} reqType="create" />
+        <div className="transparent-box">
+          <div>
+          <p className="shift-time">{format(shifts[0].start_time * 1000, timeFormat)}<span className="pm">{format(shifts[0].start_time * 1000, pm)}</span> &#8594; {format(shifts[0].end_time * 1000, timeFormat)}<span className="pm">{format(shifts[0].end_time * 1000, pm)}</span></p>
+          <br />
+          <p className="shift-location"> {shifts[0].location} </p>
+          <br />
+          <p className="shift-role"> {shifts[0].group} </p>
+          </div>
         </div>
       );
     }
@@ -26,9 +34,9 @@ class ShiftToday extends Component {
   getShifts = () => {
     let self = this;
     axios.get("http://localhost:8080/shifts").then( (response) => {
-    self.setState({shifts: response.data})
+      self.setState({shifts: response.data})
     }).catch( (error) => {
-    console.log(error)
+      console.log(error)
     });
   }
 
@@ -42,14 +50,8 @@ class ShiftToday extends Component {
     }
     else {
       return (
-        <div className="transparent-box">
-          <div>
-            <p className="shift-time">2:00<span className="pm">PM</span> &#8594; 4:00<span className="pm">PM</span></p>
-            <br />
-            <p className="shift-location"> The LINK </p>
-            <br />
-            <p className="shift-role"> Student | Service Desk</p>
-          </div>
+        <div>
+          {this.drawShifts()}
         </div>
       );
     }

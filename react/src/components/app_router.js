@@ -5,7 +5,6 @@ import {
   Route
 } from "react-router-dom";
 import Home from './home';
-import UserForm from './user/form'
 import SamlConsume from './saml/consume'
 
 class AppRouter extends Component {
