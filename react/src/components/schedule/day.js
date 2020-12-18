@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import format from "date-fns/format";
 import addDays from "date-fns/addDays";
 import subDays from "date-fns/subDays";
-
-
+import ShowDay from "./showDay.js"
+import getUnixTime from "date-fns/getUnixTime"
 
 const DayCalendar = () => {
 /* set the forward and back 1 month fxn */
@@ -38,6 +38,7 @@ const hours = ["0000", "0100", "0200", "0300", "0400", "0500", "0600", "0700", "
 "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"]
 let days = currentDate; /* the day header */
 let formattedDate = "";
+console.log("CURRENTDATE;"+ days)
 
 for (let i = 0; i < 24; i++) {
   rows.push(
@@ -45,7 +46,10 @@ for (let i = 0; i < 24; i++) {
       );
   }
 
-   return <div className="body">{rows}</div>;
+   return<div> <div className="body">{rows} </div>
+
+   <ShowDay start={getUnixTime(days)}/>
+    </div>
  }
 
  const nextDay = () => {
