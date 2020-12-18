@@ -343,3 +343,28 @@ th{
   cursor: pointer;
 
 }
+
+.scheduled-shift h4 {
+  font-weight: 500;
+  font-size: 11px;
+  color: black;
+}
+
+.scheduled-shift p {
+  font-size: 10px;
+  color: #484848;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.scheduled-shift span {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: black !important;
+}
+
+.unscheduled-availability {
+  position: absolute;
+  top: 1728px;
+}

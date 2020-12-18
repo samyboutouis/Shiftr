@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios';
 import 'bulma-calendar/dist/css/bulma-calendar.min.css'
 import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js';
+import lastDayOfWeek from "date-fns/lastDayOfWeek";
 
 class BuildSchedule extends Component {
   constructor(props){
@@ -31,7 +32,9 @@ class BuildSchedule extends Component {
   }
 
   componentDidMount() {
-    var calendars = bulmaCalendar.attach('[type="date"]', {isRange: true, labelFrom: 'Start', labelTo: 'End'});
+    var start = lastDayOfWeek(new Date(), { weekStartsOn: 1 })
+    var end = lastDayOfWeek(start)
+    var calendars = bulmaCalendar.attach('[type="date"]', {isRange: true, labelFrom: 'Start', labelTo: 'End', startDate: start, endDate: end});
     for(var i = 0; i < calendars.length; i++) {
       calendars[i].on('select', date => {
         this.dateHandler(date);

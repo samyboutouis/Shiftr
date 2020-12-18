@@ -1,7 +1,6 @@
 const db = require('../database');
 var ObjectId = require('mongodb').ObjectID;
 const shiftsCollection = db.get().collection('shifts')
-// const usersCollection = db.get().collection('users')
 
 class Shift {
 
@@ -79,34 +78,13 @@ class Shift {
     }
   }
 
-
+  // group shifts by hour
   static findByHour = async (start, end)  => {
-    // try {
-    //   return await shiftsCollection.aggregate([
-    //     { "$match": {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }},
-    //     { "$group": {
-    //       "_id": { "$divide": [ { "$mod": [ "$start_time", 1000 * 60 * 24 ] }, 1 ] },
-    //       "data":{
-    //         "$push":{
-    //           "start_time":"$start_time",
-    //           "end_time":"$end_time",
-    //           "status":"$status",
-    //           "group":"$group",
-    //           "employee":"$employee"
-    //         }
-    //       }
-    //     }}
-    //   ]).toArray();
-    //   // return await shiftsCollection.find({"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }).toArray();
-    //   // return await shiftsCollection.find({"start_time": {$gte: start}, "end_time": {$lte: end}}).toArray();
-    // } catch (err) {
-    //   console.log(err);
-    // }
     try {
       return await shiftsCollection.aggregate([
-        { "$match": {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }},
+        { "$match": {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }}, //shifts within time range
         { "$group": {
-          "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, 
+          "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
           "data":{
             "$push":{
               "start_time":"$start_time",
@@ -118,8 +96,7 @@ class Shift {
           }
         }}
       ]).toArray();
-      // return await shiftsCollection.find({"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }).toArray();
-      // return await shiftsCollection.find({"start_time": {$gte: start}, "end_time": {$lte: end}}).toArray();
+      //       "_id": { "$divide": [ { "$mod": [ "$start_time", 1000 * 60 * 24 ] }, 1 ] },
     } catch (err) {
       console.log(err);
     }
@@ -133,20 +110,6 @@ class Shift {
       console.log(err);
     }
   }
-
-  //  static schedule = async () => {
-  //   try {
-  //     let openShifts = await shiftsCollection.find({"status": "open"}).toArray();
-  //     let users = new Array();
-  //     for (const shift of openShifts) {
-  //       users.push(await usersCollection.find({"group": shift.group, "availability.times": { $elemMatch: { start_time: { $lte: shift.start_time }, end_time: { $gte: shift.end_time } } }}).toArray());
-  //     }
-  //     return users;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
 }
 
 module.exports = Shift
