@@ -21,7 +21,7 @@ class ShowMonth extends Component {
     let self = this
     const start = getUnixTime(startOfDay(this.props.day))
     const end = getUnixTime(endOfDay(this.props.day))
-    axios.get("http://localhost:8080/shifts/find_time/" + start + "/" + end ).then( (response) => {
+    axios.get("http://localhost:8080/shifts/find_day/" + start + "/" + end ).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)

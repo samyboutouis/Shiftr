@@ -29,8 +29,8 @@ router.get('/find_time/:start_time/:end_time', (req, res) => {
   });
 })
 
-router.get('/find_start/:start_time/:end_time', (req, res) => {
-  let shift = Shift.findByStart(req.params.start_time, req.params.end_time);
+router.get('/find_day/:start_time/:end_time', (req, res) => {
+  let shift = Shift.findByTime(req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result)
   });
 })
