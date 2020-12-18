@@ -55,7 +55,6 @@ class CalIndex extends Component {
 
   drawCalendar = () => {
     if (this.state.navState === "Week"){
-      console.log("week")
       return <div>
           <WeekCalendar />
         </div>

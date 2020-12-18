@@ -19,8 +19,6 @@ class ShiftShow extends Component {
 
 
   render(){
-    console.log(this.props)
-    console.log(typeof this.props.shift._id)
     return(
      <div>
         <h3>START TIME: {this.props.shift.start_time}</h3>

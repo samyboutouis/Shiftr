@@ -12,7 +12,6 @@ import getUnixTime from "date-fns/getUnixTime"
 const WeekCalendar = () => {
 /* set the forward and back 1 month fxn */
 const [currentDate, setCurrentDate] = useState(new Date());
-const [shifts, setShifts] = useState();
 /* month header */
 const header = () => {
 const dateFormat = "MMMM yyyy";

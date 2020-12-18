@@ -8,7 +8,7 @@ import WeekCalendar from './week.js'
 import DayCalendar from './day.js'
 import BuildSchedule from './generator/build'
 import axios from 'axios';
-import ShiftIndex from '../shift/index.js'
+
 class ScheduleIndex extends Component {
   constructor(props){
     super();

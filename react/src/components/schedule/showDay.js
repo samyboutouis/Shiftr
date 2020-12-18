@@ -18,10 +18,8 @@ class ShowDay extends Component {
   getShifts = (props) => {
     let self = this
     const end = this.props.start+86400
-    console.log("START"+this.props.start)
     axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end).then( (response) => {
       self.setState({shifts: response.data})
-      console.log(this.state.shifts)
     }).catch( (error) => {
       console.log(error)
     });
@@ -38,10 +36,10 @@ class ShowDay extends Component {
   mapShifts = () => {
     let shifts = this.state.shifts
     var cells=[];
-    for(var i=0;i<24; i++) {
+    for(let i=0;i<24; i++) {
       if(shifts[i]){
     shifts[i].data.map((shift,index) =>
-        cells.push(<div className="calendar-day-entry" style={{position: "absolute", top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000), paddingBottom: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/2}}>
+        cells.push(<div key={i+' '+index} className="calendar-day-entry" style={{position: "absolute", top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000), paddingBottom: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/2}}>
                 {format(shift.start_time*1000, "HH mm")} - {format(shift.end_time*1000, "HH mm")}</div>
     ))}}
     return cells;

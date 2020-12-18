@@ -51,10 +51,7 @@ for (let i = 0; i < 7; i++) {
 };
 /* calendar cells */
 
-const shiftAnalysis = 'dd MM'
-
-
-
+// const shiftAnalysis = 'dd MM'
 const cells = () => {
 const monthStart = startOfMonth(currentDate);
 const monthEnd = endOfMonth(monthStart);

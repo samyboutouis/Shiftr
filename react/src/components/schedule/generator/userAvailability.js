@@ -29,7 +29,8 @@ class UserAvailability extends Component {
         {/* <p>Rank:   {this.props.user.rank }</p> */}
         {/* <p>Total Available Hours:   {this.props.user.total_available_hours/3600 }</p> */}
         <p>Preferred Hours:   {this.props.user.availability.preferred_hours }</p>
-        <p>Availability: {this.drawAvailability()}</p>
+        <p>Availability: </p>
+        {this.drawAvailability()}
         <br/>
       </div>
 

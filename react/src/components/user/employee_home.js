@@ -12,7 +12,6 @@ class EmployeeHome extends Component {
   render() {
     let home = []
     if(this.props.affiliation === 'student'){
-      console.log("here")
       home.push(
         <div className="tile is-7 is-vertical is-parent" key="vertical">
           <div className="tile is-child">
