@@ -103,7 +103,6 @@ background: transparent;
 }
 .calendar .body .week-cell {
 position: relative;
-height: 40em;
 width: 10em;
 overflow: hidden;
 cursor: pointer;

@@ -24,7 +24,7 @@ router.get('/find_open/:status', (req, res) => {
 })
 
 router.get('/find_time/:start_time/:end_time', (req, res) => {
-  let shift = Shift.findByTime(req.params.start_time, req.params.end_time);
+  let shift = Shift.findByHour(req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result)
   });
 })

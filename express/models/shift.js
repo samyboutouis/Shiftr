@@ -86,6 +86,52 @@ class Shift {
   }
 
 
+  static findByHour = async (start, end)  => {
+    // try {
+    //   return await shiftsCollection.aggregate([
+    //     { "$match": {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }},
+    //     { "$group": {
+    //       "_id": { "$divide": [ { "$mod": [ "$start_time", 1000 * 60 * 24 ] }, 1 ] },
+    //       "data":{
+    //         "$push":{
+    //           "start_time":"$start_time",
+    //           "end_time":"$end_time",
+    //           "status":"$status",
+    //           "group":"$group",
+    //           "employee":"$employee"
+    //         }
+    //       }
+    //     }}
+    //   ]).toArray();
+    //   // return await shiftsCollection.find({"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }).toArray();
+    //   // return await shiftsCollection.find({"start_time": {$gte: start}, "end_time": {$lte: end}}).toArray();
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    try {
+      return await shiftsCollection.aggregate([
+        { "$match": {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }},
+        { "$group": {
+          "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, 
+          "data":{
+            "$push":{
+              "start_time":"$start_time",
+              "end_time":"$end_time",
+              "status":"$status",
+              "group":"$group",
+              "employee":"$employee"
+            }
+          }
+        }}
+      ]).toArray();
+      // return await shiftsCollection.find({"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }).toArray();
+      // return await shiftsCollection.find({"start_time": {$gte: start}, "end_time": {$lte: end}}).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
   static findByUser = async (netId)  => {
     try {
       return await shiftsCollection.find({"employee.netid": netId}).toArray();
