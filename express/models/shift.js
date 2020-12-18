@@ -56,11 +56,7 @@ class Shift {
   }
   static findOther = async (key, value)  => {
     try {
-      // console.log("VALUE" + value)
-      // console.log("KEY" + key)
       return await shiftsCollection.find({[key]: value}).toArray();
-      // return new Shift(shift)
-
     } catch (err) {
       console.log(err);
     }
@@ -71,7 +67,6 @@ class Shift {
     try {
 
       return await shiftsCollection.find({"start_time": {$gte: parseInt(start)}, "end_time": {$lte: parseInt(end)}}).toArray();
-      // return await shiftsCollection.find({"start_time": {$gte: start}, "end_time": {$lte: end}}).toArray();
     } catch (err) {
       console.log(err);
     }
@@ -79,7 +74,6 @@ class Shift {
   static findByStart = async (start, end)  => {
     try {
       return await shiftsCollection.find({"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }).toArray();
-      // return await shiftsCollection.find({"start_time": {$gte: start}, "end_time": {$lte: end}}).toArray();
     } catch (err) {
       console.log(err);
     }

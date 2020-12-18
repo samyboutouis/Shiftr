@@ -50,9 +50,8 @@ class ShowWeek extends Component {
 
   render(){
     return(
-     <div>
+      <div>
         {this.drawShifts()}
-        {document.documentElement.style.setProperty("--color", "lightseagreen")}
       </div>
     )
   }
