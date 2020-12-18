@@ -10,21 +10,39 @@ class EmployeeHome extends Component {
   }
 
   render() {
-    return (
-      <div className="tile is-gapless is-ancestor">
-        <div className="tile is-7 is-vertical is-parent">
+    let home = []
+    if(this.props.affiliation === 'student'){
+      console.log("here")
+      home.push(
+        <div className="tile is-7 is-vertical is-parent" key="vertical">
           <div className="tile is-child">
-            <CurrentShift />
+            <CurrentShift affiliation={this.props.affiliation}/>
           </div>
           <div className="tile is-child">
             <UpcomingShifts />
           </div>
         </div>
-        <div className="tile is-parent">
+      );
+    }
+    else {
+      home.push(
+        <div className="tile is-7 is-parent" key="supervisor">
           <div className="tile is-child">
-            <ShiftPool />
+            <CurrentShift affiliation={this.props.affiliation}/>
           </div>
         </div>
+      );
+    }
+    home.push(
+      <div className="tile is-parent" key="pool">
+        <div className="tile is-child">
+          <ShiftPool />
+        </div>
+      </div>
+    );
+    return (
+      <div className="tile is-gapless is-ancestor">
+        {home}
       </div>
     );
   }

@@ -18,7 +18,7 @@ class Home extends Component {
   }
 
   samlLogout = () => {
-    localStorage.removeItem("loggedIn");
+    localStorage.clear();
     let url = "http://localhost:8080/saml/logout"
     window.location.href = url;
   }
@@ -28,41 +28,24 @@ class Home extends Component {
   }
 
   showHome = () => {
+    let home = [];
     if (localStorage.getItem('loggedIn')){
+      home.push(<Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout} affiliation={localStorage.getItem('affiliation')} key="nav"/>)
       if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
-        return (
-          <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
-            <EmployeeHome />
-          </div>
-        );
+        home.push(<EmployeeHome affiliation={localStorage.getItem('affiliation')} key="home"/>);
       }else if(this.state.navState === "Availability"){
-        return (
-          <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
-            <AvailabilityIndex />
-          </div>
-        );
+        home.push(<AvailabilityIndex key="availability"/>);
       }else if(this.state.navState === "Schedule"){
-        return (
-          <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
-            <ScheduleIndex />
-          </div>
-        );
+        home.push(<ScheduleIndex key="schedule"/>)
       }else if(this.state.navState === "Hours") {
-        return (
-          <div>
-            <Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout}/>
-            <HoursIndex />
-          </div>
-        );
+        home.push(<HoursIndex key="hours"/>)
       }
     }else{
-      return <div>
+      home.push(
         <button onClick={this.samlLogin}>Login</button>
-      </div>
-    }
+      );
+    } 
+    return home;
   }
 
   render(){

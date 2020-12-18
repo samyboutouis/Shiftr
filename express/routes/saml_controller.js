@@ -4,6 +4,7 @@ var saml2 = require('saml2-js');
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var cookie = require('cookie');
+const User = require('../models/user');
 
 //configure identity provider
 const idp_options = {
@@ -29,10 +30,10 @@ router.use(function timeLog (req, res, next) {
   next()
 });
 
-router.get('/attributes', (req,res) => { 
-  let token = req.cookies["shiftr-saml"]
-  token = jwt.verify(attrs, "make-a-real-secret");
-  res.json(token)
+router.get('/attributes', (req,res) => {
+  let token = req.cookies["shiftr-saml"];
+  let decoded = jwt.verify(token, "make-a-real-secret");
+  res.json(decoded);
 });
 
 //consume SAML respone from the DUKE IDP
@@ -46,15 +47,16 @@ router.post('/consume', (req, res) => {
     const token = jwt.sign(attributes, "make-a-real-secret");
 
     // Set a new secure cookie for future auth
-    res.setHeader('Set-Cookie', cookie.serialize('shiftr-saml', token, {
+    res.cookie("shiftr-saml", token, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7 // 1 week
-    }));
- 
+    })
+    
+    User.createIfAbsent(attributes);
+    
     res.redirect('http://localhost:3000/saml/consume');
   });
 });
-
 
 router.get('/logout', (req,res) => {
   res.clearCookie("shiftr-saml");

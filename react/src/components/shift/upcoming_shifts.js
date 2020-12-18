@@ -1,27 +1,18 @@
 import React, {Component} from 'react';
-import ShiftShow from './show'
-// import ShiftForm from './form'
 import axios from 'axios';
 import format from "date-fns/format";
+import startOfTomorrow from 'date-fns/startOfTomorrow'
+import endOfWeek from 'date-fns/endOfWeek'
+import getUnixTime from 'date-fns/getUnixTime'
 
 class UpcomingShifts extends Component {
   constructor(props){
     super(props)
-    this.state= {shifts: false, selectedShift: false}
+    this.state= {shifts: false}
   }
 
   componentDidMount = () => {
     this.getShifts()
-  }
-
-  clearSelectedShift = () => {
-    this.setState({ selectedShift: false})
-  }
-
-  drawSelectedShift = () => {
-    if(this.state.selectedShift){
-      return <ShiftShow clearSelectedShift={this.clearSelectedShift} shift={this.state.selectedShift} getShifts={this.getShifts} />
-    }
   }
 
   drawShifts = () => {
@@ -39,24 +30,26 @@ class UpcomingShifts extends Component {
 
   getShifts = () => {
     let self = this;
-    axios.get("http://localhost:8080/shifts").then( (response) => {
-    self.setState({shifts: response.data})
+    let startTime = getUnixTime(startOfTomorrow());
+    let endTime = getUnixTime(endOfWeek(Date.now()));
+    axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
+      self.setState({shifts: response.data})
     }).catch( (error) => {
-    console.log(error)
+      console.log(error)
     });
   }
 
   mapShifts = () => {
     let shifts = this.state.shifts;
-    let dateFormat = "iii ee MMM";
+    let dateFormat = "eee dd MMM";
     let timeFormat = "hh:00aaaa";
     return shifts.map((shift,index) =>
     <div key={index} className='tile is-child columns is-mobile'>
       <div className='column is-3 upcoming-shift-date'>
-        <p>{format(new Date(shift.start_time), dateFormat)}</p>
+        <p>{format(shift.start_time * 1000, dateFormat)}</p>
       </div>
       <div className='column is-9'>
-        <p className='upcoming-shift-time'>{format(new Date(shift.start_time), timeFormat)} - {format(new Date(shift.end_time), timeFormat)}</p>
+        <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
         <p className='upcoming-shift-text'> {shift.group} </p>
         <p className='upcoming-shift-text'> @{shift.location}</p>
       </div>
@@ -64,16 +57,11 @@ class UpcomingShifts extends Component {
     );
   }
 
-  selectShift = (shift) => {
-    this.setState({selectedShift: shift})
-  }
-
   render(){
     return(
       <div className="upcoming-shift">
           <p className="upcoming-shift-title">Your upcoming shifts</p>
           {this.drawShifts()}
-          {this.drawSelectedShift()}
       </div>
     );
   }

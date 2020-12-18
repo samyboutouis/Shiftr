@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ShiftShow from './show'
 import axios from 'axios';
+import format from "date-fns/format";
 
 class OpenShifts extends Component {
   constructor(props){
@@ -26,16 +27,19 @@ class OpenShifts extends Component {
 
   drawShifts = () => {
     if(this.state.shifts && !this.state.selectedShift){
-      return <div>
-        {this.mapShifts()}
-      </div>
+      return( 
+        <div className='tile is-ancestor'>
+          <div className='tile is-parent is-vertical'>
+            {this.mapShifts()}
+          </div>
+        </div>
+      );
     }
   }
 
   getShifts = () => {
     let self = this;
-    //i only want shifts with status: true
-    axios.get("http://localhost:8080/shifts/find_open/true").then((response) => {
+    axios.get("http://localhost:8080/shifts/find_open/open").then((response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)
@@ -44,14 +48,23 @@ class OpenShifts extends Component {
 
   mapShifts = () => {
     if (this.state.shifts) {
-    //console.log(this.state.shifts)
+    let dateFormat = "eee dd MMM";
+    let timeFormat = "hh:00aaaa";
     let shifts = this.state.shifts
     return shifts.map((shift,index) =>
-      <div key={index}>
-        <p className='open-shift-time'>{shift.start_time} - {shift.end_time}</p>
-        <p className='open-shift-text'> {shift.group} | @{shift.location}</p>
+    <div key={index} className='tile is-child columns is-mobile'>
+      <div className='column is-3 upcoming-shift-date'>
+        <p>{format(shift.start_time * 1000, dateFormat)}</p>
+      </div>
+      <div className='column is-6'>
+        <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
+        <p className='upcoming-shift-text'> {shift.group} </p>
+        <p className='upcoming-shift-text'> @{shift.location}</p>
+      </div>
+      <div className='column is-3'>
         <button className='open-shift-button' onClick={() => {this.selectShift.bind(this, shift); this.claim(shift);}}>Claim</button>
       </div>
+    </div>
     )
   }
 }

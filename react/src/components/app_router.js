@@ -5,7 +5,6 @@ import {
   Route
 } from "react-router-dom";
 import Home from './home';
-import UserForm from './user/form'
 import SamlConsume from './saml/consume'
 
 class AppRouter extends Component {
@@ -18,10 +17,6 @@ class AppRouter extends Component {
 
               <Route path="/saml/consume">
                 <SamlConsume />
-              </Route>
-
-              <Route path="/create/user">
-                <UserForm reqType="create"/>
               </Route>
 
               <Route path="/">

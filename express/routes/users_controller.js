@@ -5,6 +5,7 @@ const User = require('../models/user')
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
+  let token = req.cookies["shiftr-saml"]
   console.log('Time: ', Date.now())
   next()
 })

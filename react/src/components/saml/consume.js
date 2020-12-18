@@ -5,19 +5,20 @@ import axios from 'axios';
 class SamlConsume extends Component {
   constructor(props){
     super()
-    this.state = ({attributes : null});
     localStorage.setItem("loggedIn", true)
   }
   
   setAttributes = () => {
-    let self = this;
     axios.get("http://localhost:8080/saml/attributes").then( (response) => {
-      self.setState({attributes: response.data})
+      let name = response.data.display_name.split(" ");
+      localStorage.setItem("firstName", name[0]);
+      localStorage.setItem("lastName", name[name.length - 1]);
+      localStorage.setItem("email", response.data.eppn);
+      localStorage.setItem("affiliation", response.data.affiliaton[0]);
+      localStorage.setItem("netid", response.data.netid);
     }).catch( (error) => {
       console.log(error)
     });
-    // localStorage.setItem("netid", this.state.attributes.netid);
-    // console.log(this.state.attributes.netid);
   }
 
   returnToHomePage = () => {
