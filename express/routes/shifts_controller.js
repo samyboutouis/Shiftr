@@ -4,6 +4,8 @@ const Shift = require('../models/shift');
 var jwt = require('jsonwebtoken');
 
 router.use(function timeLog (req, res, next) {
+  let token = req.cookies["shiftr-saml"]
+  console.log('Token ', token)
   console.log('Time: ', Date.now())
   next()
 })

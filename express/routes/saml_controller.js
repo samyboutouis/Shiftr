@@ -47,10 +47,10 @@ router.post('/consume', (req, res) => {
     const token = jwt.sign(attributes, "make-a-real-secret");
 
     // Set a new secure cookie for future auth
-    res.setHeader('Set-Cookie', cookie.serialize('shiftr-saml', token, {
+    res.cookie("shiftr-saml", token, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7 // 1 week
-    }));
+    })
     
     User.createIfAbsent(attributes);
     
