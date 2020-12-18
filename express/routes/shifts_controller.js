@@ -5,7 +5,6 @@ var jwt = require('jsonwebtoken');
 
 router.use(function timeLog (req, res, next) {
   let token = req.cookies["shiftr-saml"]
-  console.log('Token ', token)
   console.log('Time: ', Date.now())
   next()
 })
@@ -38,7 +37,6 @@ router.get('/find_by_user/:netId', (req, res) => {
 
 router.get('/find_by_time_and_user/:start_time/:end_time', (req, res) => {
   let token = req.cookies["shiftr-saml"];
-  console.log(token);
   let attributes = jwt.verify(token, "make-a-real-secret");
   let shift = Shift.findByTimeAndUser(attributes.netid, req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result)});

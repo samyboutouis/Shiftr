@@ -1,30 +1,40 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Clock from '../../clock.png';
-import AllShiftsToday from '../shift/all_shifts_today'
+import AllShiftsToday from '../shift/all_shifts_today';
+import startOfToday from 'date-fns/startOfToday';
+import endOfToday from 'date-fns/endOfToday';
+import getUnixTime from 'date-fns/getUnixTime';
 
 class CurrentShift extends Component {
   constructor(props){
     super(props);
-    this.state = {name: "", shiftsToday: 0, shifts: false};
+    this.state = {name: "", shiftsToday: 0};
   }
 
   getShifts = () => {
     let self = this;
-    axios.get("http://localhost:8080/shifts").then( (response) => {
-      self.setState({shifts: response.data.length});
-      this.determineState();
-    }).catch( (error) => {
-      console.log(error)
-    });
-  }
-
-  determineState = () => {
-    this.setState({name: localStorage.getItem("firstName"), shiftsToday: this.state.shifts});
+    let startTime = getUnixTime(startOfToday());
+    let endTime = getUnixTime(endOfToday());
+    console.log(startTime + " " + endTime);
+    if(this.props.affiliation === 'student'){
+      axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
+        self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length});
+      }).catch( (error) => {
+        console.log(error)
+      });
+    }
+    else {
+      axios.get("http://localhost:8080/shifts/find_time/" + startTime + "/" + endTime).then( (response) => {
+        self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length});
+      }).catch( (error) => {
+        console.log(error)
+      });
+    }
   }
 
   componentDidMount() {
-    this.determineState();
+    this.getShifts();
   }
 
   render() {

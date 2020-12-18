@@ -3,7 +3,7 @@ import axios from 'axios';
 import format from 'date-fns/format'
 import startOfToday from 'date-fns/startOfToday';
 import endOfToday from 'date-fns/endOfToday';
-import getUnixTime from 'date-fns/getUnixTime'
+import getUnixTime from 'date-fns/getUnixTime';
 
 class AllShiftsToday extends Component {
   constructor(props){
@@ -65,10 +65,7 @@ class AllShiftsToday extends Component {
   }
 
   render() {
-    let zeroShifts = "No employees are scheduled today."
-    if(this.props.affiliation === 'student'){
-      zeroShifts = "Enjoy the day off!";
-    }
+    let zeroShifts = "Enjoy the day off!"
     if(this.props.numOfShifts === 0){
       return (
         <div className="transparent-box">
