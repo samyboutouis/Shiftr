@@ -109,6 +109,14 @@ class Shift {
     }
   }
 
+  static findByUserPast = async (netID)  => {
+    try {
+      return await shiftsCollection.find({"employee.netid": netID, "clocked_in": {$exists: true}, "clocked_out": {$exists: true}, "end_time": {$lte: Date.now()/1000}}).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   static findByTimeAndUser = async (netID, start, end) => {
     try {
       return await shiftsCollection.find({start_time: {$gte: start}, end_time: {$lte: end}, "employee.netid": netID}).toArray();
