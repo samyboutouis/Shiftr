@@ -4,6 +4,7 @@ import addDays from "date-fns/addDays";
 import subDays from "date-fns/subDays";
 import ShowDay from "./showDay.js"
 import getUnixTime from "date-fns/getUnixTime"
+import startOfDay from "date-fns/startOfDay"
 
 const DayCalendar = () => {
 /* set the forward and back 1 month fxn */
@@ -41,14 +42,14 @@ let days = currentDate; /* the day header */
 
 for (let i = 0; i < 24; i++) {
   rows.push(
-        <div className="row" key={i}> {(hours[i])} </div>
+        <div className="row-day" key={i}> {(hours[i])} </div>
       );
   }
 
-   return<div> <div className="body">{rows} </div>
-
-   <ShowDay start={getUnixTime(days)}/>
-    </div>
+   return(<div>
+   <div className="body">{rows} </div>
+   <ShowDay start={getUnixTime(startOfDay(days))}/>
+    </div>)
  }
 
  const nextDay = () => {

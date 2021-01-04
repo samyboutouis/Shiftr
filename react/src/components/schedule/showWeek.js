@@ -40,8 +40,9 @@ class ShowWeek extends Component {
     for(let i=0;i<24; i++) {
       if(shifts[i]){
     shifts[i].data.map((shift,index) =>
-        cells.push(<div className="calendar-week-entry" key={i+' '+index} style={{position: "absolute", top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000), paddingBottom: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/2}}>
-                {format(shift.start_time*1000, "HH mm")} - {format(shift.end_time*1000, "HH mm")}</div>
+        cells.push(<div className="calendar-week-entry" key={i+' '+index} style={{position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
+                {format(shift.start_time*1000, "HH mm")} - {format(shift.end_time*1000, "HH mm")}
+                </div>
     ))}}
     return cells;
   }
@@ -51,6 +52,8 @@ class ShowWeek extends Component {
     return(
       <div>
         {this.drawShifts()}
+        <div className="spacing-cell"> &nbsp;
+        </div>
       </div>
     )
   }
