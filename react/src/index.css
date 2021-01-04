@@ -316,6 +316,15 @@ th{
   background-color: #FFA5AA
 }
 
+.hours-header-table th {
+  background-color: white;
+  border: 0;
+}
+
+.hours-header-table td {
+  background-color: white;
+}
+
 .hours-table {
   margin-left: 10%;
   margin-right: 10%;
