@@ -19,20 +19,21 @@ class AllShiftsToday extends Component {
 
   mapShifts = () => {
     let shifts = this.props.shifts;
+    shifts.sort((a, b) => a.start_time - b.start_time);
     let timeFormat = "hh:00";
     let pm = "a";
     return shifts.map((shift,index) => 
-    <div key={index}>
-      <div className="transparent-box">
-        <div>
-          <p className="shift-time">{format(shift.start_time * 1000, timeFormat)}<span className="pm">{format(shift.start_time * 1000, pm)}</span> &#8594; {format(shift.end_time * 1000, timeFormat)}<span className="pm">{format(shift.end_time * 1000, pm)}</span></p>
-          <br />
-          <p className="shift-location"> {shift.location} </p>
-          <br />
-          <p className="shift-role"> {shift.group} </p>
+      <div key={index}>
+        <div className="transparent-box">
+          <div>
+            <p className="shift-time">{format(shift.start_time * 1000, timeFormat)}<span className="pm">{format(shift.start_time * 1000, pm)}</span> &#8594; {format(shift.end_time * 1000, timeFormat)}<span className="pm">{format(shift.end_time * 1000, pm)}</span></p>
+            <br />
+            <p className="shift-location"> {shift.location} </p>
+            <br />
+            <p className="shift-role"> {shift.group} </p>
+          </div>
         </div>
       </div>
-    </div>
     );
   }
 
@@ -47,7 +48,7 @@ class AllShiftsToday extends Component {
     }
     else {
       let shift = [];
-      shift.push(<div key="i">{this.drawShifts()}</div>);
+      shift.push(<div key="shifts">{this.drawShifts()}</div>);
       if(this.props.affiliation === 'student'){
         shift.push(
           <button className="clock-in" key="button"> 

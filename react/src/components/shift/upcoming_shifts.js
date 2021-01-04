@@ -21,7 +21,6 @@ class UpcomingShifts extends Component {
         <div className='tile is-ancestor'>
           <div className='tile is-parent is-vertical'>
             {this.mapShifts()}
-            {/* <ShiftForm getShifts={this.getShifts} clearSelectedShift={this.clearSelectedShift} reqType="create" /> */}
           </div>
         </div>
       );
@@ -41,6 +40,7 @@ class UpcomingShifts extends Component {
 
   mapShifts = () => {
     let shifts = this.state.shifts;
+    shifts = this.props.additionalShifts.concat(shifts);
     let dateFormat = "eee dd MMM";
     let timeFormat = "hh:00aaaa";
     return shifts.map((shift,index) =>
