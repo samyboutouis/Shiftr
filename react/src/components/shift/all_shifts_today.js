@@ -4,6 +4,7 @@ import format from 'date-fns/format'
 import startOfToday from 'date-fns/startOfToday';
 import endOfToday from 'date-fns/endOfToday';
 import getUnixTime from 'date-fns/getUnixTime';
+import Clock from '../../clock.png';
 
 class AllShiftsToday extends Component {
   constructor(props){
@@ -74,9 +75,19 @@ class AllShiftsToday extends Component {
       );
     }
     else {
+      let shift = [];
+      shift.push(<div>{this.drawShifts()}</div>);
+      if(this.props.affiliation === 'student'){
+        shift.push(
+          <button className="clock-in" key="button"> 
+            <img className="clock" src={Clock} alt="Clock"/>
+            <span className="clock-text">Clock In</span>
+          </button>
+        );
+      }
       return (
         <div>
-          {this.drawShifts()}
+          {shift};
         </div>
       );
     }

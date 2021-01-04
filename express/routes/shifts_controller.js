@@ -45,6 +45,9 @@ router.get('/find_by_user/:netId', (req, res) => {
 router.get('/find_by_time_and_user/:start_time/:end_time', (req, res) => {
   let token = req.cookies["shiftr-saml"];
   let attributes = jwt.verify(token, "make-a-real-secret");
+  console.log(req.params.start_time);
+  console.log(req.params.end_time);
+  console.log(attributes.netid);
   let shift = Shift.findByTimeAndUser(attributes.netid, req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result)});
 });

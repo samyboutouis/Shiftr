@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Clock from '../../clock.png';
 import AllShiftsToday from '../shift/all_shifts_today';
 import startOfToday from 'date-fns/startOfToday';
 import endOfToday from 'date-fns/endOfToday';
@@ -20,6 +19,9 @@ class CurrentShift extends Component {
     if(this.props.affiliation === 'student'){
       axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
         self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length});
+        // console.log(startTime);
+        // console.log(endTime);
+        // console.log(this.state.shiftsToday);
       }).catch( (error) => {
         console.log(error)
       });
@@ -70,14 +72,6 @@ class CurrentShift extends Component {
       </div>
     );
     shift.push(<AllShiftsToday numOfShifts={this.state.shiftsToday} affiliation={this.props.affiliation} key="shifts"/>);
-    if(this.props.affiliation === 'student'){
-      shift.push(
-        <button className="clock-in" key="button"> 
-          <img className="clock" src={Clock} alt="Clock"/>
-          <span className="clock-text">Clock In</span>
-        </button>
-      );
-    }
     return (
       <div className="background-pretty-gradient">
         {shift}
