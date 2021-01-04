@@ -1,23 +1,14 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import format from 'date-fns/format'
-import startOfToday from 'date-fns/startOfToday';
-import endOfToday from 'date-fns/endOfToday';
-import getUnixTime from 'date-fns/getUnixTime';
 import Clock from '../../clock.png';
 
 class AllShiftsToday extends Component {
   constructor(props){
     super(props);
-    this.state = {shifts: false};
-  }
-
-  componentDidMount = () => {
-    this.getShifts()
   }
 
   drawShifts = () => {
-    if(this.state.shifts){
+    if(this.props.shifts){
       return (
         <div>
           {this.mapShifts()}
@@ -26,28 +17,8 @@ class AllShiftsToday extends Component {
     }
   }
 
-  getShifts = () => {
-    let self = this;
-    let startTime = getUnixTime(startOfToday());
-    let endTime = getUnixTime(endOfToday());
-    if(this.props.affiliation === 'student'){
-      axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
-        self.setState({shifts: response.data})
-      }).catch( (error) => {
-        console.log(error)
-      });
-    }
-    else {
-      axios.get("http://localhost:8080/shifts/find_day/" + startTime + "/" + endTime).then( (response) => {
-        self.setState({shifts: response.data})
-      }).catch( (error) => {
-        console.log(error)
-      });
-    }
-  }
-
   mapShifts = () => {
-    let shifts = this.state.shifts;
+    let shifts = this.props.shifts;
     let timeFormat = "hh:00";
     let pm = "a";
     return shifts.map((shift,index) => 
@@ -76,7 +47,7 @@ class AllShiftsToday extends Component {
     }
     else {
       let shift = [];
-      shift.push(<div>{this.drawShifts()}</div>);
+      shift.push(<div key="i">{this.drawShifts()}</div>);
       if(this.props.affiliation === 'student'){
         shift.push(
           <button className="clock-in" key="button"> 

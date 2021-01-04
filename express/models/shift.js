@@ -111,7 +111,10 @@ class Shift {
 
   static findByTimeAndUser = async (netID, start, end) => {
     try {
-      return await shiftsCollection.find({start_time: {$gte: start}, end_time: {$lte: end}, "employee.netid": {netID}}).toArray();
+      console.log(start);
+      console.log(end);
+      console.log(netID);
+      return await shiftsCollection.find({"employee.netid": netID, start_time: {$gte: parseInt(start)}, end_time: {$lte: parseInt(end)}}).toArray();
     } catch (err) {
       console.log(err);
     }

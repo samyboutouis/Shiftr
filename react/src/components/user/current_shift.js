@@ -8,20 +8,16 @@ import getUnixTime from 'date-fns/getUnixTime';
 class CurrentShift extends Component {
   constructor(props){
     super(props);
-    this.state = {name: "", shiftsToday: 0};
+    this.state = {name: "", shiftsToday: 0, shifts: false};
   }
 
   getShifts = () => {
     let self = this;
     let startTime = getUnixTime(startOfToday());
     let endTime = getUnixTime(endOfToday());
-    console.log(startTime + " " + endTime);
     if(this.props.affiliation === 'student'){
       axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
-        self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length});
-        // console.log(startTime);
-        // console.log(endTime);
-        // console.log(this.state.shiftsToday);
+        self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length, shifts: response.data});
       }).catch( (error) => {
         console.log(error)
       });
@@ -71,7 +67,7 @@ class CurrentShift extends Component {
         <p className="landing-box">{landing}</p>
       </div>
     );
-    shift.push(<AllShiftsToday numOfShifts={this.state.shiftsToday} affiliation={this.props.affiliation} key="shifts"/>);
+    shift.push(<AllShiftsToday numOfShifts={this.state.shiftsToday} shifts={this.state.shifts} affiliation={this.props.affiliation} key="shifts"/>);
     return (
       <div className="background-pretty-gradient">
         {shift}
