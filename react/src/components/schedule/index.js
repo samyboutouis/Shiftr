@@ -52,13 +52,12 @@ class ScheduleIndex extends Component {
             </div>
             <div className="key"> {/* legend*/}
               <ScheduleKey groups={[
-                {group: 'The Link', color: Constants.RED},
-                {group: 'Lilly Library', color: Constants.PINK},
-                {group: 'Co-Lab', color: Constants.DARKBLUE},
-                {group: 'East Printers', color: Constants.PEACH},
-                {group: 'Central Printers', color: Constants.LIGHTBLUE},
-                {group: 'West Printers', color: Constants.DARKPURPLE},
-                {group: 'Perkins Library', color: Constants.LIGHTPURPLE}]}/>
+                {group: 'MPS', color: Constants.RED},
+                {group: 'Co-Lab Services', color: Constants.PINK},
+                {group: 'Tech Tutors', color: Constants.DARKBLUE},
+                {group: 'Labs and Training', color: Constants.PEACH},
+                {group: 'Office Hours', color: Constants.LIGHTBLUE},
+                {group: 'DesignHub', color: Constants.DARKPURPLE}]}/>
             </div>
           </div>
         </div>
@@ -99,7 +98,7 @@ class ScheduleIndex extends Component {
           <GeneratedSchedule data = {this.state.buildSchedule} />
         </div>
     } else {
-      return <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>   
+      return <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>
     }
   }
 

@@ -176,10 +176,10 @@ width: calc(100%/7);
 
 
 /* time based shift location */
-/* :root{
-  --padbottom: 0em;
-  --marg: 2px;
-} */
+:root{
+  --tab: blue;
+  /* labs and training, office hours, designhub */
+}
 
 .twelve {
   height: 20px;
@@ -190,7 +190,7 @@ width: calc(100%/7);
   padding-left: 10px;
   /* padding-bottom: var(--padbottom); */
   background-color: rgba(235, 232, 232, .3);
-  border-left: 5px solid yellow;
+  border-left: 5px solid var(--tab);
 }
 
 
@@ -207,4 +207,25 @@ width: calc(100%/7);
 .spacing-cell{
   position: absolute;
   padding-bottom: 720px
+}
+
+
+/* these classes colour the groups that the shifts belong in */
+.mps {
+  border-left-color: rgba(255, 0, 0, .4);
+}
+.services {
+  border-left-color: rgba(245, 66, 170, .4);
+}
+.tutors {
+  border-left-color: rgba(20, 12, 245, .4);
+}
+.labTrain {
+  border-left-color: rgba(245, 113, 12, .4);
+}
+.officeHours {
+  border-left-color: rgba(12, 202, 245, .4);
+}
+.designhub {
+  border-left-color: rgba(90, 12, 245, .4);
 }
