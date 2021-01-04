@@ -109,13 +109,15 @@ class Shift {
     }
   }
 
-  static findByUserPast = async (netID)  => {
+  static findByUserPast = async (netid, date)  => {
+    //, "end_time": {$lte: Date.now()/1000}
     try {
-      return await shiftsCollection.aggregate([
-        { $match: {"employee.netid": netID, "clocked_in": {$exists: true}, "clocked_out": {$exists: true}, "end_time": {$lte: Date.now()/1000}} }, 
+      var shifts = await shiftsCollection.aggregate([
+        { $match: {"employee.netid": netid, "clocked_in": {$exists: true}, "clocked_out": {$exists: true},  "end_time": {$lte: Date.now()/1000}, "start_time": {$gte: date}} }, 
         { $project: { "clocked_in":1, "clocked_out":1, "start_time":1, "end_time":1, 
           "total_hours": { $subtract: ["$clocked_out", "$clocked_in"] },
           "ot_hours": { $add: [ { $cond: [ { $gte: [ "$clocked_in", "$start_time" ] }, 0, {$subtract: ["$start_time", "$clocked_in"]} ] }, { $cond: [ { $lte: [ "$clocked_out", "$end_time" ] }, 0, {$subtract: ["$clocked_out", "$end_time"]}]}]}} }]).toArray();
+      return {shifts: shifts, total_hours: shifts.reduce((sum, shift) => sum + shift.total_hours, 0), total_ot: shifts.reduce((sum, shift) => sum + shift.ot_hours, 0)}
     } catch (err) {
       console.log(err);
     }
