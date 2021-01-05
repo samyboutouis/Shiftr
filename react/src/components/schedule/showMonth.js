@@ -40,7 +40,7 @@ class ShowMonth extends Component {
     let dateFormat = "HH mm"
     return shifts.map((shift,index) =>
       <div key={index}>
-        <p className="calendar-month-entry">{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
+        <p className={"calendar-month-entry " + shift.group}>{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
         {/* <p className='upcoming-shift-text'> {shift.group} | @{shift.location} | {shift._id}</p>*/}
       </div>
     )

@@ -35,7 +35,6 @@ class ShowWeek extends Component {
   }
 
   mapShifts = () => {
-    let mps = {'tab': 'red'}
     let shifts = this.state.shifts
     var cells=[];
     for(let i=0;i<24; i++) {

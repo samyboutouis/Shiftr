@@ -5,10 +5,13 @@ import subDays from "date-fns/subDays";
 import ShowDay from "./showDay.js"
 import getUnixTime from "date-fns/getUnixTime"
 import startOfDay from "date-fns/startOfDay"
+import endOfDay from "date-fns/endOfDay"
+import addHours from "date-fns/addHours"
 
 const DayCalendar = () => {
 /* set the forward and back 1 month fxn */
 const [currentDate, setCurrentDate] = useState(new Date());
+// const [active, setActive]
 /* month header */
 const header = () => {
 const dateFormat = "dd MMMM yyyy";
@@ -33,23 +36,31 @@ return (
 
 /* calendar cells */
 const cells = () => {
-const rows = []; /* rows of times */
+const dayStart = startOfDay(currentDate);
+const dayEnd = endOfDay(currentDate);
+const startDate = dayStart;
+const endDate = dayEnd;
 // const dateFormat = 'dd';
 const hours = ["0000", "0100", "0200", "0300", "0400", "0500", "0600", "0700", "0800", "0900", "1000", "1100", "1200",
-"1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"]
-let days = currentDate; /* the day header */
-// let formattedDate = "";
+"1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"];
+const rows = []; /* rows of times */
+let day = startDate;
+console.log("BEFORE DISPLAY DATE:"+ day);
 
-for (let i = 0; i < 24; i++) {
-  rows.push(
-        <div className="row-day" key={i}> {(hours[i])} </div>
-      );
-  }
-
+while (day <= endDate) {
+  for (let i = 0; i < 24; i++) {
+    rows.push(<div>
+          <div className="row-day" key={i}> {(hours[i])} </div>
+          <ShowDay start={getUnixTime(day)}/>
+          </div>
+        );
+        day = addHours(day, 1);
+    }
+   }
    return(<div>
-   <div className="body">{rows} </div>
-   <ShowDay start={getUnixTime(startOfDay(days))}/>
+   <div className="body" key={day}>{rows} </div>
     </div>)
+
  }
 
  const nextDay = () => {
