@@ -399,3 +399,9 @@ th{
     #f2a6ff 100%
   ) ;
 }
+
+.nav-link:hover {
+  color: #3273dc;
+  background-color: #fafafa;
+  cursor: pointer;
+}
