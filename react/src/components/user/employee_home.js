@@ -23,13 +23,9 @@ class EmployeeHome extends Component {
         sortedShifts.sort((a, b) => a.start_time - b.start_time);
         self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length, shifts: sortedShifts});
         if(self.state.shiftsToday > 1){
-          let i = 0;
-          for(i; i < self.state.shifts.length; i++){
-            if(!self.state.shifts[i].hasOwnProperty("clocked_out")) break;
-          }
-          let additionalShifts = self.state.shifts.splice(i+1);
+          let additionalShifts = self.state.shifts.splice(1);
           let shifts = [];
-          shifts[0] = self.state.shifts[i];
+          shifts[0] = self.state.shifts[0];
           self.setState({additionalShifts: additionalShifts, shifts: shifts});
         }
       }).catch( (error) => {

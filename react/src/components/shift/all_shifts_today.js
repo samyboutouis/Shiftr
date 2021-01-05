@@ -7,7 +7,7 @@ import getUnixTime from 'date-fns/getUnixTime'
 class AllShiftsToday extends Component {
   constructor(props){
     super(props);
-    this.state = {clockedIn: false};
+    this.state = {clockedIn: false, clockedOut: false};
   }
 
   drawShifts = () => {
@@ -58,11 +58,11 @@ class AllShiftsToday extends Component {
   handleClick = () => {
     let self = this;
     let time = getUnixTime(Date.now());
-    if(time + 600 < this.props.shifts[0].start_time){
+    if(time + 600 < this.props.shifts[0].start_time && !this.state.clockedIn){
       alert("It is too early to clock in to your shift!"); // 10 minutes before or earlier
     } else if(this.state.clockedIn && window.confirm("Are you sure you want to clock out?")){
       axios.put("http://localhost:8080/shifts/update/" + this.props.shifts[0]._id, {clocked_out: time}).then((response) => {
-        self.setState({clockedIn: false});
+        self.setState({clockedIn: false, clockedOut: true});
       }).catch(function (err){  
         console.log(err)
       });
@@ -76,8 +76,8 @@ class AllShiftsToday extends Component {
   }
 
   render() {
-    let zeroShifts = "Enjoy the day off!"
-    if(this.props.numOfShifts === 0){
+    let zeroShifts = "Enjoy the time off!"
+    if(this.props.numOfShifts === 0 || this.state.clockedOut){
       return (
         <div className="transparent-box">
           <p className="no-shifts">{zeroShifts}</p>

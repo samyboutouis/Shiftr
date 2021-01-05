@@ -8,7 +8,7 @@ class CurrentShift extends Component {
   }
 
   render() {
-    let landing = "You have no shifts today."
+    let landing = "You have no shifts left today."
     if(this.props.affiliation === 'student'){
       if(this.props.shiftsToday > 0){
         if(this.props.shiftsToday === 1){
