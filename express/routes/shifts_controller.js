@@ -53,6 +53,8 @@ router.get('/supervisor_hours/:date', (req, res) => {
   let token = req.cookies["shiftr-saml"];
   let attributes = jwt.verify(token, "make-a-real-secret");
   let shift = Shift.findSupervisorHours(attributes.netid, parseInt(req.params.date));
+  // TO TEST, COMMENT LINES ABOVE, UNCOMMENT LINE BELOW, AND CHANGE AFFILIATION (INSPECT > APPLICATION) FROM STUDENT
+  // let shift = Shift.findSupervisorHours("da129", parseInt(req.params.date));
   shift.then(result => { res.json(result) });
 });
 

@@ -376,3 +376,23 @@ th{
   position: absolute;
   top: 1728px;
 }
+
+.message {
+  background-color: white;
+  border-width: 1px;
+  border-color: hsl(0, 0%, 86%);
+  border-style: solid;
+}
+
+.message-body {
+  padding: 10px 0;
+}
+
+.message-header {
+  background-image: radial-gradient(
+    104.49% 573.2% at -9.55% 10.53%,
+    #f5737b 12.98%,
+    #a195f7 52.6%,
+    #f2a6ff 100%
+  ) ;
+}

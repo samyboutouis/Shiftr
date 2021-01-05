@@ -298,3 +298,19 @@ async function basicTestShifts() {
   }
 }
     
+// creates three weeks of completed shifts
+exports.hoursTestShifts = async function() {
+  var employees = [{name: "Anna Mollard", netid: "acm105"}, {name: "Sunny Li", netid: "l616"}, {name: "Samy Boutouis", netid: "sb590"}, {name: "Ryleigh Byrne", netid: "rmb96"}]
+  var start = 1608559200;
+  for (var day = 0; day < 15; day++) {
+    for (var e = 0; e < employees.length; e++) {
+      await shiftsCollection.insertOne({ employee: employees[e], start_time: start, clocked_in: start+(Math.floor(Math.random() * 30)-15)*60, end_time: start+28800, clocked_out: start+28800+(Math.floor(Math.random() * 30)-15)*60, group: "Code+", status: "completed", supervisor: {name: "Danai", netid: "da129"} });
+    }
+    if(day === 4 || day === 9) {
+      start += 259200;
+    }
+    else {
+      start += 86400;
+    }
+  }
+}
