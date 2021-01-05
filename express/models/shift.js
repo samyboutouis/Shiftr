@@ -137,6 +137,14 @@ class Shift {
     }
   }
 
+  static supervisorSchedule = async (netid, start, end)  => {
+    try {
+      return await shiftsCollection.find({"supervisor.netid": netid, start_time: {$gte: start}, end_time: {$lte: end}}).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   static findByTimeAndUser = async (netID, start, end) => {
     try {
       return await shiftsCollection.find({"employee.netid": netID, start_time: {$gte: parseInt(start)}, end_time: {$lte: parseInt(end)}}).toArray();

@@ -38,10 +38,21 @@ class User {
     }
   }
 
-  //get a all users TODO: all cast all as user objects
+  //get all users TODO: cast all as user objects
   static all = async ()  => {
     try{
       return await usersCollection.find().toArray();
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  static employeeList = async ()  => {
+    try{
+      var admins = await usersCollection.find({"role": "admin"}).sort({"role":1}).toArray();
+      var supervisors = await usersCollection.find({"role": "supervisor"}).sort({"role":1}).toArray();
+      var employees = await usersCollection.find({"role": "employee"}).sort({"role":1}).toArray();
+      return {admins: admins, supervisors: supervisors, employees: employees};
     } catch (err) {
       console.log(err)
     }

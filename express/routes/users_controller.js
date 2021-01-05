@@ -23,6 +23,13 @@ router.get('/', (req, res) => {
   users.then(result => { res.json(result) });
 })
 
+//employee list for supervisors
+router.get('/employee_list', (req, res) => {
+  console.log('Getting Users')
+  let users = User.employeeList()
+  users.then(result => { res.json(result) });
+})
+
 //find 1 user
 router.get('/find_one/:_id', (req, res) => {
   let user = User.find(req.params._id);

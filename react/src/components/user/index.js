@@ -26,28 +26,42 @@ class UserIndex extends Component {
 
   drawUsers = () => {
     if(this.state.users && !this.state.selectedUser){
-      return <div>
-        <h1>Users</h1>
-        {this.mapUsers()}
-        <UserForm getUsers={this.getUsers} clearSelectedUser={this.clearSelectedUser} reqType="create" />
+      return <div className="container is-max-widescreen">
+        <div className="columns mt-5 pr-6">
+          <div className="column">
+            <div className="rainbow-gradient">Admins</div>
+            {this.mapUsers(this.state.users.admins)}
+          </div>
+          <div className="column">
+            <div className="rainbow-gradient">Supervisors</div>
+            {this.mapUsers(this.state.users.supervisors)}
+          </div>
+          <div className="column">
+            <div className="rainbow-gradient">Employees</div>
+            {this.mapUsers(this.state.users.employees)}
+          </div>
+        </div>
+        {/* <div onClick={this.addUser} className="rainbow-gradient right-button">Add Employee</div> */}
+        <UserForm reqType="create" />
       </div>
     }
   }
 
   getUsers = () => {
     let self = this;
-    axios.get("http://localhost:8080/users").then( (response) => {
+    axios.get("http://localhost:8080/users/employee_list").then( (response) => {
       self.setState({users: response.data})
     }).catch( (error) => {
       console.log(error)
     });
   }
 
-  mapUsers = () => {
-    let users = this.state.users
+  mapUsers = (users) => {
     return users.map((user,index) =>
-      <div key={index}>
-        <p>{user.name}</p> <button onClick={this.selectUser.bind(this, user)}>Select User</button>
+      <div className="card employee-card" key={index}>
+        {/* <button onClick={this.selectUser.bind(this, user)}>Select User</button> */}
+        <p className="title is-4">{user.name}</p>
+        <p className="subtitle is-6">{user.netid}</p>
       </div>
     )
   }

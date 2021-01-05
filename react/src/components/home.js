@@ -3,6 +3,7 @@ import AvailabilityIndex from './availability/index'
 import HoursIndex from './hours/index'
 import ScheduleIndex from './schedule/index'
 import EmployeeHome from './user/employee_home'
+import UserIndex from './user/index'
 import Nbar from './navbar'
 //import CalIndex from './availability/indexTwo'
 
@@ -39,6 +40,8 @@ class Home extends Component {
         home.push(<ScheduleIndex key="schedule"/>)
       }else if(this.state.navState === "Hours") {
         home.push(<HoursIndex key="hours"/>)
+      }else if(this.state.navState === "Employees") {
+        home.push(<UserIndex key="employees"/>)
       }
     }else{
       home.push(

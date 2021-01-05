@@ -1,98 +1,131 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 
 class UserForm extends Component {
   constructor(props){
     super()
-    this.state = {firstName: null, lastName: null, group: null, admin: false, submitted: false}
+    this.state = {uid: null, netid: null, group: null, role: false, submitted: false, modal: false}
   }
 
   changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    if(event.target.type === "checkbox") {
-      this.setState({
-        [name]: event.target.checked
-      });
-    }
-    else {
-      this.setState({
-        [name]: value
+    this.setState({
+      [name]: value
     }); 
-    }
   }
 
   submitForm = (event) => {
-    event.preventDefault();
-    let form_data = new FormData();
-    let url; 
+    console.log(this.state)
+    // event.preventDefault();
+    // let form_data = new FormData();
+    // let url; 
 
-    //gather all the state values and store them into "FormData" trasit type
-    for (let [key, value] of Object.entries(this.state)) {
-      if(value) {form_data.append(key, value)};
+    // //gather all the state values and store them into "FormData" trasit type
+    // for (let [key, value] of Object.entries(this.state)) {
+    //   if(value) {form_data.append(key, value)};
+    // }
+
+    // //change the call if this is is a create or an update
+    // if(this.props.reqType === "create"){
+    //   url = "http://localhost:8080/users" 
+    //   axios.post(url, form_data, {
+    //     headers: {'content-type': 'multipart/form-data'}
+    //   }).then((response) => {
+    //     this.setState({submitted: true})
+    //   }).catch(function (err){  
+    //     console.log(err)
+    //   });
+    // }else{
+    //   url = "http://localhost:8080/users/update/" + this.props.user._id
+    //   axios.put(url, form_data, {
+    //     headers: {'content-type': 'multipart/form-data'}
+    //   }).catch(function (err){  
+    //     console.log(err)
+    //   });
+    // }
+  }
+
+  addUserButton = () => {
+    if(this.props.reqType === "create") {
+      return <div onClick={this.toggleModal.bind(this)} className="rainbow-gradient right-button">Add Employee</div>
     }
+  }
 
-    //change the call if this is is a create or an update
-    if(this.props.reqType === "create"){
-      url = "http://localhost:8080/users" 
-      axios.post(url, form_data, {
-        headers: {'content-type': 'multipart/form-data'}
-      }).then((response) => {
-        this.setState({submitted: true})
-      }).catch(function (err){  
-        console.log(err)
-      });
-    }else{
-      url = "http://localhost:8080/users/update/" + this.props.user._id
-      axios.put(url, form_data, {
-        headers: {'content-type': 'multipart/form-data'}
-      }).catch(function (err){  
-        console.log(err)
-      });
+  toggleModal = () => {
+      this.setState({modal: !this.state.modal})
+  }
+
+  formModal = () => {
+    if(this.state.modal) {
+      return <div className="modal is-active">
+        <div className="modal-background"></div>
+        <div className="modal-card">
+          
+          <header className="modal-card-head">
+            <p className="modal-card-title">Add Employee</p>
+            <button onClick={this.toggleModal.bind(this)} className="delete" aria-label="close"></button>
+          </header>
+
+          <section className="modal-card-body">
+            <form>
+
+              <div className="field">
+                <label className="label">NetId</label>
+                <div className="control">
+                  <input className='input' name='netid' type="text" placeholder="e.g abc123" onChange={this.changeHandler} />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Unique ID</label>
+                <div className="control">
+                  <input className='input' name='uid' type="text" placeholder="e.g 0123456" onChange={this.changeHandler} />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Group</label>
+                <div className="control">
+                  <input className='input' name='group' type="text" placeholder="e.g CoLab" onChange={this.changeHandler} />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Role</label>
+                <div className="control">
+                  <div className="select" onChange={this.changeHandler}>
+                    <select defaultValue="select_a_role" name="role">
+                      <option disabled="disabled" value="select_a_role" hidden="hidden">Select a Role</option>
+                      <option>Employee</option>
+                      <option>Supervisor</option>
+                      <option>Admin</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </section>
+
+          <footer className="modal-card-foot">
+            <div className="control">
+              <input className="button is-success" onClick={this.submitForm} type='submit' />
+            </div>
+          </footer>
+
+        </div>
+        </div>
     }
   }
 
   render(){
-    if(!this.state.submitted){
       return(
-        <div></div>
-        // <Container>
-        //   <Form>
-        //     <Form.Row>
-        //       <Form.Group as={Col} controlId="formGridFirstName">
-        //         <Form.Label>First Name</Form.Label>
-        //         <Form.Control type="text" placeholder="Enter first name" name='firstName' onChange={this.changeHandler}/>
-        //       </Form.Group>
-        //       <Form.Group as={Col} controlId="formGridLastName">
-        //         <Form.Label>Last Name</Form.Label>
-        //         <Form.Control type="text" placeholder="Enter last name" name='lastName' onChange={this.changeHandler}/>
-        //       </Form.Group>
-        //     </Form.Row>
-        //     <Form.Group controlId="formGridEmail">
-        //       <Form.Label>Email</Form.Label>
-        //       <Form.Control type="email" placeholder="Enter your netID email" name='email' onChange={this.changeHandler}/>
-        //     </Form.Group>
-        //     <Form.Row>
-        //       <Form.Group as={Col} controlId="formGridRole">
-        //         <Form.Label>Role</Form.Label>
-        //         <Form.Control type="text" placeholder="Enter role" name='role' onChange={this.changeHandler}/>
-        //       </Form.Group>
-        //       <Form.Group as={Col} controlId="formGridAffiliation">
-        //         <Form.Label>Affiliation</Form.Label>
-        //         <Form.Control type="text" placeholder="Enter affiliation" name='affiliation' onChange={this.changeHandler}/>
-        //       </Form.Group>
-        //     </Form.Row>
-        //     <Button variant="primary" type="submit" onClick={this.submitForm}>
-        //       Submit
-        //     </Button>
-        //   </Form>
-        // </Container>
+        <div>
+          {this.addUserButton()}
+          {this.formModal()}
+        </div>
       )
-    }
-    else {
-      return <Redirect to='/' />
-    }
   }
 }
 

@@ -6,17 +6,17 @@ class EmployeeHours extends Component {
     drawHeader = () => {
        if(this.props.data) {
          return <div className="container is-max-widescreen">
-         <table className = "table hours-header-table is-fullwidth">
+         <table className = "is-pulled-right table hours-header-table is-fullwidth">
                <thead> 
                   <tr>
                      <th><h2 className="subtitle">Total Hours</h2></th>
-                     <th><h2 className="subtitle">Total OT Hours</h2></th>
+                     {/* <th><h2 className="subtitle">Total OT Hours</h2></th> */}
                   </tr>
                </thead> 
                <tbody>
                   <tr>
                      <td><h1 className="title">{Math.round(this.props.data.total_hours/360)/10}</h1></td>
-                     <td><h1 className="title">{Math.round(this.props.data.total_ot/360)/10}</h1></td>
+                     {/* <td><h1 className="title">{Math.round(this.props.data.total_ot/360)/10}</h1></td> */}
                   </tr>
                </tbody>
             </table>
