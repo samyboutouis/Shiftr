@@ -35,10 +35,11 @@ class EmployeeHome extends Component {
       }).catch( (error) => {
         console.log(error)
       });
-    }
-    else {
+    } else {
       axios.get("http://localhost:8080/shifts/find_time/" + startTime + "/" + endTime).then( (response) => {
-        self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length});
+        let sortedShifts = response.data;
+        sortedShifts.sort((a, b) => a.start_time - b.start_time);
+        self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length, shifts: sortedShifts});
       }).catch( (error) => {
         console.log(error)
       });
