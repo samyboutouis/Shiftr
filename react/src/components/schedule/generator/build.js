@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import 'bulma-calendar/dist/css/bulma-calendar.min.css'
+import 'bulma-calendar/dist/css/bulma-calendar.min.css';
 import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js';
 import lastDayOfWeek from "date-fns/lastDayOfWeek";
 
