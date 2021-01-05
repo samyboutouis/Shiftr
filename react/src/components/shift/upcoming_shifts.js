@@ -42,7 +42,7 @@ class UpcomingShifts extends Component {
     let shifts = this.state.shifts;
     shifts = this.props.additionalShifts.concat(shifts);
     let dateFormat = "eee dd MMM";
-    let timeFormat = "hh:00aaaa";
+    let timeFormat = "hh:mmaaaa";
     return shifts.map((shift,index) =>
     <div key={index} className='tile is-child columns is-mobile'>
       <div className='column is-3 upcoming-shift-date'>

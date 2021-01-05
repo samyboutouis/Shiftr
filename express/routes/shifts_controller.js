@@ -65,6 +65,13 @@ router.get('/find_by_time_and_user/:start_time/:end_time', (req, res) => {
   shift.then(result => { res.json(result)});
 });
 
+router.get('/find_conflict/:start_time/:end_time', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  let shift = Shift.findConflict(attributes.netid, req.params.start_time, req.params.end_time);
+  shift.then(result => { res.json(result)});
+});
+
 router.delete('/delete/:_id', (req, res) => {
   let shift = Shift.find(req.params._id);
   shift.then(shift => {

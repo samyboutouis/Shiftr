@@ -37,7 +37,7 @@ class ShiftPool extends Component {
   mapShifts = () => {
     if (this.state.shifts) {
       let dateFormat = "eee dd MMM";
-      let timeFormat = "hh:00aaaa";
+      let timeFormat = "hh:mmaaaa";
       let shifts = this.state.shifts;
       return shifts.map((shift,index) =>
         <div key={index} className='tile is-child columns is-mobile'>
@@ -58,12 +58,19 @@ class ShiftPool extends Component {
   }
 
   handleClick = (shift) => {
-    let self = this;
-    axios.put("http://localhost:8080/shifts/update/" + shift._id, {status: "closed", employee: {netid: localStorage.getItem('netid')}}).then( (res) => {
-      this.getShifts();
-    }).catch( (error) => {
-      console.log(error);
-    });
+    if(window.confirm('Are you sure you want to claim this shift?')){
+      axios.get("http://localhost:8080/shifts/find_conflict/" + shift.start_time + "/" + shift.end_time).then((response) => {
+        if(response.data.length > 0){
+          alert("This shift conflicts with another shift in your schedule! You cannot claim this shift.");
+        } else {
+          axios.put("http://localhost:8080/shifts/update/" + shift._id, {status: "closed", employee: {netid: localStorage.getItem('netid')}}).then((response) => {
+            this.getShifts();
+          }).catch( (error) => {
+            console.log(error);
+          });
+        }
+      })
+    }
   }
 
   render() {

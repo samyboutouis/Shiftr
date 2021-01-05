@@ -144,6 +144,18 @@ class Shift {
       console.log(err);
     }
   }
+
+  static findConflict = async (netID, start, end) => {
+    try {
+      // FIND shift conflicts
+      // 1. Shift starts before start and ends before end
+      // 2. Shift starts before start and ends after end
+      // 3. Shift starts after start and ends before end
+      // 4. Shift starts after start and ends after end
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 module.exports = Shift
