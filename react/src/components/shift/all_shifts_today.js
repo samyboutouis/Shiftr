@@ -22,7 +22,6 @@ class AllShiftsToday extends Component {
 
   mapShifts = () => {
     let shifts = this.props.shifts;
-    console.log(shifts);
     let timeFormat = "hh:mm";
     let pm = "a";
     if(this.props.affiliation === 'student'){
