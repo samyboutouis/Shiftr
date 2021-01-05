@@ -98,7 +98,7 @@ class ScheduleIndex extends Component {
           <GeneratedSchedule data = {this.state.buildSchedule} />
         </div>
     } else {
-      return <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button>
+      return <div><br/> <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button></div>
     }
   }
 
