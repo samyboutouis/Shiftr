@@ -15,8 +15,8 @@ class ShowWeek extends Component {
     this.getShifts()
   }
 
+/* query shifts by day */
   getShifts = (props) => {
-
     let self = this
     const end = this.props.start+86400
     axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end).then( (response) => {
@@ -34,6 +34,7 @@ class ShowWeek extends Component {
     }
   }
 
+/* format and size the display of queries */
   mapShifts = () => {
     let shifts = this.state.shifts
     var cells=[];

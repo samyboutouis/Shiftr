@@ -15,6 +15,7 @@ class ShowDay extends Component {
     this.getShifts()
   }
 
+/* query database by hour */
   getShifts = (props) => {
     let self = this
     const end = this.props.start+3600
@@ -35,6 +36,7 @@ class ShowDay extends Component {
     }
   }
 
+/* format and size the display of queries */
   mapShifts = () => {
     let shifts = this.state.shifts
     var cells=[];

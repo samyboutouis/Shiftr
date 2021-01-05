@@ -9,9 +9,8 @@ import endOfDay from "date-fns/endOfDay"
 import addHours from "date-fns/addHours"
 
 const DayCalendar = () => {
-/* set the forward and back 1 month fxn */
 const [currentDate, setCurrentDate] = useState(new Date());
-// const [active, setActive]
+
 /* month header */
 const header = () => {
 const dateFormat = "dd MMMM yyyy";
@@ -40,13 +39,12 @@ const dayStart = startOfDay(currentDate);
 const dayEnd = endOfDay(currentDate);
 const startDate = dayStart;
 const endDate = dayEnd;
-// const dateFormat = 'dd';
 const hours = ["0000", "0100", "0200", "0300", "0400", "0500", "0600", "0700", "0800", "0900", "1000", "1100", "1200",
 "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"];
-const rows = []; /* rows of times */
+const rows = []; /* rows containing each day's hours */
 let day = startDate;
-console.log("BEFORE DISPLAY DATE:"+ day);
 
+/*filling rows with 24 hours and querying for shifts*/
 while (day <= endDate) {
   for (let i = 0; i < 24; i++) {
     rows.push(<div>
@@ -63,6 +61,7 @@ while (day <= endDate) {
 
  }
 
+/* functions in header for changing the day */
  const nextDay = () => {
     setCurrentDate(addDays(currentDate, 1));
  };
