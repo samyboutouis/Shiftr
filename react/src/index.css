@@ -291,6 +291,9 @@ code {
   font-family: "Roboto";
   font-weight: 600;
   font-size: 14px;
+  float: left;
+  width: 20%;
+  height: 100%
 }
 
 .key-box /* colored box */ {
