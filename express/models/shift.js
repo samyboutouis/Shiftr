@@ -152,6 +152,14 @@ class Shift {
       // 2. Shift starts before start and ends after end
       // 3. Shift starts after start and ends before end
       // 4. Shift starts after start and ends after end
+      return await shiftsCollection.find({$or: [
+        {start_time: {$gte: start, $lte: end}},
+        {end_time: {$gte: start, $lte: end}},
+        {$and: [
+          {start: {$lt: start}},
+          {finish: {$gt: end}}
+        ]}
+      ]}).toArray();
     } catch (err) {
       console.log(err);
     }

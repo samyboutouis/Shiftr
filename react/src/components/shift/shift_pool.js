@@ -39,21 +39,27 @@ class ShiftPool extends Component {
       let dateFormat = "eee dd MMM";
       let timeFormat = "hh:mmaaaa";
       let shifts = this.state.shifts;
-      return shifts.map((shift,index) =>
-        <div key={index} className='tile is-child columns is-mobile'>
-          <div className='column is-3 upcoming-shift-date'>
-            <p>{format(shift.start_time * 1000, dateFormat)}</p>
+      let person = "Open Shift";
+      return shifts.map((shift,index) => {
+        if(shift.hasOwnProperty("employee")){
+          person = shift.employee.first_name + " " + shift.employee.last_name.charAt(0) + ".";
+        }
+        return (
+          <div key={index} className='tile is-child columns is-mobile'>
+            <div className='column is-3 upcoming-shift-date'>
+              <p>{format(shift.start_time * 1000, dateFormat)}</p>
+            </div>
+            <div className='column is-6'>
+              <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
+              <p className='upcoming-shift-text'>{person} @ {shift.location}</p>
+              <p className='upcoming-shift-text'> {shift.group} </p>
+            </div>
+            <div className='column is-3'>
+              <button className='open-shift-button' onClick={this.handleClick.bind(this, shift)}>Claim</button>
+            </div>
           </div>
-          <div className='column is-6'>
-            <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-            <p className='upcoming-shift-text'> {shift.group} </p>
-            <p className='upcoming-shift-text'> @{shift.location}</p>
-          </div>
-          <div className='column is-3'>
-            <button className='open-shift-button' onClick={this.handleClick.bind(this, shift)}>Claim</button>
-          </div>
-        </div>
-      )
+        );
+      });
     }
   }
 
@@ -61,9 +67,11 @@ class ShiftPool extends Component {
     if(window.confirm('Are you sure you want to claim this shift?')){
       axios.get("http://localhost:8080/shifts/find_conflict/" + shift.start_time + "/" + shift.end_time).then((response) => {
         if(response.data.length > 0){
+          console.log("CONFLICT");
           alert("This shift conflicts with another shift in your schedule! You cannot claim this shift.");
         } else {
-          axios.put("http://localhost:8080/shifts/update/" + shift._id, {status: "closed", employee: {netid: localStorage.getItem('netid')}}).then((response) => {
+          console.log("NO CONFLICT")
+          axios.put("http://localhost:8080/shifts/update/" + shift._id, {status: "closed", employee: {netid: localStorage.getItem('netid'), first_name: localStorage.getItem('firstName'), last_name: localStorage.getItem('lastName')}}).then((response) => {
             this.getShifts();
           }).catch( (error) => {
             console.log(error);

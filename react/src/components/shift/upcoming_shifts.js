@@ -43,25 +43,55 @@ class UpcomingShifts extends Component {
     shifts = this.props.additionalShifts.concat(shifts);
     let dateFormat = "eee dd MMM";
     let timeFormat = "hh:mmaaaa";
-    return shifts.map((shift,index) =>
-    <div key={index} className='tile is-child columns is-mobile'>
-      <div className='column is-3 upcoming-shift-date'>
-        <p>{format(shift.start_time * 1000, dateFormat)}</p>
-      </div>
-      <div className='column is-9'>
-        <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-        <p className='upcoming-shift-text'> {shift.group} </p>
-        <p className='upcoming-shift-text'> @{shift.location}</p>
-      </div>
-    </div>
-    );
+    return shifts.map((shift,index) => {
+      if(shift.status === 'open'){
+        return (
+          <div key={index} className='tile is-child columns is-mobile'>
+            <div className='column is-3 upcoming-shift-date'>
+              <p>{format(shift.start_time * 1000, dateFormat)}</p>
+            </div>
+            <div className='column is-9'>
+              <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
+              <p className='upcoming-shift-text'> @ {shift.location}</p>
+              <p className='upcoming-shift-text'> {shift.group} </p>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={index} className='tile is-child columns is-mobile'>
+            <div className='column is-3 upcoming-shift-date'>
+              <p>{format(shift.start_time * 1000, dateFormat)}</p>
+            </div>
+            <div className='column is-6'>
+              <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
+              <p className='upcoming-shift-text'> @ {shift.location}</p>
+              <p className='upcoming-shift-text'> {shift.group} </p>
+            </div>
+            <div className='column is-3'>
+              <button className='open-shift-button' onClick={this.handleClick.bind(this, shift)}>Offer Up</button>
+            </div>
+          </div>
+        );
+      }
+    });
+  }
+
+  handleClick = (shift) => {
+    if(window.confirm('Are you sure you want to offer up this shift? If no one picks up your shift, you are still required to cover your shift.')){
+      axios.put("http://localhost:8080/shifts/update/" + shift._id, {status: "open"}).then((response) => {
+        this.getShifts();
+      }).catch( (error) => {
+        console.log(error);
+      });
+    }
   }
 
   render(){
     return(
       <div className="upcoming-shift">
-          <p className="upcoming-shift-title">Your upcoming shifts</p>
-          {this.drawShifts()}
+        <p className="upcoming-shift-title">Your upcoming shifts</p>
+        {this.drawShifts()}
       </div>
     );
   }
