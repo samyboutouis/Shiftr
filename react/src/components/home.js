@@ -31,9 +31,9 @@ class Home extends Component {
   showHome = () => {
     let home = [];
     if (localStorage.getItem('loggedIn')){
-      home.push(<Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout} affiliation={localStorage.getItem('affiliation')} key="nav"/>)
+      home.push(<Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout} key="nav"/>)
       if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
-        home.push(<EmployeeHome affiliation={localStorage.getItem('affiliation')} key="home"/>);
+        home.push(<EmployeeHome key="home"/>);
       }else if(this.state.navState === "Availability"){
         home.push(<AvailabilityIndex key="availability"/>);
       }else if(this.state.navState === "Schedule"){

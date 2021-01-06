@@ -1,18 +1,34 @@
 import React, {Component} from 'react'
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 class UserForm extends Component {
   constructor(props){
     super()
-    this.state = {uid: null, netid: null, group: null, role: false, modal: false}
+    this.state = {uid: null, netid: null, group: [], role: false, modal: false}
   }
 
   changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    this.setState({
-      [name]: value
-    }); 
+    if(event.target.type === "checkbox") {
+      if(name.includes('group')){
+        // add group to array if checked
+        if(event.target.checked) {
+          this.setState({group: this.state.group.concat(value)})
+        } 
+        // reove group from array if unchecked
+        else {
+          this.setState({group: this.state.group.filter(function(g){ return g !== value;})})
+        }
+      }
+    }
+    else {
+      this.setState({
+        [name]: value
+      }); 
+    }
   }
 
   submitForm = (event) => {
@@ -22,7 +38,7 @@ class UserForm extends Component {
 
     //gather all the state values and store them into "FormData" trasit type
     for (let [key, value] of Object.entries(this.state)) {
-      if(value && key!='modal') {form_data.append(key, value)};
+      if(value && key!=='modal') {form_data.append(key, value)};
     }
 
     //change the call if this is is a create or an update
@@ -46,14 +62,35 @@ class UserForm extends Component {
     }
   }
 
+  // button to add an employee to the database
+  // TODO: account for whether employee is already in database
   addUserButton = () => {
     if(this.props.reqType === "create") {
-      return <div onClick={this.toggleModal.bind(this)} className="rainbow-gradient right-button">Add Employee</div>
+      return <div onClick={this.toggleModal.bind(this)} className="rainbow-gradient right-button">
+        Add Employee &nbsp; 
+        <FontAwesomeIcon icon={faPlusCircle} />
+      </div>
     }
   }
 
   toggleModal = () => {
       this.setState({modal: !this.state.modal})
+  }
+
+  // checkboxes for user's groups
+  // options come from the current supervisor's groups
+  groupOptions = () => {
+    var groups = localStorage.getItem('group').split(",")
+    var options = []
+    groups.forEach((group, index) =>
+      options.push(
+        <label key={index} className="checkbox mr-5">
+          <input name={'group'+index} value={group} type="checkbox" onChange={this.changeHandler} />
+          &nbsp;{group}
+        </label>
+      )
+    )
+    return options
   }
 
   formModal = () => {
@@ -87,7 +124,7 @@ class UserForm extends Component {
               <div className="field">
                 <label className="label">Group</label>
                 <div className="control">
-                  <input className='input' name='group' type="text" placeholder="e.g CoLab" onChange={this.changeHandler} />
+                  {this.groupOptions()}
                 </div>
               </div>
 
@@ -121,7 +158,7 @@ class UserForm extends Component {
 
   render(){
       return(
-        <div>
+        <div className="parent">
           {this.addUserButton()}
           {this.formModal()}
         </div>

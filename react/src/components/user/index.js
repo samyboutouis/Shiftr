@@ -39,9 +39,11 @@ class UserIndex extends Component {
             <div className="rainbow-gradient">Employees</div>
             {this.mapUsers(this.state.users.employees)}
           </div>
+          <div className="column is-2">
+            <UserForm updateUsers={this.componentDidMount} reqType="create" />
+          </div>
         </div>
         {/* <div onClick={this.addUser} className="rainbow-gradient right-button">Add Employee</div> */}
-        <UserForm updateUsers={this.componentDidMount} reqType="create" />
       </div>
     }
   }

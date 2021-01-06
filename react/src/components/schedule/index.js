@@ -86,7 +86,7 @@ class ScheduleIndex extends Component {
   }
 
   buildSchedule = () => {
-    if(localStorage.getItem('affiliation') !== 'student') {
+    if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       if(this.state.buildSchedule === true){
         return <div>
           <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>

@@ -17,7 +17,7 @@ class EmployeeHome extends Component {
     let self = this;
     let startTime = getUnixTime(startOfToday());
     let endTime = getUnixTime(endOfToday());
-    if(this.props.affiliation === 'student'){
+    if(localStorage.getItem('role')==='employee'){
       axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
         let sortedShifts = response.data;
         sortedShifts.sort((a, b) => a.start_time - b.start_time);
@@ -52,11 +52,11 @@ class EmployeeHome extends Component {
 
   render() {
     let home = []
-    if(this.props.affiliation === 'student'){
+    if(localStorage.getItem('role')==='employee'){
       home.push(
         <div className="tile is-7 is-vertical is-parent" key="vertical">
           <div className="tile is-child">
-            <CurrentShift affiliation={this.props.affiliation} name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
+            <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
           </div>
           <div className="tile is-child">
             <UpcomingShifts additionalShifts={this.state.additionalShifts}/>
@@ -68,7 +68,7 @@ class EmployeeHome extends Component {
       home.push(
         <div className="tile is-7 is-parent" key="supervisor">
           <div className="tile is-child">
-            <CurrentShift affiliation={this.props.affiliation} name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
+            <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
           </div>
         </div>
       );

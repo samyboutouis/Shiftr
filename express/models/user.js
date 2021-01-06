@@ -14,6 +14,10 @@ class User {
   //create a new user
   create = async () => {
     try {
+      // converts groups from string separated by commas to array
+      if(this.body.group){
+        this.body.group = this.body.group.split(",");
+      }
       return await usersCollection.insertOne(this.body)
     } catch (err) {
       console.log(err)
@@ -47,11 +51,55 @@ class User {
     }
   }
 
-  static employeeList = async ()  => {
+  // gets all relevant users for supervisor 'employees' page
+  // checks that user's group list intersects with the supervisor's group list
+  // also checks that netid isn't the current supervisor
+  static employeeList = async (group, netid)  => {
     try{
-      var admins = await usersCollection.find({"role": "admin"}).sort({"role":1}).toArray();
-      var supervisors = await usersCollection.find({"role": "supervisor"}).sort({"role":1}).toArray();
-      var employees = await usersCollection.find({"role": "employee"}).sort({"role":1}).toArray();
+      var employees = await usersCollection.aggregate([ 
+        { "$match" : { "role": "employee", "netid": { "$ne": netid}}},
+        { "$unwind" : "$group" },
+        { "$match"  : { "group" : { "$in" : group } } },
+        { "$group"  : { 
+          "_id" : "$_id", 
+          "group" : { "$push" : "$group" }, 
+          "netid": { "$first": "$netid" }, 
+          "name": { "$first": "$name" }, 
+          "email": { "$first": "$email" }, 
+          "role": { "$first": "$role" } 
+        } }
+       ]).toArray();
+       
+       var admins = await usersCollection.aggregate([ 
+        { "$match" : { "role": "admin", "netid": { "$ne": netid}}},
+        { "$unwind" : "$group" },
+        { "$match"  : { "group" : { "$in" : group } } },
+        { "$group"  : { 
+          "_id" : "$_id", 
+          "group" : { "$push" : "$group" }, 
+          "netid": { "$first": "$netid" }, 
+          "name": { "$first": "$name" }, 
+          "email": { "$first": "$email" }, 
+          "role": { "$first": "$role" } 
+        } }
+       ]).toArray();
+       
+       var supervisors = await usersCollection.aggregate([ 
+        { "$match" : { "role": "supervisor", "netid": { "$ne": netid}}},
+        { "$unwind" : "$group" },
+        { "$match"  : { "group" : { "$in" : group } } },
+        { "$group"  : { 
+          "_id" : "$_id", 
+          "group" : { "$push" : "$group" }, 
+          "netid": { "$first": "$netid" }, 
+          "name": { "$first": "$name" }, 
+          "email": { "$first": "$email" }, 
+          "role": { "$first": "$role" } 
+        } }
+       ]).toArray();
+      // var admins = await usersCollection.find({role: "admin", group: { $in: group }, netid: { $ne: netid}}).sort({"role":1}).toArray();
+      // var supervisors = await usersCollection.find({role: "supervisor", group: { $in: group }, netid: { $ne: netid}}).sort({"role":1}).toArray();
+      // var employees = await usersCollection.find({role: "employee", group: { $in: group }, netid: { $ne: netid}}).sort({"role":1}).toArray();
       return {admins: admins, supervisors: supervisors, employees: employees};
     } catch (err) {
       console.log(err)
@@ -86,6 +134,19 @@ class User {
     try {
       let user = await usersCollection.findOne({"email": email});
       return new User(user)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // get user's permission level
+  // should return {role: "supervisor/admin/employee", group: [Group 1, Group 2, Group 3]}
+  static getPermissions = async (netid) => {
+    try {
+      var permissions = await usersCollection.aggregate([
+        {$match: {netid: netid}}, 
+        {$project: {_id: 0, role: 1, group: 1}}]).toArray();
+      return permissions[0];
     } catch (err) {
       console.log(err);
     }

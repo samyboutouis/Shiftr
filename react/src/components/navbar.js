@@ -18,7 +18,7 @@ class Nbar extends Component {
 
   userBar = () => {
     let third = null;
-    if(this.props.affiliation === 'student'){
+    if(localStorage.getItem('role')==='employee'){
       third = "Availability";
     }
     else {
