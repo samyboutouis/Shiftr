@@ -85,6 +85,7 @@ class UpcomingShifts extends Component {
         console.log(error);
       });
     }
+    this.props.rerenderParentCallback();
   }
 
   render(){

@@ -11,6 +11,7 @@ class EmployeeHome extends Component {
   constructor(props){
     super(props);
     this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: []};
+    this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
   }
 
   getShifts = () => {
@@ -42,6 +43,10 @@ class EmployeeHome extends Component {
     }
   }
 
+  rerenderParentCallback() {
+    this.forceUpdate();
+  }
+
   componentDidMount() {
     this.getShifts();
   }
@@ -55,7 +60,7 @@ class EmployeeHome extends Component {
             <CurrentShift affiliation={this.props.affiliation} name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
           </div>
           <div className="tile is-child">
-            <UpcomingShifts additionalShifts={this.state.additionalShifts}/>
+            <UpcomingShifts additionalShifts={this.state.additionalShifts} rerenderParentCallback={this.rerenderParentCallback}/>
           </div>
         </div>
       );
@@ -72,7 +77,7 @@ class EmployeeHome extends Component {
     home.push(
       <div className="tile is-parent" key="pool">
         <div className="tile is-child">
-          <ShiftPool />
+          <ShiftPool rerenderParentCallback={this.rerenderParentCallback}/>
         </div>
       </div>
     );

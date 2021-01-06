@@ -79,6 +79,7 @@ class ShiftPool extends Component {
         }
       })
     }
+    this.props.rerenderParentCallback();
   }
 
   render() {
