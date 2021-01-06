@@ -42,7 +42,7 @@ class Home extends Component {
       }
     }else{
       home.push(
-        <button onClick={this.samlLogin}>Login</button>
+        <button onClick={this.samlLogin} key="login">Login</button>
       );
     } 
     return home;

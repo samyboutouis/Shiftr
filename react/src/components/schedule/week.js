@@ -10,9 +10,10 @@ import ShowWeek from "./showWeek.js";
 import getUnixTime from "date-fns/getUnixTime"
 
 const WeekCalendar = () => {
-/* set the forward and back 1 month fxn */
 const [currentDate, setCurrentDate] = useState(new Date());
+
 /* month header */
+/* set the forward and back 1 month fxn */
 const header = () => {
 const dateFormat = "MMMM yyyy";
 return (
@@ -33,11 +34,11 @@ return (
    </div>
    );
 };
-/* days of the week */
+
+/* days of the week under the header */
 const days = () => {
 const days = [];
 const fill = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-/*let startDate = startOfWeek(currentDate);*/
 for (let i = 0; i < 7; i++) {
       days.push(
          <div className="column col-center" key={i}>
@@ -47,17 +48,16 @@ for (let i = 0; i < 7; i++) {
    }
    return <div className="days row">{days}</div>;
 };
-/* calendar cells */
 
+/* calendar cells */
 const cells = () => {
 const weekStart = startOfWeek(currentDate);
 const weekEnd = endOfWeek(currentDate);
-// const rows = [];
 const startDate = weekStart;
 const endDate = weekEnd;
 const dateFormat = 'dd';
-// const hours = ["0000", "0100", "0200", "0300", "0400", "0500", "0600", "0700", "0800", "0900", "1000", "1100", "1200",
-// "1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"]
+const hours = ["0000", "0100", "0200", "0300", "0400", "0500", "0600", "0700", "0800", "0900", "1000", "1100", "1200",
+"1300", "1400", "1500", "1600", "1700", "1800", "1900", "2000", "2100", "2200", "2300"]
 let days = [];
 let day = startDate;
 let formattedDate = "";
@@ -69,7 +69,9 @@ days.push(
       <div
        className={`column week-cell ${!isSameWeek(day, weekStart)}`}
        key={day}>
-       <div className="number">{formattedDate}</div>
+       <div className="number">
+       {formattedDate}
+       </div>
        <ShowWeek start={getUnixTime(day)}/>
      </div>
      );
@@ -82,6 +84,7 @@ days.push(
     </div>)
  }
 
+/* functions used in header for changing weeks */
  const nextWeek = () => {
     setCurrentDate(addWeeks(currentDate, 1));
  };

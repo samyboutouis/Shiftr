@@ -15,9 +15,8 @@ class ShowMonth extends Component {
     this.getShifts()
   }
 
-
+/* query shifts by day */
   getShifts = (props) => {
-
     let self = this
     const start = getUnixTime(startOfDay(this.props.day))
     const end = getUnixTime(endOfDay(this.props.day))
@@ -35,12 +34,14 @@ class ShowMonth extends Component {
       </div>
     }
   }
+
+/* format queries */
   mapShifts = () => {
     let shifts = this.state.shifts
     let dateFormat = "HH mm"
     return shifts.map((shift,index) =>
       <div key={index}>
-        <p className="calendar-month-entry">{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
+        <p className={"calendar-month-entry " + shift.group}>{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
         {/* <p className='upcoming-shift-text'> {shift.group} | @{shift.location} | {shift._id}</p>*/}
       </div>
     )

@@ -15,8 +15,8 @@ class ShowWeek extends Component {
     this.getShifts()
   }
 
+/* query shifts by day */
   getShifts = (props) => {
-
     let self = this
     const end = this.props.start+86400
     axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end).then( (response) => {
@@ -34,23 +34,44 @@ class ShowWeek extends Component {
     }
   }
 
+/* format and size the display of queries */
   mapShifts = () => {
     let shifts = this.state.shifts
     var cells=[];
     for(let i=0;i<24; i++) {
       if(shifts[i]){
     shifts[i].data.map((shift,index) =>
-        cells.push(<div className="calendar-week-entry" key={i+' '+index} style={{position: "absolute", top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000), paddingBottom: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/2}}>
-                {format(shift.start_time*1000, "HH mm")} - {format(shift.end_time*1000, "HH mm")}</div>
+        cells.push(<div className={"calendar-week-entry " + shift.group} key={i+' '+index} style={{ position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
+                {format(shift.start_time*1000, "HH mm")} - {format(shift.end_time*1000, "HH mm")}
+                <br />
+                {shift.group}
+                <br />
+                {shift.location}
+
+                </div>
+
     ))}}
     return cells;
   }
 
 
+  // colorCells = () => {
+  //   if
+  //   var dbValues = {'tab': 'red'}
+  //
+  //   for (let i=0; i<25; i++) {
+  //
+  //
+  //
+  //   }
+  // }
+
   render(){
     return(
       <div>
         {this.drawShifts()}
+        <div className="spacing-cell"> &nbsp;
+        </div>
       </div>
     )
   }

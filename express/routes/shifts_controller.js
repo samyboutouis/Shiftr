@@ -42,6 +42,22 @@ router.get('/find_by_user/:netId', (req, res) => {
   shift.then(result => { res.json(result) });
 });
 
+router.get('/employee_hours/:date', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  let shift = Shift.findEmployeeHours(attributes.netid, parseInt(req.params.date));
+  shift.then(result => { res.json(result) });
+});
+
+router.get('/supervisor_hours/:date', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  let shift = Shift.findSupervisorHours(attributes.netid, parseInt(req.params.date));
+  // TO TEST, COMMENT LINES ABOVE, UNCOMMENT LINE BELOW, AND CHANGE AFFILIATION (INSPECT > APPLICATION) FROM STUDENT
+  // let shift = Shift.findSupervisorHours("da129", parseInt(req.params.date));
+  shift.then(result => { res.json(result) });
+});
+
 router.get('/find_by_time_and_user/:start_time/:end_time', (req, res) => {
   let token = req.cookies["shiftr-saml"];
   let attributes = jwt.verify(token, "make-a-real-secret");

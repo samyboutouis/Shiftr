@@ -88,6 +88,7 @@ class Shift {
             "$push":{
               "start_time":"$start_time",
               "end_time":"$end_time",
+              "location":"$location",
               "status":"$status",
               "group":"$group",
               "employee":"$employee"
@@ -109,9 +110,36 @@ class Shift {
     }
   }
 
+  static findEmployeeHours = async (netid, date)  => {
+    try {
+      var shifts = await shiftsCollection.aggregate([
+        { $match: {"employee.netid": netid, "clocked_in": {$exists: true}, "clocked_out": {$exists: true}, "end_time": {$lte: Date.now()/1000}, "start_time": {$gte: date}} }, 
+        { $project: { "clocked_in":1, "clocked_out":1, "start_time":1, "end_time":1, 
+          "total_hours": { $subtract: ["$clocked_out", "$clocked_in"] },
+          "ot_hours": { $add: [ { $cond: [ { $gte: [ "$clocked_in", "$start_time" ] }, 0, {$subtract: ["$start_time", "$clocked_in"]} ] }, { $cond: [ { $lte: [ "$clocked_out", "$end_time" ] }, 0, {$subtract: ["$clocked_out", "$end_time"]}]}]}} }]).toArray();
+      return {shifts: shifts, total_hours: shifts.reduce((sum, shift) => sum + shift.total_hours, 0), total_ot: shifts.reduce((sum, shift) => sum + shift.ot_hours, 0)}
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  static findSupervisorHours = async (netid, date)  => {
+    try {
+      var employees = await shiftsCollection.aggregate([
+        { $match: {"supervisor.netid": netid, "clocked_in": {$exists: true}, "clocked_out": {$exists: true}, "end_time": {$lte: Date.now()/1000}, "start_time": {$gte: date}} }, 
+        { $group: { "_id": "$employee.netid", "name": { "$first": "$employee.name" }, "total_hours": { $sum: { $subtract: ["$clocked_out", "$clocked_in"] }}}} ]).toArray();
+      for (var i=0; i<employees.length; i++) {
+        employees[i].details = await this.findEmployeeHours(employees[i]._id, date)
+      }
+      return employees
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   static findByTimeAndUser = async (netID, start, end) => {
     try {
-      return await shiftsCollection.find({start_time: {$gte: start}, end_time: {$lte: end}, "employee.netid": netID}).toArray();
+      return await shiftsCollection.find({"employee.netid": netID, start_time: {$gte: parseInt(start)}, end_time: {$lte: parseInt(end)}}).toArray();
     } catch (err) {
       console.log(err);
     }

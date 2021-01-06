@@ -25,6 +25,11 @@ router.get('/', (req, res) => {
     shifts.then(result => { res.json(result) });
   })
 
+  router.put('/hoursTestShifts', (req, res) => {
+    let shifts = scheduler.hoursTestShifts();
+    shifts.then(result => { res.json(result) });
+  })
+
   router.get('/temp_users', (req, res) => {
     console.log('Getting Users')
     let shifts = scheduler.temp_users();

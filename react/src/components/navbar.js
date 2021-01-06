@@ -13,7 +13,7 @@ class Nbar extends Component {
 
   toggleClass() {
     const currentState = this.state.active;
-    this.setState({ active: !currentState });
+    this.setState({active: !currentState});
   };
 
   userBar = () => {
