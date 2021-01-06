@@ -12,7 +12,7 @@ class UpcomingShifts extends Component {
   }
 
   componentDidMount = () => {
-    this.getShifts()
+    this.getUpcomingShifts()
   }
 
   drawShifts = () => {
@@ -27,7 +27,7 @@ class UpcomingShifts extends Component {
     }
   }
 
-  getShifts = () => {
+  getUpcomingShifts = () => {
     let self = this;
     let startTime = getUnixTime(startOfTomorrow());
     let endTime = getUnixTime(endOfWeek(Date.now()));
@@ -80,7 +80,7 @@ class UpcomingShifts extends Component {
   handleClick = (shift) => {
     if(window.confirm('Are you sure you want to offer up this shift? If no one picks up your shift, you are still required to cover it.')){
       axios.put("http://localhost:8080/shifts/update/" + shift._id, {status: "open"}).then((response) => {
-        this.getShifts();
+        this.getUpcomingShifts();
       }).catch( (error) => {
         console.log(error);
       });

@@ -10,10 +10,10 @@ class ShiftPool extends Component {
   }
 
   componentDidMount = () => {
-    this.getShifts()
+    this.getOpenShifts()
   }
 
-  getShifts = () => {
+  getOpenShifts = () => {
     let self = this;
     axios.get("http://localhost:8080/shifts/find_open/open").then((response) => {
       self.setState({shifts: response.data})
@@ -73,15 +73,21 @@ class ShiftPool extends Component {
           alert("This shift conflicts with another shift in your schedule! You cannot claim this shift.");
         } else {
           console.log("NO CONFLICT")
-          axios.put("http://localhost:8080/shifts/update/" + shift._id, {status: "closed", employee: {netid: localStorage.getItem('netid'), first_name: localStorage.getItem('firstName'), last_name: localStorage.getItem('lastName')}}).then((response) => {
-            this.getShifts();
+          axios.put("http://localhost:8080/shifts/update/" + shift._id, {
+            status: "closed", 
+            employee: {
+              netid: localStorage.getItem('netid'), 
+              first_name: localStorage.getItem('firstName'), 
+              last_name: localStorage.getItem('lastName')}
+            }
+          ).then((response) => {
+            this.getOpenShifts();
           }).catch( (error) => {
             console.log(error);
           });
         }
       })
     }
-    this.props.rerenderParentCallback();
   }
 
   render() {

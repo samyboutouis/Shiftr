@@ -7,14 +7,14 @@ import startOfToday from 'date-fns/startOfToday';
 import endOfToday from 'date-fns/endOfToday';
 import getUnixTime from 'date-fns/getUnixTime';
 
-class EmployeeHome extends Component {
+class HomeIndex extends Component {
   constructor(props){
     super(props);
     this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: []};
     this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
   }
 
-  getShifts = () => {
+  getShiftsToday = () => {
     let self = this;
     let startTime = getUnixTime(startOfToday());
     let endTime = getUnixTime(endOfToday());
@@ -44,11 +44,11 @@ class EmployeeHome extends Component {
   }
 
   rerenderParentCallback() {
-    this.forceUpdate();
+    this.getShiftsToday();
   }
 
   componentDidMount() {
-    this.getShifts();
+    this.getShiftsToday();
   }
 
   render() {
@@ -89,4 +89,4 @@ class EmployeeHome extends Component {
   }
 }
 
-export default EmployeeHome;
+export default HomeIndex;
