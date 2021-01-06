@@ -4,7 +4,7 @@ import axios from 'axios';
 class UserForm extends Component {
   constructor(props){
     super()
-    this.state = {uid: null, netid: null, group: null, role: false, submitted: false, modal: false}
+    this.state = {uid: null, netid: null, group: null, role: false, modal: false}
   }
 
   changeHandler = (event) => {
@@ -16,34 +16,34 @@ class UserForm extends Component {
   }
 
   submitForm = (event) => {
-    console.log(this.state)
-    // event.preventDefault();
-    // let form_data = new FormData();
-    // let url; 
+    event.preventDefault();
+    let form_data = new FormData();
+    let url; 
 
-    // //gather all the state values and store them into "FormData" trasit type
-    // for (let [key, value] of Object.entries(this.state)) {
-    //   if(value) {form_data.append(key, value)};
-    // }
+    //gather all the state values and store them into "FormData" trasit type
+    for (let [key, value] of Object.entries(this.state)) {
+      if(value && key!='modal') {form_data.append(key, value)};
+    }
 
-    // //change the call if this is is a create or an update
-    // if(this.props.reqType === "create"){
-    //   url = "http://localhost:8080/users" 
-    //   axios.post(url, form_data, {
-    //     headers: {'content-type': 'multipart/form-data'}
-    //   }).then((response) => {
-    //     this.setState({submitted: true})
-    //   }).catch(function (err){  
-    //     console.log(err)
-    //   });
-    // }else{
-    //   url = "http://localhost:8080/users/update/" + this.props.user._id
-    //   axios.put(url, form_data, {
-    //     headers: {'content-type': 'multipart/form-data'}
-    //   }).catch(function (err){  
-    //     console.log(err)
-    //   });
-    // }
+    //change the call if this is is a create or an update
+    if(this.props.reqType === "create"){
+      url = "http://localhost:8080/users" 
+      axios.post(url, form_data, {
+        headers: {'content-type': 'multipart/form-data'}
+      }).then((response) => {
+        this.setState({modal: false})
+        this.props.updateUsers()
+      }).catch(function (err){  
+        console.log(err)
+      });
+    }else{
+      url = "http://localhost:8080/users/update/" + this.props.user._id
+      axios.put(url, form_data, {
+        headers: {'content-type': 'multipart/form-data'}
+      }).catch(function (err){  
+        console.log(err)
+      });
+    }
   }
 
   addUserButton = () => {
@@ -97,9 +97,9 @@ class UserForm extends Component {
                   <div className="select" onChange={this.changeHandler}>
                     <select defaultValue="select_a_role" name="role">
                       <option disabled="disabled" value="select_a_role" hidden="hidden">Select a Role</option>
-                      <option>Employee</option>
-                      <option>Supervisor</option>
-                      <option>Admin</option>
+                      <option value="employee">Employee</option>
+                      <option value="supervisor">Supervisor</option>
+                      <option value="admin">Admin</option>
                     </select>
                   </div>
                 </div>

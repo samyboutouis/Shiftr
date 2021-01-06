@@ -6,7 +6,7 @@ import axios from 'axios';
 class UserIndex extends Component {
   constructor(props){
     super()
-    this.state= {users: false, selectedUser: false}
+    this.state= {users: false, selectedUser: false, yeet: false}
   }
 
   componentDidMount = () => {
@@ -16,7 +16,6 @@ class UserIndex extends Component {
   clearSelectedUser = () => {
     this.setState({ selectedUser: false})
   }
-
 
   drawSelectedUser = () => {
     if(this.state.selectedUser){
@@ -42,7 +41,7 @@ class UserIndex extends Component {
           </div>
         </div>
         {/* <div onClick={this.addUser} className="rainbow-gradient right-button">Add Employee</div> */}
-        <UserForm reqType="create" />
+        <UserForm updateUsers={this.componentDidMount} reqType="create" />
       </div>
     }
   }
@@ -61,7 +60,9 @@ class UserIndex extends Component {
       <div className="card employee-card" key={index}>
         {/* <button onClick={this.selectUser.bind(this, user)}>Select User</button> */}
         <p className="title is-4">{user.name}</p>
-        <p className="subtitle is-6">{user.netid}</p>
+        <p className="subtitle is-6 mb-2">{user.netid}</p>
+        <p>{Array.isArray(user.group) ? user.group.join(', ') : user.group}</p>
+        <p>{user.email}</p>
       </div>
     )
   }
