@@ -42,6 +42,9 @@ class Nbar extends Component {
             <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")} href="#schedule">
               Schedule
             </a>
+            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Availability")} href="#availability">
+              Availability
+            </a>
             <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, third)} href="#employee" >
               {third}
             </a>

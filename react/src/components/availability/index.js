@@ -3,6 +3,7 @@ import Key from './Key'
 import * as Constants from '../../constants'
 import AvailabilityForm from './form'
 
+
 class AvailabilityIndex extends Component {
   constructor(props){
     super();
@@ -13,24 +14,24 @@ class AvailabilityIndex extends Component {
         <table className="days-of-week">
             <thead>
                 <tr className="week">
-                    <th className="day">Sunday</th>
-                    <th className="day">Monday</th>
-                    <th className="day">Tuesday</th>
-                    <th className="day">Wednesday</th>
-                    <th className="day">Thursday</th>
-                    <th className="day">Friday</th>
-                    <th className="day">Saturday</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
                 </tr>
             </thead>
             <tbody>
                 <tr className = "time"> 
-                    <td className = "day"> </td>
-                    <td className = "day"> </td>
-                    <td className = "day"> </td>
-                    <td className = "day"> </td>
-                    <td className = "day"> </td>
-                    <td className = "day"> </td>
-                    <td className = "day"> </td>
+                <td></td> 
+                <td></td> 
+                <td></td> 
+                <td></td> 
+                <td></td> 
+                <td></td> 
+                <td></td> 
                 </tr>
             </tbody>
         </table>
@@ -49,8 +50,9 @@ class AvailabilityIndex extends Component {
             {group: 'Somewhat Preferred', color: Constants.YELLOW},
             {group: 'Least Preferred', color: Constants.LIGHTORANGE},
             {group: 'Unavailable', color: Constants.DARKRED}]}/>
-        <AvailabilityForm />
+            <AvailabilityForm />
     </div>
+    
 
     
   }
@@ -59,6 +61,7 @@ class AvailabilityIndex extends Component {
     return(
         <div>
           {this.drawCalendar()}
+          
         </div>
     )
   }
