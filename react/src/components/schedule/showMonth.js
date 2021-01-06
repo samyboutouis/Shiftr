@@ -8,13 +8,15 @@ import getUnixTime from "date-fns/getUnixTime";
 class ShowMonth extends Component {
   constructor(props){
     super()
-    this.state= {shifts: false};
-    this.state = {isModal: false};
+    this.state= {shifts: false, isModal: false, activeItem: ''};
   }
 
 
-  handleClick = () => {
+
+  handleClick = (id) => {
     this.setState({ isModal: !this.state.isModal });
+    this.setState({activeItem: id});
+
   };
 
   componentDidMount = () => {
@@ -46,38 +48,43 @@ class ShowMonth extends Component {
 /* format queries */
   mapShifts = () => {
     let shifts = this.state.shifts
-    let dateFormat = "HH mm"
+    let dateFormat = "HH:mm"
     const active = this.state.isModal ? "is-active" : "";
-    return shifts.map((shift,index) =>
-      <div key={index} >
+    return(
+    <div>
+    {shifts.map((shift,index) => (
+      <div key={shift} >
 
-
-        <div onClick={this.handleClick}>
+        <div onClick={() => this.handleClick(shift)} >
           <p className={"calendar-month-entry " + shift.group }>{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
         </div>
 
-
-        {/* modal for each shift */}
-        <div className={`modal ${active}`}>
-          <div className="modal-background" />
-          <div className="modal-card">
-            <header className="modal-card-head">
-              <p className="modal-card-title">{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}, @ {shift.location}</p>
-              <button
-                onClick={this.handleClick}
-                className="delete"
-              />
-            </header>
-            <section className="modal-card-body">
-                <p>{shift.group}</p>
-            </section>
-            <footer className="modal-card-foot"></footer>
-          </div>
-        </div>
       </div>
 
+    ))}
 
-    )
+    <div className={`modal ${active}`}>
+    <div className="modal-background" />
+        <div className="modal-card">
+          <header className="modal-card-head">
+            <p className="modal-card-title">{this.state.activeItem.location}</p>
+            <button
+              onClick={this.handleClick}
+              className="delete"
+            />
+          </header>
+          <section className="modal-card-body">
+              <p>{this.state.activeItem.group}</p>
+              <br/>
+              {console.log(this.state.activeItem.start_time)}
+          </section>
+          <footer className="modal-card-foot"></footer>
+        </div>
+
+    </div>
+
+
+    </div>)
   }
 
   // $(".modal-button").click(function() {
