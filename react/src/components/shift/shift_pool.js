@@ -43,6 +43,8 @@ class ShiftPool extends Component {
       return shifts.map((shift,index) => {
         if(shift.hasOwnProperty("employee")){
           person = shift.employee.first_name + " " + shift.employee.last_name.charAt(0) + ".";
+        } else {
+          person = "Open Shift";
         }
         return (
           <div key={index} className='tile is-child columns is-mobile'>
