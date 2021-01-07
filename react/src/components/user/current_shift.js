@@ -19,7 +19,7 @@ class CurrentShift extends Component {
         }
       }
     }
-    else {
+    else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       if(this.props.shiftsToday === 0){
         landing = "No employees are scheduled to work today."
       }

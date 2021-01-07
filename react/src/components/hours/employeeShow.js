@@ -9,8 +9,7 @@ class EmployeeShow extends Component {
                  <thead> 
                     <tr>
                        <th>Date</th>
-                       <th>Start Time</th>
-                       <th>End Time</th>
+                       <th>Shift Time</th>
                        <th>Clocked In</th>
                        <th>Clocked Out</th>
                        {/* <th>Regular Hours</th>
@@ -31,8 +30,7 @@ class EmployeeShow extends Component {
         return this.props.data.shifts.map((shift,index) =>
           <tr key={index}>
               <td> {format(shift.start_time*1000, "M/d/y")}</td>
-              <td> {format(shift.start_time*1000, "h:mm a")}</td>
-              <td> {format(shift.end_time*1000, "h:mm a")}</td>
+              <td> {format(shift.start_time*1000, "h:mm a")} &#8211; {format(shift.end_time*1000, "h:mm a")}</td>
               <td> {format(shift.clocked_in*1000, "h:mm a")}</td>
               <td> {format(shift.clocked_out*1000, "h:mm a")}</td>
               {/* <td> {Math.round((shift.total_hours-shift.ot_hours)/360)/10} </td>

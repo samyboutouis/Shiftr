@@ -35,7 +35,7 @@ class EmployeeHome extends Component {
       }).catch( (error) => {
         console.log(error)
       });
-    } else {
+    } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       axios.get("http://localhost:8080/shifts/find_time/" + startTime + "/" + endTime).then( (response) => {
         let sortedShifts = response.data;
         sortedShifts.sort((a, b) => a.start_time - b.start_time);
@@ -64,7 +64,7 @@ class EmployeeHome extends Component {
         </div>
       );
     }
-    else {
+    else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       home.push(
         <div className="tile is-7 is-parent" key="supervisor">
           <div className="tile is-child">

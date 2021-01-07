@@ -20,8 +20,7 @@ class Nbar extends Component {
     let third = null;
     if(localStorage.getItem('role')==='employee'){
       third = "Availability";
-    }
-    else {
+    } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       third = "Employees"
     }
     return (
