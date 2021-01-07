@@ -49,7 +49,9 @@ class HomeIndex extends Component {
     let startTime = getUnixTime(startOfTomorrow());
     let endTime = getUnixTime(endOfWeek(Date.now()));
     axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
-      self.setState({upcomingShifts: response.data})
+      let sortedShifts = response.data;
+      sortedShifts.sort((a, b) => a.start_time - b.start_time);
+      self.setState({upcomingShifts: sortedShifts})
     }).catch( (error) => {
       console.log(error)
     });
@@ -58,7 +60,15 @@ class HomeIndex extends Component {
   getOpenShifts = () => {
     let self = this;
     axios.get("http://localhost:8080/shifts/find_open/open").then((response) => {
-      self.setState({openShifts: response.data})
+      let sortedShifts = response.data;
+      sortedShifts.sort((a, b) => {
+        if (a.end_time < b.end_time || (a.end_time === b.end_time && a.start_time < b.start_time))
+          return -1;
+        if (a.end_time > b.end_time || (a.end_time === b.end_time && a.start_time > b.start_time))
+          return 1;
+        return 0;
+      });
+      self.setState({openShifts: sortedShifts})
     }).catch( (error) => {
       console.log(error)
     });
@@ -160,7 +170,15 @@ class HomeIndex extends Component {
 
   handleUpcomingClick = (shift) => {
     if(window.confirm('Are you sure you want to offer up this shift? If no one picks up your shift, you are still required to cover it.')){
-      axios.put("http://localhost:8080/shifts/update/" + shift._id, {status: "open"}).then((response) => {
+      axios.put("http://localhost:8080/shifts/update/" + shift._id, {
+        status: "open", 
+        employee: {
+          netid: localStorage.getItem('netid'), 
+          first_name: localStorage.getItem('firstName'), 
+          last_name: localStorage.getItem('lastName')}
+        }
+      ).then((response) => {
+        this.getShiftsToday();
         this.getUpcomingShifts();
         this.getOpenShifts();
       }).catch( (error) => {
@@ -172,7 +190,9 @@ class HomeIndex extends Component {
   handleOpenClick = (shift) => {
     if(window.confirm('Are you sure you want to claim this shift?')){
       axios.get("http://localhost:8080/shifts/find_conflict/" + shift.start_time + "/" + shift.end_time).then((response) => {
-        if(response.data.length > 0 && shift.employee.netid !== localStorage.getItem('netid')){
+        if(response.data.length > 0 && !shift.hasOwnProperty('employee')) {
+          alert("This shift conflicts with another shift in your schedule! You cannot claim this shift.");
+        } else if (response.data.length > 0 && shift.hasOwnProperty('employee') && shift.employee.netid !== localStorage.getItem('netid')){
           alert("This shift conflicts with another shift in your schedule! You cannot claim this shift.");
         } else {
           axios.put("http://localhost:8080/shifts/update/" + shift._id, {
@@ -183,6 +203,7 @@ class HomeIndex extends Component {
               last_name: localStorage.getItem('lastName')}
             }
           ).then((response) => {
+            this.getShiftsToday();
             this.getOpenShifts();
             this.getUpcomingShifts();
           }).catch( (error) => {

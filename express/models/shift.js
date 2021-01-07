@@ -147,17 +147,7 @@ class Shift {
 
   static findConflict = async (netID, start, end) => {
     try {
-      // FIND shift conflicts
-      // 1. Shift starts before start and ends before end
-      // 2. Shift starts before start and ends after end
-      // 3. Shift starts after start and ends before end
-      // 4. Shift starts after start and ends after end
-      return await shiftsCollection.find({"employee.netid": netID, $or: [
-        {$and: [{start_time: {$lte: parseInt(start)}}, {end_time: {$gte: parseInt(start), $lte: parseInt(end)}}]},
-        {$and: [{start_time: {$lte: parseInt(start)}}, {end_time: {$gte: parseInt(end)}}]},
-        {$and: [{start_time: {$gte: parseInt(start), $lte: parseInt(end)}}, {end_time: {$lte: parseInt(end)}}]},
-        {$and: [{start_time: {$gte: parseInt(start), $lte: parseInt(end)}}, {end_time: {$gte: parseInt(end)}}]}
-      ]}).toArray();
+      return await shiftsCollection.find({"employee.netid": netID, start_time: {$lt: parseInt(end)}, end_time: {$gt: parseInt(start)}}).toArray();
     } catch (err) {
       console.log(err);
     }

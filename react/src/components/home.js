@@ -49,11 +49,11 @@ class Home extends Component {
   }
 
   render(){
-    return(
+    return (
       <div>
         {this.showHome()}
       </div>
-      );
+    );
   }
 }
 
