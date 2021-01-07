@@ -309,7 +309,9 @@ code {
   width: 80%
 }
 
-
+.availability-table td{
+  background-color: white;
+}
 /* HOURS THINGS */
 
 tr{

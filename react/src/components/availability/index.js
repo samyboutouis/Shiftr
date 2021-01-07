@@ -8,11 +8,24 @@ class AvailabilityIndex extends Component {
   constructor(props){
     super();
   }
-
+  mapTimes = () => {
+    return  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  
+    </tr> 
+    //fix this so that it at least displays empty cal to be filled 
+    //change color based on availability 
+  }
   drawCalendar = () => {
     return <div>
-      <div className= "days-of-week">
-        <table className = "table is-bordered is-striped is-fullwidth">
+      <div className= "days-of-week availability-table">
+        <table className = "table is-bordered is-fullwidth">
             <thead>
                 <tr className="week">
                     <th>Sunday</th>
@@ -25,18 +38,7 @@ class AvailabilityIndex extends Component {
                 </tr>
             </thead>
             <tbody>
-                <tr> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                </tr>
-                <tr>
-                  <td></td>
-                </tr>
+            {this.mapTimes()}
             </tbody>
         </table>
         </div>
