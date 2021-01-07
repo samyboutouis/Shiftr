@@ -21,7 +21,7 @@ router.get('/find_one/:_id', (req, res) => {
 });
 
 router.get('/find_open/:status', (req, res) => {
-  let shift = Shift.findOther("status" , req.params.status);
+  let shift = Shift.findByKeyValue("status" , req.params.status);
   shift.then(result => { res.json(result) });
 });
 
@@ -38,7 +38,7 @@ router.get('/find_day/:start_time/:end_time', (req, res) => {
 })
 
 router.get('/find_by_user/:netId', (req, res) => {
-  let shift = Shift.findByUser(req.params.netId);
+  let shift = Shift.findByKeyValue("employee.netid", req.params.netId);
   shift.then(result => { res.json(result) });
 });
 
