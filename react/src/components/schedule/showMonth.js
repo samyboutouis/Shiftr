@@ -3,13 +3,21 @@ import axios from 'axios';
 import format from "date-fns/format";
 import startOfDay from "date-fns/startOfDay";
 import endOfDay from "date-fns/endOfDay";
-import getUnixTime from "date-fns/getUnixTime"
-
+import getUnixTime from "date-fns/getUnixTime";
+import Notes from "./notes.js";
+import fromUnixTime from "date-fns/fromUnixTime";
 class ShowMonth extends Component {
   constructor(props){
     super()
-    this.state= {shifts: false}
+    this.state= {shifts: false, isModal: false, activeItem: ''};
   }
+
+
+/*changed whether modal is active or not, and which shift's info is shown*/
+  handleClick = (id) => {
+    this.setState({ isModal: !this.state.isModal });
+    this.setState({activeItem: id});
+  };
 
   componentDidMount = () => {
     this.getShifts()
@@ -35,18 +43,56 @@ class ShowMonth extends Component {
     }
   }
 
+
+
 /* format queries */
   mapShifts = () => {
     let shifts = this.state.shifts
-    let dateFormat = "HH mm"
-    return shifts.map((shift,index) =>
-      <div key={index}>
-        <p className={"calendar-month-entry " + shift.group}>{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
-        {/* <p className='upcoming-shift-text'> {shift.group} | @{shift.location} | {shift._id}</p>*/}
+    let dateFormat = "HH:mm"
+    const active = this.state.isModal ? "is-active" : "";
+    return(
+    /* extra div added so modal can be on same hierarchical level as mapping, (not creating modals within the map)*/
+    <div>
+    {/*map each shift into the calendar cell*/}
+    {shifts.map((shift,index) => (
+      <div key={shift} >
+        <div onClick={() => this.handleClick(shift)} >
+          <p className={"calendar-month-entry " + shift.group }>{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
+        </div>
       </div>
-    )
-  }
 
+    ))}
+    {/*create one modal, and use state to change out displayed info*/}
+    <div className={`modal ${active}`}>
+    <div className="modal-background" />
+        <div className="modal-card">
+          <header className="modal-card-head">
+            <p className="modal-card-title">{this.state.activeItem.location}</p> {/*<Notes shift={this.state.activeItem}/>*/}
+            <button
+              onClick={this.handleClick}
+              className="delete"
+            />
+          </header>
+          <section className="modal-card-body">
+              <p>{this.state.activeItem.group}</p>
+              <br/>
+              {/*for some reason, formatting time here is causing a time range error, can't console log it either*/}
+              {/*for admin, ability to assign shift from here? for students, claim open? and send to pool?*/}
+              {/* ^^ do we want users to be able to manage shifts from calendar?*/}
+              <div>
+              <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+              <br/>
+              <p></p>
+              {/*<Notes shift={this.state.activeItem}/>*/}
+              </div>
+          </section>
+          <footer className="modal-card-foot"></footer>
+        </div>
+
+    </div>
+
+    </div>)
+  }
 
   render(){
 

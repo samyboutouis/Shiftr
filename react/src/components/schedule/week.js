@@ -36,17 +36,17 @@ return (
 };
 
 /* days of the week under the header */
-const days = () => {
-const days = [];
+const daynames = () => {
+const daynames = [];
 const fill = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 for (let i = 0; i < 7; i++) {
-      days.push(
+      daynames.push(
          <div className="column col-center" key={i}>
          {(fill[i])}
          </div>
       );
    }
-   return <div className="days row">{days}</div>;
+   return <div className="days row">{daynames}</div>;
 };
 
 /* calendar cells */
@@ -95,7 +95,7 @@ days.push(
 return (
    <div className="calendar">
       <div>{header()}</div>
-      <div>{days()}</div>
+      <div>{daynames()}</div>
       <div>{cells()}</div>
    </div>
   );

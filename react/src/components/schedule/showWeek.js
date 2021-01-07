@@ -42,7 +42,7 @@ class ShowWeek extends Component {
       if(shifts[i]){
     shifts[i].data.map((shift,index) =>
         cells.push(<div className={"calendar-week-entry " + shift.group} key={i+' '+index} style={{ position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
-                {format(shift.start_time*1000, "HH mm")} - {format(shift.end_time*1000, "HH mm")}
+                {format(shift.start_time*1000, "HH:mm")} - {format(shift.end_time*1000, "HH:mm")}
                 <br />
                 {shift.group}
                 <br />
