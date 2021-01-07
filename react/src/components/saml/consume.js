@@ -27,7 +27,7 @@ class SamlConsume extends Component {
   }
 
   returnToHomePage = () => {
-    const res = this.setAttributes();
+    this.setAttributes();
     if(this.state.loggedIn){
       return <Redirect to='/' />;
     }
@@ -37,7 +37,7 @@ class SamlConsume extends Component {
     this.setState = (state,callback)=>{
       return;
     };
-}
+  }
 
   render(){
     return (<div>
