@@ -11,7 +11,8 @@ class AvailabilityIndex extends Component {
 
   drawCalendar = () => {
     return <div>
-        <table className="days-of-week">
+      <div className= "days-of-week">
+        <table className = "table is-bordered is-striped is-fullwidth">
             <thead>
                 <tr className="week">
                     <th>Sunday</th>
@@ -24,7 +25,7 @@ class AvailabilityIndex extends Component {
                 </tr>
             </thead>
             <tbody>
-                <tr className = "time"> 
+                <tr> 
                 <td></td> 
                 <td></td> 
                 <td></td> 
@@ -33,8 +34,12 @@ class AvailabilityIndex extends Component {
                 <td></td> 
                 <td></td> 
                 </tr>
+                <tr>
+                  <td></td>
+                </tr>
             </tbody>
         </table>
+        </div>
         <div className = "ml-5">Location: </div>
         <Key groups={[
             {group: 'The Link', color: Constants.RED},
@@ -52,9 +57,7 @@ class AvailabilityIndex extends Component {
             {group: 'Unavailable', color: Constants.DARKRED}]}/>
             <AvailabilityForm />
     </div>
-    
 
-    
   }
 
   render(){
@@ -66,6 +69,5 @@ class AvailabilityIndex extends Component {
     )
   }
 }
-
 
 export default AvailabilityIndex
