@@ -242,6 +242,7 @@ code {
   margin-right: 80%;
   margin-left: 5%;
  }
+
 /* SCHEDULE THINGS */
 .days-of-week {
   float: right;
@@ -254,7 +255,7 @@ code {
   border-collapse: collapse;
   margin-right: 120px;
 }
-.day-week-month  /* the indiv tabs input[type="button"]*/ {
+.day-week-month {
   border: none ;
   outline: none ;
   width: 6em ;
@@ -270,7 +271,7 @@ code {
 
 }
 
-.day-week-month.active  /*input[type="button"].active*/ {
+.day-week-month.active {
   background-image: radial-gradient(
     104.49% 573.2% at -9.55% 10.53%,
     #f5737b 12.98%,
@@ -287,7 +288,9 @@ code {
 }
 
 .key /* div containing all keys */ {
-  margin-top: 10em;
+  position: relative;
+  top: 12em;
+  left: 6em;
   font-family: "Roboto";
   font-weight: 600;
   font-size: 14px;
@@ -306,8 +309,6 @@ code {
   float: right;
   width: 80%
 }
-
-
 
 
 /* HOURS THINGS */
@@ -345,14 +346,16 @@ th{
 
 .build-schedule-button {
   margin: 1rem;
-  padding: .8rem 3rem;
+  padding: .8rem 2rem;
   border: none;
   border-radius: 7px;
   background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
   background-size: 100% 100%;
   cursor: pointer;
-
+  position: absolute;
+  left: 3em;
+  top:60em;
 }
 
 .scheduled-shift h4 {

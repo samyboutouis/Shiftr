@@ -98,14 +98,14 @@ position: relative;
 width: 6em;
 height: 8em;
 border-right: 1px solid lightgray;
-overflow: hidden;
+overflow: scroll;
 cursor: pointer;
 background: transparent;
 }
 .calendar .body .week-cell {
 position: relative;
 width: 10em;
-overflow: hidden;
+overflow: scroll;
 cursor: pointer;
 background: transparent;
 }

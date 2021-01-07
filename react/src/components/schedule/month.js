@@ -9,7 +9,8 @@ import isSameDay from "date-fns/isSameDay";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import subMonths from "date-fns/subMonths";
-import ShowMonth from './showMonth.js'
+import ShowMonth from './showMonth.js';
+import parse from "date-fns/parse";
 
 const MonthCalendar = () => {
 /* set the forward and back 1 month fxn */
@@ -37,17 +38,17 @@ return (
    );
 };
 /* days of the week */
-const days = () => {
-const days = [];
+const daynames = () => {
+const daynames = [];
 const fill = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 for (let i = 0; i < 7; i++) {
-      days.push(
+      daynames.push(
          <div className="column col-center" key={i}>
          {(fill[i])}
          </div>
       );
    }
-   return <div className="days row">{days}</div>;
+   return <div className="days row">{daynames}</div>;
 };
 /* calendar cells */
 
@@ -64,15 +65,15 @@ let day = startDate;
 let formattedDate = "";
 while (day <= endDate) {
    for (let i = 0; i < 7; i++) {
-   formattedDate = format(day, dateFormat);
+     const cloneDay = day;
+     formattedDate = format(day, dateFormat);
 days.push(
       <div /* double ternary operator checks if the date belongs to the month, and adds disabled if not current date */
        className={`column cell ${!isSameMonth(day, monthStart)
        ? "disabled" : isSameDay(day, selectedDate)
        ? "selected" : "" }`}
        key={day}
-       value={selectedDate}
-       onClick={onDateClick}>
+       onClick={() => onDateClick(cloneDay, dateFormat, new Date())}> 
 
        <div>
 
@@ -101,8 +102,8 @@ const prevMonth = () => {
    setCurrentDate(subMonths(currentDate, 1));
 };
 
-const onDateClick = day => {
-setSelectedDate(day);
+const onDateClick = (day) => {
+  setSelectedDate(day);
 }
 
 
@@ -110,7 +111,7 @@ setSelectedDate(day);
 return (
    <div className="calendar">
       <div>{header()}</div>
-      <div>{days()}</div>
+      <div>{daynames()}</div>
       <div>{cells()}</div>
    </div>
   );

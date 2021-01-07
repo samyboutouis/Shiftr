@@ -12,11 +12,10 @@ class ShowMonth extends Component {
   }
 
 
-
+/*changed whether modal is active or not, and which shift's info is shown*/
   handleClick = (id) => {
     this.setState({ isModal: !this.state.isModal });
     this.setState({activeItem: id});
-
   };
 
   componentDidMount = () => {
@@ -51,18 +50,18 @@ class ShowMonth extends Component {
     let dateFormat = "HH:mm"
     const active = this.state.isModal ? "is-active" : "";
     return(
+    /* extra div added so modal can be on same hierarchical level as mapping, (not creating modals within the map)*/
     <div>
+    {/*map each shift into the calendar cell*/}
     {shifts.map((shift,index) => (
       <div key={shift} >
-
         <div onClick={() => this.handleClick(shift)} >
           <p className={"calendar-month-entry " + shift.group }>{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
         </div>
-
       </div>
 
     ))}
-
+    {/*create one modal, and use state to change out displayed info*/}
     <div className={`modal ${active}`}>
     <div className="modal-background" />
         <div className="modal-card">
@@ -76,28 +75,17 @@ class ShowMonth extends Component {
           <section className="modal-card-body">
               <p>{this.state.activeItem.group}</p>
               <br/>
-              {console.log(this.state.activeItem.start_time)}
+              {/*for some reason, formatting time here is causing a time range error, can't console log it either*/}
+              {/*for admin, ability to assign shift from here? for students, claim open? and send to pool?*/}
+              {/* ^^ do we want users to be able to manage shifts from calendar?*/}
           </section>
           <footer className="modal-card-foot"></footer>
         </div>
 
     </div>
 
-
     </div>)
   }
-
-  // $(".modal-button").click(function() {
-  //           var target = $(this).data("target");
-  //           $("html").addClass("is-clipped");
-  //           $(target).addClass("is-active");
-  //        });
-  //
-  //  $(".modal-close").click(function() {
-  //     $("html").removeClass("is-clipped");
-  //     $(this).parent().removeClass("is-active");
-  //  });
-
 
   render(){
 
