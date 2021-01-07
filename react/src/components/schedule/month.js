@@ -10,7 +10,6 @@ import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import subMonths from "date-fns/subMonths";
 import ShowMonth from './showMonth.js';
-import parse from "date-fns/parse";
 
 const MonthCalendar = () => {
 /* set the forward and back 1 month fxn */
@@ -73,7 +72,7 @@ days.push(
        ? "disabled" : isSameDay(day, selectedDate)
        ? "selected" : "" }`}
        key={day}
-       onClick={() => onDateClick(cloneDay, dateFormat, new Date())}> 
+       onClick={() => onDateClick(cloneDay, dateFormat, new Date())}>
 
        <div>
 

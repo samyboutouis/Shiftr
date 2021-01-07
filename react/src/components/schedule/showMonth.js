@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
+import ShiftTimes from "./shifttimes.js";
 import axios from 'axios';
 import format from "date-fns/format";
 import startOfDay from "date-fns/startOfDay";
 import endOfDay from "date-fns/endOfDay";
 import getUnixTime from "date-fns/getUnixTime";
-import Notes from "./notes.js";
-import fromUnixTime from "date-fns/fromUnixTime";
 class ShowMonth extends Component {
   constructor(props){
     super()
@@ -45,9 +44,9 @@ class ShowMonth extends Component {
     }
   }
 
-  drawNotes = (shift) => {
+  drawTimes = (shift) => {
     if (this.state.isModal) {
-      return(<Notes shift={shift}/>)}
+      return(<ShiftTimes shift={shift}/>)}
   }
 
 /* format queries */
@@ -73,7 +72,7 @@ class ShowMonth extends Component {
         <div className="modal-card">
           <header className="modal-card-head">
 
-            <div className="modal-card-title"> {this.drawNotes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
+            <div className="modal-card-title"> {this.drawTimes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
             <button
               onClick={this.handleClick.bind(this, '')}
               className="delete"

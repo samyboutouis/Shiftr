@@ -178,7 +178,7 @@ width: calc(100%/7);
 
 /* time based shift location */
 :root{
-  --tab: blue;
+  --tab: pink;
   /* labs and training, office hours, designhub */
 }
 
@@ -187,6 +187,7 @@ width: calc(100%/7);
 }
 .calendar-week-entry{
   /* margin: var(--marg); */
+  cursor:pointer;
   font-size: 12px;
   padding-left: 1em;
   padding-top: 1em;

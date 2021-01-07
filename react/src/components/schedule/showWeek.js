@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ShiftTimes from "./shifttimes.js";
 import axios from 'axios';
 import format from "date-fns/format";
 import getHours from "date-fns/getHours"
@@ -8,8 +9,16 @@ import differenceInMinutes from "date-fns/differenceInMinutes"
 class ShowWeek extends Component {
   constructor(props){
     super()
-    this.state= {shifts: false}
+    this.state= {shifts: false, isModal: false, activeItem: ''}
   }
+
+  /*changed whether modal is active or not, and which shift's info is shown*/
+    handleClick = (id) => {
+      this.setState({ isModal: !this.state.isModal });
+      console.log(id)
+      this.setState({activeItem: id});
+
+    };
 
   componentDidMount = () => {
     this.getShifts()
@@ -34,44 +43,70 @@ class ShowWeek extends Component {
     }
   }
 
+
+  drawTimes = (shift) => {
+    if (this.state.isModal) {
+      return(<ShiftTimes shift={shift}/>)}
+  }
 /* format and size the display of queries */
   mapShifts = () => {
     let shifts = this.state.shifts
+    const active = this.state.isModal ? "is-active" : "";
     var cells=[];
     for(let i=0;i<24; i++) {
       if(shifts[i]){
     shifts[i].data.map((shift,index) =>
-        cells.push(<div className={"calendar-week-entry " + shift.group} key={i+' '+index} style={{ position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
+        cells.push(
+          <div className={"calendar-week-entry " + shift.group} key={i+' '+index, shift} style={{ position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
+            <div onClick={this.handleClick.bind(this, shift)}>
                 {format(shift.start_time*1000, "HH:mm")} - {format(shift.end_time*1000, "HH:mm")}
                 <br />
                 {shift.group}
                 <br />
                 {shift.location}
-
-                </div>
+            </div>
+          </div>
 
     ))}}
     return cells;
   }
 
 
-  // colorCells = () => {
-  //   if
-  //   var dbValues = {'tab': 'red'}
-  //
-  //   for (let i=0; i<25; i++) {
-  //
-  //
-  //
-  //   }
-  // }
-
   render(){
+    const active = this.state.isModal ? "is-active" : "";
     return(
       <div>
         {this.drawShifts()}
         <div className="spacing-cell"> &nbsp;
         </div>
+
+        {/*create one modal, and use state to change out displayed info*/}
+        <div className={`modal ${active}`}>
+          <div className="modal-background" />
+              <div className="modal-card">
+                <header className="modal-card-head">
+
+                  <div className="modal-card-title"> {this.drawTimes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
+                  <button
+                    onClick={this.handleClick.bind(this, '')}
+                    className="delete"
+                  />
+                </header>
+                <section className="modal-card-body">
+                    <p>{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
+                    <br/>
+                    <div>
+                    <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+                    <br/>
+                    <p></p>
+                    {/*<Notes shift={this.state.activeItem}/>*/}
+                    </div>
+                </section>
+                <footer className="modal-card-foot"></footer>
+              </div>
+          </div>
+
+
       </div>
     )
   }
