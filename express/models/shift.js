@@ -139,7 +139,15 @@ class Shift {
 
   static findByTimeAndUser = async (netID, start, end) => {
     try {
-      return await shiftsCollection.find({"employee.netid": netID, start_time: {$gte: parseInt(start)}, end_time: {$lte: parseInt(end)}}).toArray();
+      return await shiftsCollection.find({"employee.netid": netID, start_time: {$gte: parseInt(start)}, end_time: {$lte: parseInt(end)}, clocked_out: {$exists: false}}).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  static findConflict = async (netID, start, end) => {
+    try {
+      return await shiftsCollection.find({"employee.netid": netID, start_time: {$lt: parseInt(end)}, end_time: {$gt: parseInt(start)}}).toArray();
     } catch (err) {
       console.log(err);
     }
