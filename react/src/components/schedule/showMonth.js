@@ -4,7 +4,8 @@ import format from "date-fns/format";
 import startOfDay from "date-fns/startOfDay";
 import endOfDay from "date-fns/endOfDay";
 import getUnixTime from "date-fns/getUnixTime";
-import Notes from "./notes.js"
+import Notes from "./notes.js";
+import fromUnixTime from "date-fns/fromUnixTime";
 class ShowMonth extends Component {
   constructor(props){
     super()
@@ -66,7 +67,7 @@ class ShowMonth extends Component {
     <div className="modal-background" />
         <div className="modal-card">
           <header className="modal-card-head">
-            <p className="modal-card-title">{this.state.activeItem.location}</p>
+            <p className="modal-card-title">{this.state.activeItem.location}</p> {/*<Notes shift={this.state.activeItem}/>*/}
             <button
               onClick={this.handleClick}
               className="delete"
@@ -78,9 +79,12 @@ class ShowMonth extends Component {
               {/*for some reason, formatting time here is causing a time range error, can't console log it either*/}
               {/*for admin, ability to assign shift from here? for students, claim open? and send to pool?*/}
               {/* ^^ do we want users to be able to manage shifts from calendar?*/}
-              <p>Notes for this shift : </p>
+              <div>
+              <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
               <br/>
-              <Notes shift={this.state.activeItem}>
+              <p></p>
+              {/*<Notes shift={this.state.activeItem}/>*/}
+              </div>
           </section>
           <footer className="modal-card-foot"></footer>
         </div>
