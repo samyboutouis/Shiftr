@@ -12,7 +12,7 @@ class ShowWeek extends Component {
     this.state= {shifts: false, isModal: false, activeItem: ''}
   }
 
-  /*changed whether modal is active or not, and which shift's info is shown*/
+  /*changes whether modal is active or not, and which shift's info is shown*/
     handleClick = (id) => {
       this.setState({ isModal: !this.state.isModal });
       console.log(id)
@@ -51,20 +51,21 @@ class ShowWeek extends Component {
 /* format and size the display of queries */
   mapShifts = () => {
     let shifts = this.state.shifts
-    const active = this.state.isModal ? "is-active" : "";
     var cells=[];
     for(let i=0;i<24; i++) {
       if(shifts[i]){
     shifts[i].data.map((shift,index) =>
         cells.push(
-          <div className={"calendar-week-entry " + shift.group} key={i+' '+index, shift} style={{ position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
-            <div onClick={this.handleClick.bind(this, shift)}>
+          <div className="heyo" onClick={this.handleClick.bind(this, shift)}>
+          <div className={"calendar-week-entry " + shift.group} key={i+' '+index, shift} style={{position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
+            <div>
                 {format(shift.start_time*1000, "HH:mm")} - {format(shift.end_time*1000, "HH:mm")}
                 <br />
                 {shift.group}
                 <br />
                 {shift.location}
             </div>
+          </div>
           </div>
 
     ))}}
@@ -75,7 +76,7 @@ class ShowWeek extends Component {
   render(){
     const active = this.state.isModal ? "is-active" : "";
     return(
-      <div>
+      <div >
         {this.drawShifts()}
         <div className="spacing-cell"> &nbsp;
         </div>
@@ -99,7 +100,6 @@ class ShowWeek extends Component {
                     <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
                     <br/>
                     <p></p>
-                    {/*<Notes shift={this.state.activeItem}/>*/}
                     </div>
                 </section>
                 <footer className="modal-card-foot"></footer>

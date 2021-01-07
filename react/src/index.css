@@ -255,6 +255,7 @@ code {
   margin-right: 120px;
 }
 .day-week-month {
+  cursor: pointer;
   border: none ;
   outline: none ;
   width: 6em ;

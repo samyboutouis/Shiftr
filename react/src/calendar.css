@@ -159,6 +159,7 @@ width: calc(100%/7);
 }
 
 .calendar-day-entry{
+  cursor: pointer;
   margin:2px;
   position: absolute;
   left: 36em;
@@ -233,3 +234,10 @@ width: calc(100%/7);
 .designhub {
   border-left-color: rgba(90, 12, 245, .4);
 }
+
+/* ATTEMPTING TO GET RID OF SHIFT OVERLAP IN CAL */
+/* .heyo{
+  position: relative;
+  float: left;
+  display: inline-block;
+} */
