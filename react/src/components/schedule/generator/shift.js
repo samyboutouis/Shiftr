@@ -17,7 +17,7 @@ class Shift extends Component {
     var end = this.props.shift.end_time*1000
     if(differenceInMinutes(end, start) > 30) {
       return  <div className="scheduled-shift">
-        <h4>{format(start, "h:mm")} - {format(end, "h:mm")}</h4>
+        <h4>{format(start, "M/d")} {format(start, "h:mm")} - {format(end, "h:mm")}</h4>
         <p> {this.props.shift.employee ? this.props.shift.employee.name : "unassigned" } @ {this.props.group} </p>
       </div>
     } else {

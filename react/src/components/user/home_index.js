@@ -106,7 +106,9 @@ class HomeIndex extends Component {
       let person = "Open Shift";
       return shifts.map((shift,index) => {
         if(shift.hasOwnProperty("employee")){
-          person = shift.employee.first_name + " " + shift.employee.last_name.charAt(0) + ".";
+          var last
+          shift.employee.last_name ? last = shift.employee.last_name.charAt(0) + "." : last = ''
+          person = shift.employee.first_name + " " + last;
         } else {
           person = "Open Shift";
         }
