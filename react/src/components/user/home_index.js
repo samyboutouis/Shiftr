@@ -77,7 +77,7 @@ class HomeIndex extends Component {
   }
 
   drawUpcomingShifts = () => {
-    if(this.state.upcomingShifts){
+    if(this.state.upcomingShifts || this.state.additionalShifts){
       return (
         <div className='tile is-ancestor'>
           <div className='tile is-parent is-vertical'>
