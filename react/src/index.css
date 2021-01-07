@@ -150,11 +150,25 @@ code {
   font-size: 2.5em;
   font-family: Roboto;
   font-weight: normal;
+  position: relative;
 }
 
 .shift-pool-image {
   height: 1em;
   margin-right: .5em;
+}
+
+.add-shift-button {
+  margin-left: 25px;
+  border: none;
+  background: url('./button.png') no-repeat scroll 0 0 transparent;
+  color: white;
+  background-size: 100% 100%;
+  padding: .8em 2em;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .open-shift-time {

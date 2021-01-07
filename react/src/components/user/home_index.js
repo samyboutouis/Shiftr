@@ -218,6 +218,10 @@ class HomeIndex extends Component {
     }
   }
 
+  handleAddClick = () => {
+    // Modal that lets admin add open shift to schedule
+  }
+
   componentDidMount() {
     this.getShiftsToday();
     this.getUpcomingShifts();
@@ -225,7 +229,7 @@ class HomeIndex extends Component {
   }
 
   render() {
-    let home = []
+    let home = [];
     if(localStorage.getItem('role')==='employee'){
       home.push(
         <div className="tile is-7 is-vertical is-parent" key="vertical">
@@ -250,13 +254,16 @@ class HomeIndex extends Component {
         </div>
       );
     }
+    let shiftPool = [<img src={Pool} key="Pool" className='shift-pool-image' alt="Pool"/>, "Shift Pool"];
+    if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
+      shiftPool.push(<button key="add" className='add-shift-button'>Add</button>);
+    }
     home.push(
       <div className="tile is-parent" key="pool">
         <div className="tile is-child">
           <div className='shift-pool'>
             <p className="shift-pool-title">
-              <img src={Pool} className='shift-pool-image' alt="Pool"/> 
-              Shift Pool 
+              {shiftPool}
             </p>
             <div>
               {this.drawOpenShifts()}
