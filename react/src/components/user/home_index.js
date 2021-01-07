@@ -65,7 +65,7 @@ class HomeIndex extends Component {
   }
 
   drawOpenShifts = () => {
-    if(this.state.shifts){
+    if(this.state.openShifts){
       return( 
         <div className='tile is-ancestor'>
           <div className='tile is-parent is-vertical'>
@@ -77,7 +77,7 @@ class HomeIndex extends Component {
   }
 
   drawUpcomingShifts = () => {
-    if(this.state.shifts && !this.state.selectedShift){
+    if(this.state.upcomingShifts){
       return (
         <div className='tile is-ancestor'>
           <div className='tile is-parent is-vertical'>
@@ -172,11 +172,9 @@ class HomeIndex extends Component {
   handleOpenClick = (shift) => {
     if(window.confirm('Are you sure you want to claim this shift?')){
       axios.get("http://localhost:8080/shifts/find_conflict/" + shift.start_time + "/" + shift.end_time).then((response) => {
-        if(response.data.length > 0){
-          console.log("CONFLICT");
+        if(response.data.length > 0 && shift.employee.netid !== localStorage.getItem('netid')){
           alert("This shift conflicts with another shift in your schedule! You cannot claim this shift.");
         } else {
-          console.log("NO CONFLICT")
           axios.put("http://localhost:8080/shifts/update/" + shift._id, {
             status: "closed", 
             employee: {
@@ -191,7 +189,7 @@ class HomeIndex extends Component {
             console.log(error);
           });
         }
-      })
+      });
     }
   }
 

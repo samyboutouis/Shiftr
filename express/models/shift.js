@@ -152,12 +152,12 @@ class Shift {
       // 2. Shift starts before start and ends after end
       // 3. Shift starts after start and ends before end
       // 4. Shift starts after start and ends after end
-      return await shiftsCollection.find({"employee.netid": netID, $or: [{
-        $and: [{start_time: {$lte: start}}, {end_time: {$gte: start, $lte: end}}],
-        $and: [{start_time: {$lte: start}}, {end_time: {$gte: end}}],
-        $and: [{start_time: {$gte: start, $lte: end}}, {end_time: {$lte: end}}],
-        $and: [{start_time: {$gte: start, $lte: end}}, {end_time: {$gte: end}}],
-      }]}).toArray();
+      return await shiftsCollection.find({"employee.netid": netID, $or: [
+        {$and: [{start_time: {$lte: parseInt(start)}}, {end_time: {$gte: parseInt(start), $lte: parseInt(end)}}]},
+        {$and: [{start_time: {$lte: parseInt(start)}}, {end_time: {$gte: parseInt(end)}}]},
+        {$and: [{start_time: {$gte: parseInt(start), $lte: parseInt(end)}}, {end_time: {$lte: parseInt(end)}}]},
+        {$and: [{start_time: {$gte: parseInt(start), $lte: parseInt(end)}}, {end_time: {$gte: parseInt(end)}}]}
+      ]}).toArray();
     } catch (err) {
       console.log(err);
     }
