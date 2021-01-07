@@ -16,7 +16,9 @@ class ShowMonth extends Component {
 /*changed whether modal is active or not, and which shift's info is shown*/
   handleClick = (id) => {
     this.setState({ isModal: !this.state.isModal });
+    console.log(id)
     this.setState({activeItem: id});
+
   };
 
   componentDidMount = () => {
@@ -43,7 +45,10 @@ class ShowMonth extends Component {
     }
   }
 
-
+  drawNotes = (shift) => {
+    if (this.state.isModal) {
+      return(<Notes shift={shift}/>)}
+  }
 
 /* format queries */
   mapShifts = () => {
@@ -56,8 +61,8 @@ class ShowMonth extends Component {
     {/*map each shift into the calendar cell*/}
     {shifts.map((shift,index) => (
       <div key={shift} >
-        <div onClick={() => this.handleClick(shift)} >
-          <p className={"calendar-month-entry " + shift.group }>{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</p>
+        <div onClick={this.handleClick.bind(this, shift)} >
+          <div className={"calendar-month-entry " + shift.group }>{format(shift.start_time*1000 , dateFormat)} - {format(shift.end_time*1000, dateFormat)}</div>
         </div>
       </div>
 
@@ -67,14 +72,16 @@ class ShowMonth extends Component {
     <div className="modal-background" />
         <div className="modal-card">
           <header className="modal-card-head">
-            <p className="modal-card-title">{this.state.activeItem.location}</p> {/*<Notes shift={this.state.activeItem}/>*/}
+
+            <div className="modal-card-title"> {this.drawNotes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
             <button
-              onClick={this.handleClick}
+              onClick={this.handleClick.bind(this, '')}
               className="delete"
             />
           </header>
           <section className="modal-card-body">
-              <p>{this.state.activeItem.group}</p>
+              <p>{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
+
               <br/>
               {/*for some reason, formatting time here is causing a time range error, can't console log it either*/}
               {/*for admin, ability to assign shift from here? for students, claim open? and send to pool?*/}
@@ -95,8 +102,6 @@ class ShowMonth extends Component {
   }
 
   render(){
-
-
     return(
      <div>
         {this.drawShifts()}

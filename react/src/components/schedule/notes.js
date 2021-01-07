@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import fromUnixTime from "date-fns/fromUnixTime";
-
+import format from "date-fns/format"
 class Notes extends Component {
   constructor(props){
     super()
@@ -12,35 +12,21 @@ class Notes extends Component {
     this.getNotes()
   }
 
-  getTimes = (start, end) => {
-    let startTime = fromUnixTime(parseInt(start)*1000)
-    let endTime = fromUnixTime(parseInt(end)*1000)
-    console.log("HEY")
-    console.log(typeof(startTime))
-    return(<div> startTime -  endTime</div>)
-  }
 
 
   getNotes = (props) => {
     let self = this
     // let start = self.props.start
     // let end = self.props.end
-
-    // let start = shift.start_time
-    // let end = shift.end_time
-    // let startTime = fromUnixTime(parseInt(start)*1000)
-    // let endTime = fromUnixTime(parseInt(end)*1000)
-    // console.log("HEY")
-    // console.log("SHIFT TYPE"+typeof(shift))
-    // console.log("SHIFT"+(shift))
-    // console.log("TIME TYPE BEFORE CONVERT"+typeof(parseInt(start)))
-    // console.log("TIME BEFORE CONVERT"+(parseInt(start)))
-    // console.log("TYPE AFTER CONVERT FROM UNIX"+typeof(startTime))
-    // console.log("TIME AFTER CONVERT"+startTime)
-
-
+    let shift = self.props.shift
+    const newshift = shift
+    let start = newshift.start_time
+    let end = newshift.end_time
+    let dateformat = "HH:mm"
+    let startTime = format(start * 1000, dateformat)
+    let endTime = format(end  * 1000, dateformat)
     return(<div>
-      {/*<div>{startTime} -  {endTime} </div>*/}
+      <div>{startTime} -  {endTime} </div>
       </div>)
     // const start = getUnixTime(startOfDay(this.props.day))
     // const end = getUnixTime(endOfDay(this.props.day))
