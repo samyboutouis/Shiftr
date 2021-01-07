@@ -24,7 +24,7 @@ class SupervisorHours extends Component {
                <p>{this.state.selectedEmployee.name}</p>
                <button onClick={() => this.clearSelectedEmployee()} className="delete" aria-label="delete"></button>
             </div>
-            <div class="message-body">
+            <div className="message-body">
                <EmployeeShow data={this.state.selectedEmployee.details} />
             </div>
             </div>
@@ -35,7 +35,7 @@ class SupervisorHours extends Component {
      drawShifts = () => {
        if(this.props.data){
          return <div className = "hours-table">
-             <table className = "table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+             <table className = "table is-bordered is-striped is-narrow is-fullwidth">
                 <thead> 
                    <tr>
                       <th>Name</th>
@@ -53,7 +53,7 @@ class SupervisorHours extends Component {
  
      mapShifts = () => {
        return this.props.data.map((user,index) =>
-         <tr onClick={this.selectEmployee.bind(this, user)} key={index}>
+         <tr className="click-me" onClick={this.selectEmployee.bind(this, user)} key={index}>
             <td> {user.name}</td>
             <td> {user._id}</td>
             <td> {Math.round((user.total_hours)/360)/10} </td>

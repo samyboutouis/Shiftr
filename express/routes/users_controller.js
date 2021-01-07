@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const User = require('../models/user')
-
+var jwt = require('jsonwebtoken');
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -20,6 +20,14 @@ router.use(function timeLog (req, res, next) {
 router.get('/', (req, res) => {
   console.log('Getting Users')
   let users = User.all()
+  users.then(result => { res.json(result) });
+})
+
+// list of admins, employees, and other supervisors
+router.get('/employee_list', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  let users = User.employeeList(attributes.group, attributes.netid)
   users.then(result => { res.json(result) });
 })
 

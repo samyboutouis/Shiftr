@@ -20,13 +20,13 @@ class HoursIndex extends Component {
     getShifts = () => {
       let self = this;
       let date = subWeeks(startOfWeek(new Date()),1)/1000
-      if(localStorage.getItem('affiliation') === 'student') {
+      if(localStorage.getItem('role')==='employee'){
          axios.get("http://localhost:8080/shifts/employee_hours/"+date).then( (response) => {
             self.setState({data: response.data})
          }).catch( (error) => {
             console.log(error)
          });
-      } else {
+      } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
          axios.get("http://localhost:8080/shifts/supervisor_hours/"+date).then( (response) => {
             self.setState({data: response.data})
          }).catch( (error) => {
@@ -47,9 +47,9 @@ class HoursIndex extends Component {
    }
 
     drawHours = () => {
-       if(localStorage.getItem('affiliation') === 'student') {
+       if(localStorage.getItem('role')==='employee'){
           return <EmployeeHours data = {this.state.data} />
-       } else {
+       } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
           return <SupervisorHours data = {this.state.data} />
        }
     }

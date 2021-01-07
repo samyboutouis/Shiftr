@@ -86,19 +86,21 @@ class ScheduleIndex extends Component {
   }
 
   buildSchedule = () => {
-    if(this.state.buildSchedule === true){
-      return <div>
-        <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
-        <BuildSchedule toggleBuildSchedule={this.toggleBuildSchedule} />
-      </div>
-    }
-    else if(this.state.buildSchedule) {
-      return <div>
+    if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
+      if(this.state.buildSchedule === true){
+        return <div>
           <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
-          <GeneratedSchedule data = {this.state.buildSchedule} />
+          <BuildSchedule toggleBuildSchedule={this.toggleBuildSchedule} />
         </div>
-    } else {
-      return <div><br/> <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button></div>
+      }
+      else if(this.state.buildSchedule) {
+        return <div>
+            <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+            <GeneratedSchedule data = {this.state.buildSchedule} />
+          </div>
+      } else {
+        return <div><br/> <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button></div>
+      }
     }
   }
 

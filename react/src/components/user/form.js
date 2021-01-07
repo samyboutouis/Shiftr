@@ -1,25 +1,33 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 class UserForm extends Component {
   constructor(props){
     super()
-    this.state = {firstName: null, lastName: null, group: null, admin: false, submitted: false}
+    this.state = {uid: null, netid: null, group: [], role: false, modal: false}
   }
 
   changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     if(event.target.type === "checkbox") {
-      this.setState({
-        [name]: event.target.checked
-      });
+      if(name.includes('group')){
+        // add group to array if checked
+        if(event.target.checked) {
+          this.setState({group: this.state.group.concat(value)})
+        } 
+        // reove group from array if unchecked
+        else {
+          this.setState({group: this.state.group.filter(function(g){ return g !== value;})})
+        }
+      }
     }
     else {
       this.setState({
         [name]: value
-    }); 
+      }); 
     }
   }
 
@@ -30,7 +38,7 @@ class UserForm extends Component {
 
     //gather all the state values and store them into "FormData" trasit type
     for (let [key, value] of Object.entries(this.state)) {
-      if(value) {form_data.append(key, value)};
+      if(value && key!=='modal') {form_data.append(key, value)};
     }
 
     //change the call if this is is a create or an update
@@ -39,7 +47,8 @@ class UserForm extends Component {
       axios.post(url, form_data, {
         headers: {'content-type': 'multipart/form-data'}
       }).then((response) => {
-        this.setState({submitted: true})
+        this.setState({modal: false})
+        this.props.updateUsers()
       }).catch(function (err){  
         console.log(err)
       });
@@ -53,46 +62,107 @@ class UserForm extends Component {
     }
   }
 
-  render(){
-    if(!this.state.submitted){
-      return(
-        <div></div>
-        // <Container>
-        //   <Form>
-        //     <Form.Row>
-        //       <Form.Group as={Col} controlId="formGridFirstName">
-        //         <Form.Label>First Name</Form.Label>
-        //         <Form.Control type="text" placeholder="Enter first name" name='firstName' onChange={this.changeHandler}/>
-        //       </Form.Group>
-        //       <Form.Group as={Col} controlId="formGridLastName">
-        //         <Form.Label>Last Name</Form.Label>
-        //         <Form.Control type="text" placeholder="Enter last name" name='lastName' onChange={this.changeHandler}/>
-        //       </Form.Group>
-        //     </Form.Row>
-        //     <Form.Group controlId="formGridEmail">
-        //       <Form.Label>Email</Form.Label>
-        //       <Form.Control type="email" placeholder="Enter your netID email" name='email' onChange={this.changeHandler}/>
-        //     </Form.Group>
-        //     <Form.Row>
-        //       <Form.Group as={Col} controlId="formGridRole">
-        //         <Form.Label>Role</Form.Label>
-        //         <Form.Control type="text" placeholder="Enter role" name='role' onChange={this.changeHandler}/>
-        //       </Form.Group>
-        //       <Form.Group as={Col} controlId="formGridAffiliation">
-        //         <Form.Label>Affiliation</Form.Label>
-        //         <Form.Control type="text" placeholder="Enter affiliation" name='affiliation' onChange={this.changeHandler}/>
-        //       </Form.Group>
-        //     </Form.Row>
-        //     <Button variant="primary" type="submit" onClick={this.submitForm}>
-        //       Submit
-        //     </Button>
-        //   </Form>
-        // </Container>
+  // button to add an employee to the database
+  // TODO: account for whether employee is already in database
+  addUserButton = () => {
+    if(this.props.reqType === "create") {
+      return <div onClick={this.toggleModal.bind(this)} className="rainbow-gradient right-button">
+        Add Employee &nbsp; 
+        <FontAwesomeIcon icon={faPlusCircle} />
+      </div>
+    }
+  }
+
+  toggleModal = () => {
+      this.setState({modal: !this.state.modal})
+  }
+
+  // checkboxes for user's groups
+  // options come from the current supervisor's groups
+  groupOptions = () => {
+    var groups = localStorage.getItem('group').split(",")
+    var options = []
+    groups.forEach((group, index) =>
+      options.push(
+        <label key={index} className="checkbox mr-5">
+          <input name={'group'+index} value={group} type="checkbox" onChange={this.changeHandler} />
+          &nbsp;{group}
+        </label>
       )
+    )
+    return options
+  }
+
+  formModal = () => {
+    if(this.state.modal) {
+      return <div className="modal is-active">
+        <div className="modal-background"></div>
+        <div className="modal-card">
+          
+          <header className="modal-card-head">
+            <p className="modal-card-title">Add Employee</p>
+            <button onClick={this.toggleModal.bind(this)} className="delete" aria-label="close"></button>
+          </header>
+
+          <section className="modal-card-body">
+            <form>
+
+              <div className="field">
+                <label className="label">NetId</label>
+                <div className="control">
+                  <input className='input' name='netid' type="text" placeholder="e.g abc123" onChange={this.changeHandler} />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Unique ID</label>
+                <div className="control">
+                  <input className='input' name='uid' type="text" placeholder="e.g 0123456" onChange={this.changeHandler} />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Group</label>
+                <div className="control">
+                  {this.groupOptions()}
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Role</label>
+                <div className="control">
+                  <div className="select" onChange={this.changeHandler}>
+                    <select defaultValue="select_a_role" name="role">
+                      <option disabled="disabled" value="select_a_role" hidden="hidden">Select a Role</option>
+                      <option value="employee">Employee</option>
+                      <option value="supervisor">Supervisor</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </section>
+
+          <footer className="modal-card-foot">
+            <div className="control">
+              <input className="button is-success" onClick={this.submitForm} type='submit' />
+            </div>
+          </footer>
+
+        </div>
+        </div>
     }
-    else {
-      return <Redirect to='/' />
-    }
+  }
+
+  render(){
+      return(
+        <div className="parent">
+          {this.addUserButton()}
+          {this.formModal()}
+        </div>
+      )
   }
 }
 

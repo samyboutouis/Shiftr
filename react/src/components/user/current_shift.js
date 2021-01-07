@@ -9,7 +9,7 @@ class CurrentShift extends Component {
 
   render() {
     let landing = "You have no shifts left today."
-    if(this.props.affiliation === 'student'){
+    if(localStorage.getItem('role')==='employee'){
       if(this.props.shiftsToday > 0){
         if(this.props.shiftsToday === 1){
           landing = "You have one shift today."
@@ -17,7 +17,8 @@ class CurrentShift extends Component {
           landing = "You have " + this.props.shiftsToday + " shifts today."
         }
       }
-    } else {
+    }
+    else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       if(this.props.shiftsToday === 0){
         landing = "No employees are scheduled to work today."
       } else {
@@ -35,7 +36,7 @@ class CurrentShift extends Component {
         <p className="landing-box">{landing}</p>
       </div>
     );
-    shift.push(<AllShiftsToday numOfShifts={this.props.shiftsToday} shifts={this.props.shifts} affiliation={this.props.affiliation} key="shifts"/>);
+    shift.push(<AllShiftsToday numOfShifts={this.props.shiftsToday} shifts={this.props.shifts} key="shifts"/>);
     return (
       <div className="background-pretty-gradient">
         {shift}

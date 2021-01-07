@@ -21,7 +21,7 @@ router.get('/find_one/:_id', (req, res) => {
 });
 
 router.get('/find_open/:status', (req, res) => {
-  let shift = Shift.findOther("status" , req.params.status);
+  let shift = Shift.findByKeyValue("status" , req.params.status);
   shift.then(result => { res.json(result) });
 });
 
@@ -38,7 +38,7 @@ router.get('/find_day/:start_time/:end_time', (req, res) => {
 })
 
 router.get('/find_by_user/:netId', (req, res) => {
-  let shift = Shift.findByUser(req.params.netId);
+  let shift = Shift.findByKeyValue("employee.netid", req.params.netId);
   shift.then(result => { res.json(result) });
 });
 
@@ -55,6 +55,15 @@ router.get('/supervisor_hours/:date', (req, res) => {
   let shift = Shift.findSupervisorHours(attributes.netid, parseInt(req.params.date));
   // TO TEST, COMMENT LINES ABOVE, UNCOMMENT LINE BELOW, AND CHANGE AFFILIATION (INSPECT > APPLICATION) FROM STUDENT
   // let shift = Shift.findSupervisorHours("da129", parseInt(req.params.date));
+  shift.then(result => { res.json(result) });
+});
+
+router.get('/supervisor_schedule/:start/:end', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  let shift = Shift.findSupervisorHours(attributes.netid, parseInt(req.params.date));
+  // TO TEST, COMMENT LINES ABOVE, UNCOMMENT LINE BELOW, AND CHANGE AFFILIATION (INSPECT > APPLICATION) FROM STUDENT
+  // let shift = Shift.supervisorSchedule("da129", parseInt(req.params.start), parseInt(req.params.end));
   shift.then(result => { res.json(result) });
 });
 

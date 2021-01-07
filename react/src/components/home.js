@@ -3,6 +3,7 @@ import AvailabilityIndex from './availability/index'
 import HoursIndex from './hours/index'
 import ScheduleIndex from './schedule/index'
 import HomeIndex from './user/home_index'
+import UserIndex from './user/index'
 import Nbar from './navbar'
 //import CalIndex from './availability/indexTwo'
 
@@ -30,15 +31,17 @@ class Home extends Component {
   showHome = () => {
     let home = [];
     if (localStorage.getItem('loggedIn')){
-      home.push(<Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout} affiliation={localStorage.getItem('affiliation')} key="nav"/>)
+      home.push(<Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout} key="nav"/>)
       if (this.state.navState === "Shiftr" || this.state.navState === "Home"){
-        home.push(<HomeIndex affiliation={localStorage.getItem('affiliation')} key="home"/>);
+        home.push(<HomeIndex key="home"/>);
       }else if(this.state.navState === "Availability"){
         home.push(<AvailabilityIndex key="availability"/>);
       }else if(this.state.navState === "Schedule"){
         home.push(<ScheduleIndex key="schedule"/>)
       }else if(this.state.navState === "Hours") {
         home.push(<HoursIndex key="hours"/>)
+      }else if(this.state.navState === "Employees") {
+        home.push(<UserIndex key="employees"/>)
       }
     }else{
       home.push(

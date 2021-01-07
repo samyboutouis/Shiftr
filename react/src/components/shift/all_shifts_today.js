@@ -24,7 +24,7 @@ class AllShiftsToday extends Component {
     let shifts = this.props.shifts;
     let timeFormat = "hh:mm";
     let pm = "a";
-    if(this.props.affiliation === 'student'){
+    if(localStorage.getItem('role')==='employee'){
       return shifts.map((shift,index) => 
         <div key={index}>
           <div className="transparent-box">
@@ -38,7 +38,7 @@ class AllShiftsToday extends Component {
           </div>
         </div>
       );
-    } else {
+    } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       return shifts.map((shift,index) => 
         <div key={index}>
           <div className="transparent-box">
@@ -87,7 +87,7 @@ class AllShiftsToday extends Component {
     else {
       let shift = [];
       shift.push(<div key="shifts">{this.drawShifts()}</div>);
-      if(this.props.affiliation === 'student'){
+      if(localStorage.getItem('role')==='employee'){
         let message = "";
         if(this.state.clockedIn){
           message = "Clock Out";

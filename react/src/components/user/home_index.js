@@ -19,7 +19,7 @@ class HomeIndex extends Component {
     let self = this;
     let startTime = getUnixTime(startOfToday());
     let endTime = getUnixTime(endOfToday());
-    if(this.props.affiliation === 'student'){
+    if(localStorage.getItem('role')==='employee'){
       axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
         let sortedShifts = response.data;
         sortedShifts.sort((a, b) => a.start_time - b.start_time);
@@ -33,7 +33,7 @@ class HomeIndex extends Component {
       }).catch( (error) => {
         console.log(error)
       });
-    } else {
+    } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       axios.get("http://localhost:8080/shifts/find_time/" + startTime + "/" + endTime).then( (response) => {
         let sortedShifts = response.data;
         sortedShifts.sort((a, b) => a.start_time - b.start_time);
@@ -222,11 +222,11 @@ class HomeIndex extends Component {
 
   render() {
     let home = []
-    if(this.props.affiliation === 'student'){
+    if(localStorage.getItem('role')==='employee'){
       home.push(
         <div className="tile is-7 is-vertical is-parent" key="vertical">
           <div className="tile is-child">
-            <CurrentShift affiliation={this.props.affiliation} name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
+            <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
           </div>
           <div className="tile is-child">
             <div className="upcoming-shift">
@@ -237,11 +237,11 @@ class HomeIndex extends Component {
         </div>
       );
     }
-    else {
+    else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       home.push(
         <div className="tile is-7 is-parent" key="supervisor">
           <div className="tile is-child">
-            <CurrentShift affiliation={this.props.affiliation} name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
+            <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
           </div>
         </div>
       );

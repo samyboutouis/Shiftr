@@ -43,18 +43,28 @@ router.post('/consume', (req, res) => {
     if (err != null)
       return res.send(500);
   
-    const attributes = mapAttrs(saml_response.user.attributes);
-    const token = jwt.sign(attributes, "make-a-real-secret");
+    var attributes = mapAttrs(saml_response.user.attributes);
 
-    // Set a new secure cookie for future auth
-    res.cookie("shiftr-saml", token, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 7 // 1 week
-    })
-    
-    User.createIfAbsent(attributes);
-    
-    res.redirect('http://localhost:3000/saml/consume');
+    // get role and groups
+    let permissions = User.getPermissions(attributes.netid);
+    permissions.then(result => { 
+
+      // add role and groups to attributes
+      attributes.role = result.role;
+      attributes.group = result.group;
+
+      const token = jwt.sign(attributes, "make-a-real-secret");
+
+      // Set a new secure cookie for future auth
+      res.cookie("shiftr-saml", token, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7 // 1 week
+      })
+      
+      User.createIfAbsent(attributes);
+
+      res.redirect('http://localhost:3000/saml/consume');
+    });
   });
 });
 

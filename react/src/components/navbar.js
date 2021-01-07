@@ -18,39 +18,38 @@ class Nbar extends Component {
 
   userBar = () => {
     let third = null;
-    if(this.props.affiliation === 'student'){
+    if(localStorage.getItem('role')==='employee'){
       third = "Availability";
-    }
-    else {
+    } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       third = "Employees"
     }
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <p className="logo" onClick={this.changeCurrentPage.bind(this, "Shiftr")}>Shiftr</p>
-          <a role="button" className={this.state.active ? 'navbar-burger is-active': 'navbar-burger'} onClick={this.toggleClass} href="#logo" aria-label="menu" aria-expanded="false" data-target="navbar">
+          <div role="button" className={this.state.active ? 'navbar-burger is-active': 'navbar-burger'} onClick={this.toggleClass} aria-label="menu" aria-expanded="false" data-target="navbar">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
-          </a>
+          </div>
         </div>
         <div id="navbar" className={this.state.active ? 'navbar-menu is-active': 'navbar-menu'} onClick={this.toggleClass}>
           <div className="navbar-end">
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Home")} href="#home">
+            <div className="navbar-item nav-link" onClick={this.changeCurrentPage.bind(this, "Home")} >
               Home
-            </a>
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Schedule")} href="#schedule">
+            </div>
+            <div className="navbar-item nav-link" onClick={this.changeCurrentPage.bind(this, "Schedule")} >
               Schedule
-            </a>
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, third)} href="#employee" >
+            </div>
+            <div className="navbar-item nav-link" onClick={this.changeCurrentPage.bind(this, third)}  >
               {third}
-            </a>
-            <a className="navbar-item" onClick={this.changeCurrentPage.bind(this, "Hours")} href="#hours">
+            </div>
+            <div className="navbar-item nav-link" onClick={this.changeCurrentPage.bind(this, "Hours")} >
               Hours
-            </a>
-            <a className="navbar-item" onClick={this.props.logout} href="#logout">
+            </div>
+            <div className="navbar-item nav-link" onClick={this.props.logout} >
               Logout
-            </a>
+            </div>
           </div>
         </div>
       </nav>
