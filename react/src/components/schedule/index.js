@@ -12,7 +12,7 @@ import axios from 'axios';
 class ScheduleIndex extends Component {
   constructor(props){
     super();
-    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false, testing: null }
+    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false }
   }
 
   componentDidMount = () => {
@@ -91,18 +91,11 @@ class ScheduleIndex extends Component {
     this.setState({ buildSchedule: value})
   }
 
-  testing = () => {
-    if(this.state.testing) {
-      return <GeneratedSchedule data = {this.state.testing} />
-    }
-  }
-
   render(){
     return(
         <div>
           {this.displayCalendar()}
           {this.buildSchedule()}
-          {this.testing()}
         </div>
     )
   }

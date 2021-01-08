@@ -15,7 +15,14 @@ class GeneratedSchedule extends Component {
 
     drawShifts = () => {
         var cells=[];
-        this.props.data.shifts.map((shift,index) =>
+        var first_shift = this.props.data.shifts[0]
+        var day = getDay(first_shift.start_time*1000)
+        var starting_height = (getHours(first_shift.start_time*1000)*60+getMinutes(first_shift.start_time*1000))*6/5-100
+        this.props.data.shifts.map((shift,index) => {
+            if (getDay(shift.start_time*1000)>day) {
+                starting_height = (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5-100
+                day = getDay(shift.start_time*1000)
+            }
             cells.push( <div 
                 onClick={this.toggleModal.bind(this, shift)} 
                 className="calendar-week-entry click-me" 
@@ -24,11 +31,11 @@ class GeneratedSchedule extends Component {
                     position: "absolute", 
                     left: getDay(shift.start_time*1000)*200, 
                     width: 150, 
-                    top: (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5, 
+                    top: (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5-starting_height, 
                     height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10}}>
                 <Shift shift={shift} group={this.props.data.group}/>
             </div>
-        ))
+        )})
         return cells
     }
 
