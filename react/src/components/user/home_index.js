@@ -6,7 +6,6 @@ import Pool from '../../pool.png';
 import startOfToday from 'date-fns/startOfToday';
 import startOfTomorrow from 'date-fns/startOfTomorrow';
 import endOfToday from 'date-fns/endOfToday';
-import endOfWeek from 'date-fns/endOfWeek';
 import getUnixTime from 'date-fns/getUnixTime';
 import format from "date-fns/format";
 
@@ -83,9 +82,19 @@ class HomeIndex extends Component {
 
   drawOpenShifts = () => {
     if(this.state.openShifts){
+      let shiftPool = [<div className="column is-9" key="title">
+        <img src={Pool} className='shift-pool-image' alt="Pool" align="left"/>
+        <p className="shift-pool-title">Shift Pool</p>
+      </div>];
+      if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
+        shiftPool.push(<div className="column is-3" key="add"><button key="add" className='add-shift-button' onClick={this.toggleModal.bind(this)}>Add</button></div>);
+      }
       return( 
         <div className='tile is-ancestor'>
           <div className='tile is-parent is-vertical'>
+            <div className='tile is-child columns is-mobile'>
+              {shiftPool}
+            </div>
             {this.mapOpenShifts()}
           </div>
         </div>
@@ -253,17 +262,10 @@ class HomeIndex extends Component {
         </div>
       );
     }
-    let shiftPool = [<img src={Pool} key="Pool" className='shift-pool-image' alt="Pool"/>, "Shift Pool"];
-    if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
-      shiftPool.push(<button key="add" className='add-shift-button' onClick={this.toggleModal.bind(this)}>Add</button>);
-    }
     home.push(
       <div className="tile is-parent" key="pool">
         <div className="tile is-child">
           <div className='shift-pool'>
-            <p className="shift-pool-title">
-              {shiftPool}
-            </p>
             <div>
               {this.drawOpenShifts()}
             </div>
