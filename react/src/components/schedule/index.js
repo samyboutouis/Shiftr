@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ScheduleKey from './key';
+import ScheduleKey from './key'
 import GeneratedSchedule from './generator/schedule';
 import DayWeekMonth from './dayWeekMonth';
 import * as Constants from '../../constants';
@@ -40,13 +40,7 @@ class ScheduleIndex extends Component {
               {this.drawCalendar()}
             </div>
             <div className="key"> {/* legend*/}
-              <ScheduleKey groups={[
-                {group: 'MPS', color: Constants.RED},
-                {group: 'Co-Lab Services', color: Constants.PINK},
-                {group: 'Tech Tutors', color: Constants.DARKBLUE},
-                {group: 'Labs and Training', color: Constants.PEACH},
-                {group: 'Office Hours', color: Constants.LIGHTBLUE},
-                {group: 'DesignHub', color: Constants.DARKPURPLE}]}/>
+              <ScheduleKey/>
             </div>
           </div>
         </div>

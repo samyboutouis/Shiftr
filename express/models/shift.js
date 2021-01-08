@@ -107,37 +107,37 @@ class Shift {
       var shifts = await shiftsCollection.aggregate([
         // check netid matches, employee clocked in and clocked out, and the shift was within the page's time range
         { $match: {
-          "employee.netid": netid, 
-          "clocked_in": {$exists: true}, 
-          "clocked_out": {$exists: true}, 
-          "end_time": {$lte: Date.now()/1000}, 
+          "employee.netid": netid,
+          "clocked_in": {$exists: true},
+          "clocked_out": {$exists: true},
+          "end_time": {$lte: Date.now()/1000},
           "start_time": {$gte: date} }
-        }, 
-        { $project: { 
-          "clocked_in":1, 
-          "clocked_out":1, 
-          "start_time":1, 
-          "end_time":1, 
+        },
+        { $project: {
+          "clocked_in":1,
+          "clocked_out":1,
+          "start_time":1,
+          "end_time":1,
           // calculate length of shift
-          "total_hours": { 
-            $subtract: ["$clocked_out", "$clocked_in"] 
-          }, 
+          "total_hours": {
+            $subtract: ["$clocked_out", "$clocked_in"]
+          },
           // calculate time worked outside of regular hours
-          "ot_hours": { $add: [ 
-            { $cond: [ 
-              { $gte: [ "$clocked_in", "$start_time" ] }, 
-              0, 
-              {$subtract: ["$start_time", "$clocked_in"]} ] }, 
-            { $cond: [ 
-              { $lte: [ "$clocked_out", "$end_time" ] }, 
-              0, 
+          "ot_hours": { $add: [
+            { $cond: [
+              { $gte: [ "$clocked_in", "$start_time" ] },
+              0,
+              {$subtract: ["$start_time", "$clocked_in"]} ] },
+            { $cond: [
+              { $lte: [ "$clocked_out", "$end_time" ] },
+              0,
               {$subtract: ["$clocked_out", "$end_time"]}]}]}
-            } 
+            }
           }]).toArray();
       // returns shift information as well as total hours over the time period
       return {
-        shifts: shifts, 
-        total_hours: shifts.reduce((sum, shift) => sum + shift.total_hours, 0), 
+        shifts: shifts,
+        total_hours: shifts.reduce((sum, shift) => sum + shift.total_hours, 0),
         total_ot: shifts.reduce((sum, shift) => sum + shift.ot_hours, 0)}
     } catch (err) {
       console.log(err);
@@ -181,6 +181,14 @@ class Shift {
       console.log(err);
     }
   }
+// for stacking shifts in calendar
+  // static findOverlap = async (start, end) => {
+  //   try {
+  //     return await shiftsCollection.find({start_time: {$lt: parseInt(end)}, end_time: {$gt: parseInt(start)}}).toArray();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 }
 
 module.exports = Shift

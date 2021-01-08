@@ -101,6 +101,11 @@ border-right: 1px solid lightgray;
 overflow: scroll;
 cursor: pointer;
 background: transparent;
+-ms-overflow-style: none;  /* IE 10+ */
+scrollbar-width: none;  /* Firefox */
+}
+.calendar .body .cell::-webkit-scrollbar {
+    display: none;
 }
 .calendar .body .week-cell {
 position: relative;
@@ -159,6 +164,7 @@ width: calc(100%/7);
 }
 
 .calendar-day-entry{
+  cursor: pointer;
   margin:2px;
   position: absolute;
   left: 36em;
@@ -172,13 +178,12 @@ width: calc(100%/7);
 }
 .month-shift-box {
   margin-top: 2em;
-
 }
 
 
 /* time based shift location */
 :root{
-  --tab: blue;
+  --tab: pink;
   /* labs and training, office hours, designhub */
 }
 
@@ -187,6 +192,7 @@ width: calc(100%/7);
 }
 .calendar-week-entry{
   /* margin: var(--marg); */
+  cursor:pointer;
   font-size: 12px;
   padding-left: 1em;
   padding-top: 1em;
@@ -221,7 +227,7 @@ width: calc(100%/7);
   border-left-color: rgba(245, 66, 170, .4);
 }
 .tutors {
-  border-left-color: rgba(20, 12, 245, .4);
+  border-left-color: rgba(10, 12, 266, .4);
 }
 .labTrain {
   border-left-color: rgba(245, 113, 12, .4);
@@ -230,5 +236,10 @@ width: calc(100%/7);
   border-left-color: rgba(12, 202, 245, .4);
 }
 .designhub {
-  border-left-color: rgba(90, 12, 245, .4);
+  border-left-color: rgba(150, 12, 200, .4);
 }
+
+/* ATTEMPTING TO GET RID OF SHIFT OVERLAP IN CAL */
+/* .heyo{
+  display: inline-block;
+} */
