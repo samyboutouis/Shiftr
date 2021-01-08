@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ScheduleKey from './key';
+import ScheduleKey from './legend/key';
 import GeneratedSchedule from './generator/schedule';
 import DayWeekMonth from './dayWeekMonth';
 import * as Constants from '../../constants';
