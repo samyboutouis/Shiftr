@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import CurrentShift from "./current_shift";
+import AddOpen from "../shift/add_open";
 import Pool from '../../pool.png';
 import startOfToday from 'date-fns/startOfToday';
 import startOfTomorrow from 'date-fns/startOfTomorrow';
@@ -12,7 +13,7 @@ import format from "date-fns/format";
 class HomeIndex extends Component {
   constructor(props){
     super(props);
-    this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: [], upcomingShifts: [], openShifts: []};
+    this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: [], upcomingShifts: [], openShifts: [], modal: false};
   }
 
   getShiftsToday = () => {
@@ -34,9 +35,15 @@ class HomeIndex extends Component {
         console.log(error)
       });
     } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
-      axios.get("http://localhost:8080/shifts/find_time/" + startTime + "/" + endTime).then( (response) => {
+      axios.get("http://localhost:8080/shifts/find_day/" + startTime + "/" + endTime).then( (response) => {
         let sortedShifts = response.data;
-        sortedShifts.sort((a, b) => a.start_time - b.start_time);
+        sortedShifts.sort((a, b) => {
+          if (a.start_time < b.start_time || (a.start_time === b.start_time && a.end_time < b.end_time))
+            return -1;
+          if (a.start_time > b.start_time || (a.start_time === b.start_time && a.end_time > b.end_time))
+            return 1;
+          return 0;
+        });
         self.setState({name: localStorage.getItem("firstName"), shiftsToday: response.data.length, shifts: sortedShifts});
       }).catch( (error) => {
         console.log(error)
@@ -62,9 +69,9 @@ class HomeIndex extends Component {
     axios.get("http://localhost:8080/shifts/find_open/open").then((response) => {
       let sortedShifts = response.data;
       sortedShifts.sort((a, b) => {
-        if (a.end_time < b.end_time || (a.end_time === b.end_time && a.start_time < b.start_time))
+        if (a.start_time < b.start_time || (a.start_time === b.start_time && a.end_time < b.end_time))
           return -1;
-        if (a.end_time > b.end_time || (a.end_time === b.end_time && a.start_time > b.start_time))
+        if (a.start_time > b.start_time || (a.start_time === b.start_time && a.end_time > b.end_time))
           return 1;
         return 0;
       });
@@ -103,12 +110,12 @@ class HomeIndex extends Component {
       let dateFormat = "eee dd MMM";
       let timeFormat = "hh:mmaaaa";
       let shifts = this.state.openShifts;
-      let person = "Open Shift";
       return shifts.map((shift,index) => {
+        let person = "Open Shift";
         if(shift.hasOwnProperty("employee")){
-          person = shift.employee.first_name + " " + shift.employee.last_name.charAt(0) + ".";
-        } else {
-          person = "Open Shift";
+          let firstName = shift.employee.name.split(" ")[0];
+          let lastName = shift.employee.name.split(" ")[1];
+          person = firstName + " " + lastName.charAt(0) + ".";
         }
         return (
           <div key={index} className='tile is-child columns is-mobile'>
@@ -174,14 +181,13 @@ class HomeIndex extends Component {
         status: "open", 
         employee: {
           netid: localStorage.getItem('netid'), 
-          first_name: localStorage.getItem('firstName'), 
-          last_name: localStorage.getItem('lastName')}
+          name: localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')
         }
-      ).then((response) => {
+      }).then((response) => {
         this.getShiftsToday();
         this.getUpcomingShifts();
         this.getOpenShifts();
-      }).catch( (error) => {
+      }).catch((error) => {
         console.log(error);
       });
     }
@@ -199,19 +205,22 @@ class HomeIndex extends Component {
             status: "closed", 
             employee: {
               netid: localStorage.getItem('netid'), 
-              first_name: localStorage.getItem('firstName'), 
-              last_name: localStorage.getItem('lastName')}
+              name: localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')
             }
-          ).then((response) => {
+          }).then((response) => {
             this.getShiftsToday();
             this.getOpenShifts();
             this.getUpcomingShifts();
-          }).catch( (error) => {
+          }).catch((error) => {
             console.log(error);
           });
         }
       });
     }
+  }
+
+  toggleModal = () => {
+    this.setState({modal: !this.state.modal});
   }
 
   componentDidMount() {
@@ -221,7 +230,7 @@ class HomeIndex extends Component {
   }
 
   render() {
-    let home = []
+    let home = [];
     if(localStorage.getItem('role')==='employee'){
       home.push(
         <div className="tile is-7 is-vertical is-parent" key="vertical">
@@ -246,13 +255,16 @@ class HomeIndex extends Component {
         </div>
       );
     }
+    let shiftPool = [<img src={Pool} key="Pool" className='shift-pool-image' alt="Pool"/>, "Shift Pool"];
+    if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
+      shiftPool.push(<button key="add" className='add-shift-button' onClick={this.toggleModal.bind(this)}>Add</button>);
+    }
     home.push(
       <div className="tile is-parent" key="pool">
         <div className="tile is-child">
           <div className='shift-pool'>
             <p className="shift-pool-title">
-              <img src={Pool} className='shift-pool-image' alt="Pool"/> 
-              Shift Pool 
+              {shiftPool}
             </p>
             <div>
               {this.drawOpenShifts()}
@@ -263,6 +275,7 @@ class HomeIndex extends Component {
     );
     return (
       <div className="tile is-gapless is-ancestor">
+        {/*<AddOpen modal={this.state.modal} onClose={this.toggleModal}/>*/}
         {home}
       </div>
     );

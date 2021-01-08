@@ -3,8 +3,7 @@ import AllShiftsToday from '../shift/all_shifts_today';
 
 class CurrentShift extends Component {
   constructor(props){
-    super(props);
-    this.state = {name: "", shiftsToday: 0, shifts: false};
+    super();
   }
 
   render() {
