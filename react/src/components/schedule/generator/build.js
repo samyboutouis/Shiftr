@@ -1,14 +1,19 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import 'bulma-calendar/dist/css/bulma-calendar.min.css';
-import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js';
 import lastDayOfWeek from "date-fns/lastDayOfWeek";
 import getUnixTime from 'date-fns/getUnixTime'
+import format from 'date-fns/format'
+import toDate from 'date-fns/toDate'
 
 class BuildSchedule extends Component {
   constructor(props){
     super()
-    this.state = {group: null, modal: true, data: null, start_date: null, end_date: null}
+    this.state = {
+      group: null, 
+      modal: true, 
+      data: null, 
+      start_date: null, 
+      end_date: null}
     window.scrollTo(0,0)
   }
 
@@ -22,13 +27,23 @@ class BuildSchedule extends Component {
 
   submitForm = (event) => {
     event.preventDefault();
-    let url = "http://localhost:8080/schedule/assign_shifts/" + this.state.group + '/' + this.state.start_date + '/' + this.state.end_date
-    axios.put(url).then((response) => {
-        console.log(response.data)
-        this.props.toggleBuildSchedule(response.data)
-    }).catch(function (err){  
-        console.log(err)
-    });
+    if(this.state.group && this.state.start_date && this.state.end_date) {
+      var start_parts = this.state.start_date.split("-")
+      var start = toDate(new Date(start_parts[0], start_parts[1]-1, start_parts[2], 0, 0, 0))
+      var end_parts = this.state.end_date.split("-")
+      var end = toDate(new Date(end_parts[0], end_parts[1]-1, end_parts[2], 23, 59, 59))
+
+      let url = "http://localhost:8080/schedule/assign_shifts/" + this.state.group + '/' + getUnixTime(start) + '/' + getUnixTime(end)
+      axios.put(url).then((response) => {
+          console.log(response.data)
+          this.props.toggleBuildSchedule(response.data)
+      }).catch(function (err){  
+          console.log(err)
+      });
+    }
+    else {
+      alert("Please complete form.")
+    }
   }
 
   dateHandler = (date) => {
@@ -36,17 +51,6 @@ class BuildSchedule extends Component {
       start_date: getUnixTime(date.data.datePicker._date.start), 
       end_date: getUnixTime(date.data.datePicker._date.end)
     })
-  }
-
-  componentDidMount() {
-    var start = lastDayOfWeek(new Date(), { weekStartsOn: 1 })
-    var end = lastDayOfWeek(start)
-    var calendars = bulmaCalendar.attach('[type="date"]', {isRange: true, labelFrom: 'Start', labelTo: 'End', startDate: start, endDate: end});
-    for(var i = 0; i < calendars.length; i++) {
-      calendars[i].on('select', date => {
-        this.dateHandler(date);
-      });
-    }
   }
 
   groupOptions = () => {
@@ -79,9 +83,27 @@ class BuildSchedule extends Component {
             </div>
 
           <div className="field">
-            <label className="label">Time Range</label>
+            <label className="label">Start Date</label>
             <div className="control">
-              <input type="date"/>
+              <input 
+                className="input" 
+                type="date" 
+                name="start_date"
+                onChange={this.changeHandler} 
+                defaultValue={format(lastDayOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd")}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label">End Date</label>
+            <div className="control">
+              <input 
+                className="input" 
+                type="date" 
+                name="end_date"
+                onChange={this.changeHandler}
+                defaultValue={format(lastDayOfWeek(lastDayOfWeek(new Date(), { weekStartsOn: 1 })), "yyyy-MM-dd")}/>
             </div>
           </div>
 
