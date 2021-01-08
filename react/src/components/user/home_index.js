@@ -236,8 +236,6 @@ class HomeIndex extends Component {
         <div className="tile is-7 is-vertical is-parent" key="vertical">
           <div className="tile is-child">
             <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
-          </div>
-          <div className="tile is-child">
             <div className="upcoming-shift">
               <p className="upcoming-shift-title">Your upcoming shifts</p>
               {this.drawUpcomingShifts()}
