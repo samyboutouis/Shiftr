@@ -6,7 +6,7 @@ import axios from 'axios';
 class UserIndex extends Component {
   constructor(props){
     super()
-    this.state= {users: false, selectedUser: false, yeet: false}
+    this.state= {users: false, selectedUser: false }
   }
 
   componentDidMount = () => {

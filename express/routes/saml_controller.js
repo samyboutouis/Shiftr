@@ -40,8 +40,10 @@ router.get('/attributes', (req,res) => {
 router.post('/consume', (req, res) => {
   const options = {request_body: req.body};
   sp.post_assert(idp, options, function(err, saml_response) {
-    if (err != null)
-      return res.send(500);
+    if (err != null) {
+      console.log(err)
+      return res.sendStatus(500);
+    }
   
     var attributes = mapAttrs(saml_response.user.attributes);
 

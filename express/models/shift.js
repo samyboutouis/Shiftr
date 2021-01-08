@@ -144,10 +144,10 @@ class Shift {
     }
   }
 
-  static findSupervisorHours = async (netid, date)  => {
+  static findSupervisorHours = async (group, date)  => {
     try {
       var employees = await shiftsCollection.aggregate([
-        { $match: {"supervisor.netid": netid, "clocked_in": {$exists: true}, "clocked_out": {$exists: true}, "end_time": {$lte: Date.now()/1000}, "start_time": {$gte: date}} }, 
+        { $match: {"group": { $in: group }, "clocked_in": {$exists: true}, "clocked_out": {$exists: true}, "end_time": {$lte: Date.now()/1000}, "start_time": {$gte: date}} }, 
         { $group: { "_id": "$employee.netid", "name": { "$first": "$employee.name" }, "total_hours": { $sum: { $subtract: ["$clocked_out", "$clocked_in"] }}}} ]).toArray();
       for (var i=0; i<employees.length; i++) {
         employees[i].details = await this.findEmployeeHours(employees[i]._id, date)

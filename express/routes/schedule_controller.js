@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
     shifts.then(result => { res.json(result) });
   })
 
-  router.put('/hoursTestShifts', (req, res) => {
+  router.put('/hours_test_shifts', (req, res) => {
     let shifts = scheduler.hoursTestShifts();
     shifts.then(result => { res.json(result) });
   })
@@ -41,8 +41,8 @@ router.get('/all_matches/:group', (req, res) => {
     shifts.then(result => { res.json(result) });
 })
 
-router.put('/assign_shifts/:group', (req, res) => {
-    let schedule = scheduler.assign_shifts(req.params.group);
+router.put('/assign_shifts/:group/:start_date/:end_date', (req, res) => {
+    let schedule = scheduler.assign_shifts(req.params.group, parseInt(req.params.start_date), parseInt(req.params.end_date));
     schedule.then(result => { res.json(result) });
 })
 
