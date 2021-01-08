@@ -54,7 +54,7 @@ class HomeIndex extends Component {
   getUpcomingShifts = () => {
     let self = this;
     let startTime = getUnixTime(startOfTomorrow());
-    let endTime = getUnixTime(endOfWeek(Date.now()));
+    let endTime = startTime + 2629800;
     axios.get("http://localhost:8080/shifts/find_by_time_and_user/" + startTime + "/" + endTime).then( (response) => {
       let sortedShifts = response.data;
       sortedShifts.sort((a, b) => a.start_time - b.start_time);
