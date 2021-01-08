@@ -307,13 +307,12 @@ code {
 
 /* THE CHECKBOXES */
 /* hide defaults */
-/* .container input {
+.container input {
   opacity: 0;
   cursor: pointer;
   height: 0;
   width: 0;
-} */
-
+}
 .checkmark{
   position: absolute;
   top: 0;

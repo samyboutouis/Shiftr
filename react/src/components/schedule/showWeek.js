@@ -96,11 +96,7 @@ class ShowWeek extends Component {
                 <section className="modal-card-body">
                     <p>{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
                     <br/>
-                    <div>
                     <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
-                    <br/>
-                    <p></p>
-                    </div>
                 </section>
                 <footer className="modal-card-foot"></footer>
               </div>
