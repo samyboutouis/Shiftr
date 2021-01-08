@@ -141,7 +141,7 @@ class User {
   //find user by availability
   static findByAvailability = async (start, end)  => {
     try {
-      return await usersCollection.find({start_time: {$gte: start}, end_time: {$lte: end}}).toArray();
+      return await usersCollection.find({day: {$gte: day}, start_time: {$gte: start}, end_time: {$lte: end}}).toArray();
     } catch (err) {
       console.log(err);
     }

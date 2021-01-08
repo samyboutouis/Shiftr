@@ -8,10 +8,24 @@ class AvailabilityIndex extends Component {
   constructor(props){
     super();
   }
-
+  mapTimes = () => {
+    return  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  
+    </tr> 
+    //fix this so that it at least displays empty cal to be filled 
+    //change color based on availability 
+  }
   drawCalendar = () => {
     return <div>
-        <table className="days-of-week">
+      <div className= "days-of-week availability-table">
+        <table className = "table is-bordered is-fullwidth">
             <thead>
                 <tr className="week">
                     <th>Sunday</th>
@@ -24,17 +38,10 @@ class AvailabilityIndex extends Component {
                 </tr>
             </thead>
             <tbody>
-                <tr className = "time"> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                <td></td> 
-                </tr>
+            {this.mapTimes()}
             </tbody>
         </table>
+        </div>
         <div className = "ml-5">Location: </div>
         <Key groups={[
             {group: 'The Link', color: Constants.RED},
@@ -52,9 +59,7 @@ class AvailabilityIndex extends Component {
             {group: 'Unavailable', color: Constants.DARKRED}]}/>
             <AvailabilityForm />
     </div>
-    
 
-    
   }
 
   render(){
@@ -66,6 +71,5 @@ class AvailabilityIndex extends Component {
     )
   }
 }
-
 
 export default AvailabilityIndex

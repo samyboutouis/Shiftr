@@ -72,5 +72,11 @@ router.put('/update/:_id', (req, res) => {
     updateUser.then(result => res.json(result))
   })
 })
+//update user availability
+router.put('/add_availability/:_id', (req, res) => {
+  const body = req.body;
+  let user = User.add_availability(req.params._id, body);
+  user.then(result => res.json(result))
+ })
 
 module.exports = router
