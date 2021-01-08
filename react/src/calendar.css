@@ -99,7 +99,7 @@ width: 6em;
 height: 8em;
 border-right: 1px solid lightgray;
 overflow: scroll;
-cursor: pointer;
+cursor: default;
 background: transparent;
 -ms-overflow-style: none;  /* IE 10+ */
 scrollbar-width: none;  /* Firefox */
@@ -158,6 +158,7 @@ width: calc(100%/7);
   margin:2px;
   font-size: 12px;
   padding-left: 10px;
+  cursor:pointer;
   background-color: #EBE8E8;
   border-left: 5px solid pink;
   /* change the borders into var(--location) from js */
@@ -237,6 +238,9 @@ width: calc(100%/7);
 }
 .designhub {
   border-left-color: rgba(150, 12, 200, .4);
+}
+.codePlus {
+  border-left-color: rgba(255, 255, 0, .2);
 }
 
 /* ATTEMPTING TO GET RID OF SHIFT OVERLAP IN CAL */

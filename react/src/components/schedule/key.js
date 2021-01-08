@@ -51,6 +51,11 @@ class ScheduleKey extends React.Component {
         key: 'box6',
         name: 'DesignHub',
       },
+      {
+        styletag: 'codePlus-box',
+        key: 'box7',
+        name: 'Code Plus',
+      },
     ];
 
     return (

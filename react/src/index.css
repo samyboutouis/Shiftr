@@ -378,7 +378,9 @@ code {
 .container input:checked ~ .designhub-box {
   background-color: rgba(150, 12, 200, .4);
 }
-
+.container input:checked ~ .codePlus-box {
+  background-color: rgba(255, 255, 0, .4);
+}
 
 .schedule-calendar /* box containing calendar */ {
   float: right;
