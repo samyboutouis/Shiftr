@@ -113,11 +113,9 @@ class HomeIndex extends Component {
       return shifts.map((shift,index) => {
         let person = "Open Shift";
         if(shift.hasOwnProperty("employee")){
-          var last
-          shift.employee.last_name ? last = shift.employee.last_name.charAt(0) + "." : last = ''
-          person = shift.employee.first_name + " " + last;
-        } else {
-          person = "Open Shift";
+          if(shift.employee.hasOwnProperty("name")){
+            person = shift.employee.name.split(" ")[0] + " " + shift.employee.name.split(" ")[1].charAt(0) + ".";
+          }
         }
         return (
           <div key={index} className='tile is-child columns is-mobile'>
