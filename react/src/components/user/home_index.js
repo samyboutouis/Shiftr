@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import CurrentShift from "./current_shift";
+import AddOpen from "../shift/add_open";
 import Pool from '../../pool.png';
 import startOfToday from 'date-fns/startOfToday';
 import startOfTomorrow from 'date-fns/startOfTomorrow';
@@ -12,7 +13,7 @@ import format from "date-fns/format";
 class HomeIndex extends Component {
   constructor(props){
     super(props);
-    this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: [], upcomingShifts: [], openShifts: []};
+    this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: [], upcomingShifts: [], openShifts: [], modal: false};
   }
 
   getShiftsToday = () => {
@@ -218,8 +219,8 @@ class HomeIndex extends Component {
     }
   }
 
-  handleAddClick = () => {
-    // Modal that lets admin add open shift to schedule
+  toggleModal = () => {
+    this.setState({modal: !this.state.modal});
   }
 
   componentDidMount() {
@@ -256,7 +257,7 @@ class HomeIndex extends Component {
     }
     let shiftPool = [<img src={Pool} key="Pool" className='shift-pool-image' alt="Pool"/>, "Shift Pool"];
     if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
-      shiftPool.push(<button key="add" className='add-shift-button'>Add</button>);
+      shiftPool.push(<button key="add" className='add-shift-button' onClick={this.toggleModal.bind(this)}>Add</button>);
     }
     home.push(
       <div className="tile is-parent" key="pool">
@@ -274,6 +275,7 @@ class HomeIndex extends Component {
     );
     return (
       <div className="tile is-gapless is-ancestor">
+        {/*<AddOpen modal={this.state.modal} onClose={this.toggleModal}/>*/}
         {home}
       </div>
     );
