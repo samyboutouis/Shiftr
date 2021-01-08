@@ -9,16 +9,15 @@ class AvailabilityIndex extends Component {
     super();
   }
   mapTimes = () => {
-    return  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  
-    </tr> 
+    let times = [];
+
+      for(let i = 0; i < 7; i++){
+          times.push(<td></td>);
+      }
+
+    return times
+    
+   
     //fix this so that it at least displays empty cal to be filled 
     //change color based on availability 
   }
@@ -38,10 +37,15 @@ class AvailabilityIndex extends Component {
                 </tr>
             </thead>
             <tbody>
-            {this.mapTimes()}
+            <tr>{this.mapTimes()}</tr>
+            <tr>{this.mapTimes()}</tr>
+            
+
+  
             </tbody>
         </table>
         </div>
+        {/*
         <div className = "ml-5">Location: </div>
         <Key groups={[
             {group: 'The Link', color: Constants.RED},
@@ -57,9 +61,9 @@ class AvailabilityIndex extends Component {
             {group: 'Somewhat Preferred', color: Constants.YELLOW},
             {group: 'Least Preferred', color: Constants.LIGHTORANGE},
             {group: 'Unavailable', color: Constants.DARKRED}]}/>
+            */}
             <AvailabilityForm />
     </div>
-
   }
 
   render(){
