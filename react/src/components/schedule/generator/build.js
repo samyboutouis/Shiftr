@@ -32,9 +32,10 @@ class BuildSchedule extends Component {
   }
 
   dateHandler = (date) => {
-    this.setState({start_date: getUnixTime(date.data.datePicker._date.start), end_date: getUnixTime(date.data.datePicker._date.end)})
-    console.log(this.state.start_date)
-    console.log(this.state.end_date)
+    this.setState({
+      start_date: getUnixTime(date.data.datePicker._date.start), 
+      end_date: getUnixTime(date.data.datePicker._date.end)
+    })
   }
 
   componentDidMount() {

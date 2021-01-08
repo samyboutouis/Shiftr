@@ -17,7 +17,6 @@ class ScheduleIndex extends Component {
 
   componentDidMount = () => {
     this.getShifts()
-    // this.getTestData()
   }
 
   //TODO: get shifts for specific user
@@ -25,16 +24,6 @@ class ScheduleIndex extends Component {
     let self = this;
     axios.get("http://localhost:8080/shifts/find_by_user/sl616").then( (response) => {
       self.setState({shifts: response.data})
-    }).catch( (error) => {
-      console.log(error)
-    });
-  }
-
-  getTestData = () => {
-    let self = this;
-    axios.get("http://localhost:8080/temp_shifts/").then( (response) => {
-//    axios.get("http://localhost:8080/shifts/").then( (response) => {
-    self.setState({testing: response.data})
     }).catch( (error) => {
       console.log(error)
     });
