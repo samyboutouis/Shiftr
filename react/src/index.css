@@ -353,7 +353,7 @@ code {
   background-color:rgba(245, 66, 170, .4);
 }
 .container input:checked ~ .tutors-box {
-  background-color: rgba(20, 12, 245, .4);
+  background-color: rgba(10, 12, 266, .4);
 }
 .container input:checked ~ .labTrain-box{
   background-color: rgba(245, 113, 12, .4);
@@ -362,7 +362,7 @@ code {
   background-color: rgba(12, 202, 245, .4);
 }
 .container input:checked ~ .designhub-box {
-  background-color: rgba(90, 12, 245, .4);
+  background-color: rgba(150, 12, 200, .4);
 }
 
 

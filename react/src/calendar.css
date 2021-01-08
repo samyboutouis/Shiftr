@@ -227,7 +227,7 @@ width: calc(100%/7);
   border-left-color: rgba(245, 66, 170, .4);
 }
 .tutors {
-  border-left-color: rgba(20, 12, 245, .4);
+  border-left-color: rgba(10, 12, 266, .4);
 }
 .labTrain {
   border-left-color: rgba(245, 113, 12, .4);
@@ -236,7 +236,7 @@ width: calc(100%/7);
   border-left-color: rgba(12, 202, 245, .4);
 }
 .designhub {
-  border-left-color: rgba(90, 12, 245, .4);
+  border-left-color: rgba(150, 12, 200, .4);
 }
 
 /* ATTEMPTING TO GET RID OF SHIFT OVERLAP IN CAL */
