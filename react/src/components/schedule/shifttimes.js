@@ -20,7 +20,7 @@ class ShiftTimes extends Component {
     let dateformat = "HH:mm"
     let startTime = format(start * 1000, dateformat)
     let endTime = format(end  * 1000, dateformat)
-    return(<div>{startTime} -  {endTime}</div>)
+    return(<div>{startTime} -  {endTime} -- {shift.employee.name.split(" ")[0]}</div>)
   }
 
   render(){

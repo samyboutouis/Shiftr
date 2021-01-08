@@ -49,6 +49,13 @@ class ShowMonth extends Component {
       return(<ShiftTimes shift={shift}/>)}
   }
 
+  getEmployee = (shift) => {
+    if (this.state.isModal) {
+      let shift = this.state.activeItem
+      return(
+        <p>Employee Assigned: {shift.employee.name}</p>
+      )}
+  }
 /* format queries */
   mapShifts = () => {
     let shifts = this.state.shifts
@@ -80,11 +87,10 @@ class ShowMonth extends Component {
           </header>
           <section className="modal-card-body">
               <p>{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
-
+              <p>Current Shift Status: {this.state.activeItem.status}</p>
+              <div>{this.getEmployee(this.state.activeItem)}</div>
               <br/>
-              {/*for some reason, formatting time here is causing a time range error, can't console log it either*/}
-              {/*for admin, ability to assign shift from here? for students, claim open? and send to pool?*/}
-              {/* ^^ do we want users to be able to manage shifts from calendar?*/}
+
               <div>
               <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
               <br/>
