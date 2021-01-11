@@ -80,7 +80,8 @@ class Shift {
   static findByHour = async (start, end)  => {
     try {
       return await shiftsCollection.aggregate([
-        { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }, {"checked": true}]}}, //shifts within time range
+        { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }//, {"checked": true}
+      ]}}, //shifts within time range
         { "$group": {
           "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
           "data":{
