@@ -61,4 +61,9 @@ router.put('/edit_shift/:_id', (req, res) => {
   shifts.then(result => { res.json(result) });
 })
 
+router.get('/:_id', (req, res) => {
+  let shifts = scheduler.get_schedule(req.params._id);
+  shifts.then(result => { res.json(result) });
+})
+
 module.exports = router

@@ -327,6 +327,14 @@ exports.temp_users = async function() {
     }
   }
 
+  exports.get_schedule = async function(id) {
+    try {
+      return await schedulesCollection.findOne({"_id": ObjectId(id)});
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   // creates one hour Code+ shifts from 9AM-5PM Dec 9-11, 14-15 2020 eastern (for testing)
 async function basicTestShifts() {
   var start = 1607522400;

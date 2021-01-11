@@ -16,7 +16,7 @@ class EditShift extends Component {
     componentDidMount = () => {
         this.setState({
             employee: this.props.shift.employee ? this.props.shift.employee.name : null, 
-            employee: this.props.shift.employee ? this.props.shift.employee.netid : null, 
+            netid: this.props.shift.employee ? this.props.shift.employee.netid : null, 
             start_time: this.props.shift.start_time, 
             end_time: this.props.shift.end_time
         })
@@ -36,8 +36,7 @@ class EditShift extends Component {
 
         let url = "http://localhost:8080/schedule/edit_shift/" + this.props.schedule
         axios.put(url, form_data, { headers: {'content-type': 'multipart/form-data'}}).then((response) => {
-            console.log(response.data)
-            this.props.toggleBuildSchedule(response.data)
+            this.props.updateSchedule()
         }).catch(function (err){  
             console.log(err)
         });
@@ -55,7 +54,7 @@ class EditShift extends Component {
             var time = value.split(":")
             var date = this.props.shift[name]*1000
             this.setState({
-                [name]: getUnixTime(toDate(new Date(getYear(date), getMonth(date)+1, getDate(date), time[0], time[1], 0)))
+                [name]: getUnixTime(toDate(new Date(getYear(date), getMonth(date), getDate(date), time[0], time[1], 0)))
             })
         }
         else {
