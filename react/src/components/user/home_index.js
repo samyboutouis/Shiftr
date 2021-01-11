@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import CurrentShift from "./current_shift";
-import AddOpen from "../shift/add_open";
+import ShiftModal from "../shift/shift_modal";
 import Pool from '../../pool.png';
 import startOfToday from 'date-fns/startOfToday';
 import startOfTomorrow from 'date-fns/startOfTomorrow';
@@ -12,7 +12,7 @@ import format from "date-fns/format";
 class HomeIndex extends Component {
   constructor(props){
     super(props);
-    this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: [], upcomingShifts: [], openShifts: [], modal: false};
+    this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: [], upcomingShifts: [], openShifts: [], modal: false, newShift: false};
   }
 
   getShiftsToday = () => {
@@ -128,7 +128,7 @@ class HomeIndex extends Component {
           }
         }
         if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
-          button = <div><button className='edit-shift-button'>Edit</button><button className='edit-shift-button'>Delete</button></div>;
+          button = <div><button className='edit-shift-button'>Edit</button><button className='edit-shift-button' onClick={this.deleteOpen.bind(this, shift)}>Delete</button></div>;
         }
         else {
           button = <button className='open-shift-button' onClick={this.handleOpenClick.bind(this, shift)}>Claim</button>;
@@ -158,36 +158,38 @@ class HomeIndex extends Component {
     let dateFormat = "eee dd MMM";
     let timeFormat = "hh:mmaaaa";
     return shifts.map((shift,index) => {
+      let tiles = [
+        <div className='column is-3 upcoming-shift-date' key="date">
+          <p>{format(shift.start_time * 1000, dateFormat)}</p>
+        </div>
+      ];
       if(shift.status === 'open'){
-        return (
-          <div key={index} className='tile is-child columns is-mobile'>
-            <div className='column is-3 upcoming-shift-date'>
-              <p>{format(shift.start_time * 1000, dateFormat)}</p>
-            </div>
-            <div className='column is-9'>
-              <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-              <p className='upcoming-shift-text'> @ {shift.location}</p>
-              <p className='upcoming-shift-text'> {shift.group} </p>
-            </div>
+        tiles.push(
+          <div className='column is-9' key="combined">
+            <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
+            <p className='upcoming-shift-text'> @ {shift.location}</p>
+            <p className='upcoming-shift-text'> {shift.group} </p>
           </div>
         );
       } else {
-        return (
-          <div key={index} className='tile is-child columns is-mobile'>
-            <div className='column is-3 upcoming-shift-date'>
-              <p>{format(shift.start_time * 1000, dateFormat)}</p>
-            </div>
-            <div className='column is-6'>
-              <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-              <p className='upcoming-shift-text'> @ {shift.location}</p>
-              <p className='upcoming-shift-text'> {shift.group} </p>
-            </div>
-            <div className='column is-3'>
-              <button className='open-shift-button' onClick={this.handleUpcomingClick.bind(this, shift)}>Offer Up</button>
-            </div>
+        tiles.push(
+          <div className='column is-6' key="info">
+            <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
+            <p className='upcoming-shift-text'> @ {shift.location}</p>
+            <p className='upcoming-shift-text'> {shift.group} </p>
+          </div>
+        );
+        tiles.push(
+          <div className='column is-3' key="button">
+            <button className='open-shift-button' onClick={this.handleUpcomingClick.bind(this, shift)}>Offer Up</button>
           </div>
         );
       }
+      return (
+        <div key={index} className='tile is-child columns is-mobile'>
+          {tiles}
+        </div>
+      );
     });
   }
 
@@ -235,12 +237,22 @@ class HomeIndex extends Component {
     }
   }
 
+  deleteOpen = (shift) => {
+    if(window.confirm('Are you sure you want to delete this shift?')){
+      axios.delete("http://localhost:8080/shifts/delete/" + shift._id).then((response) => {
+        this.getOpenShifts();
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }
+
   showModal = () => {
-    this.setState({modal: true});
+    this.setState({modal: true, newShift: true});
   }
 
   hideModal = () => {
-    this.setState({modal: false});
+    this.setState({modal: false, newShift: false});
   }
 
   componentDidMount() {
@@ -286,7 +298,7 @@ class HomeIndex extends Component {
     );
     return (
       <div className="tile is-gapless is-ancestor">
-        <AddOpen modal={this.state.modal} onClose={this.hideModal} getOpenShifts={this.getOpenShifts}/>
+        <ShiftModal modal={this.state.modal} onClose={this.hideModal} getOpenShifts={this.getOpenShifts} newShift={this.state.newShift}/>
         {home}
       </div>
     );

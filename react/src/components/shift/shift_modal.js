@@ -3,7 +3,7 @@ import axios from 'axios';
 import parseISO from 'date-fns/parseISO';
 import getUnixTime from 'date-fns/getUnixTime';
 
-class AddOpen extends Component {
+class ShiftModal extends Component {
   constructor(props){
     super();
   }
@@ -139,4 +139,4 @@ class AddOpen extends Component {
   }
 }
 
-export default AddOpen
+export default ShiftModal
