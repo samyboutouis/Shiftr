@@ -464,13 +464,11 @@ th{
 
 .message {
   background-color: white;
-  border-width: 1px;
-  border-color: hsl(0, 0%, 86%);
-  border-style: solid;
+  border-style: none;
 }
 
 .message-body {
-  padding: 10px 0;
+  padding: 0;
 }
 
 .message-header {

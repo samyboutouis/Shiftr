@@ -61,7 +61,7 @@ async function createSchedule(group) {
     var tempUsers = await tempUsersCollection.aggregate([
       { $match: {group: group} }, 
       { $sort: {rank: 1} },
-      { $project: { name: 1, netid: 1, availability: 1 }}]).toArray();
+      { $project: { name: 1, netid: 1, availability: 1, previous_availability: 1 }}]).toArray();
     // insert document in schedulesCollection
     schedule = await schedulesCollection.insertOne({
       group: group,
@@ -302,12 +302,58 @@ exports.temp_users = async function() {
   exports.delete_data = async function(group) {
     try {
       shiftsCollection.deleteMany( { } );
-      // await basicTestShifts();
       usersCollection.deleteMany( { } );
+      // schedulesCollection.deleteMany( { } );
+      // db.get().collection('temp').deleteMany( { } );
     } catch (err) {
       console.log(err);
     }
   }
+
+  exports.edit_shift = async function(id, body) {
+    try {
+      await schedulesCollection.updateOne(
+        {"_id": ObjectId(id)},
+        { $set: { 
+          "shifts.$[elem].employee.name" : body.user,
+          "shifts.$[elem].status": "scheduled", 
+          "shifts.$[elem].employee.netid" : body.netid, 
+          "shifts.$[elem].start_time" : parseInt(body.start_time), 
+          "shifts.$[elem].end_time" : parseInt(body.end_time) } 
+        },
+        { arrayFilters: [ { "elem._id": ObjectId(body.shift_id) } ] }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+exports.get_schedule = async function(id) {
+  try {
+    return await schedulesCollection.findOne({"_id": ObjectId(id)});
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+exports.publish_schedule = async function(id) {
+  try {
+    await schedulesCollection.aggregate([
+      { $match: { "_id": ObjectId(id)} },
+      { $unwind : "$shifts" },
+      { $replaceRoot: { newRoot: "$shifts" } },
+      {$merge: {into: "shifts", on: "_id"}}
+    ]).toArray();
+    await schedulesCollection.aggregate([
+      { $match: { "_id": ObjectId(id)} },
+      { $unwind : "$users" },
+      { $replaceRoot: { newRoot: "$users" } },
+      {$merge: {into: "users", on: "_id"}}
+    ]).toArray();
+  } catch (err) {
+    console.log(err);
+  }
+}
 
   // creates one hour Code+ shifts from 9AM-5PM Dec 9-11, 14-15 2020 eastern (for testing)
 async function basicTestShifts() {

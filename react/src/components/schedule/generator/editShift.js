@@ -1,30 +1,67 @@
 import React, {Component} from 'react';
 import format from 'date-fns/format'
+import toDate from 'date-fns/toDate'
+import getYear from 'date-fns/getYear'
+import getMonth from 'date-fns/getMonth'
+import getDate from 'date-fns/getDate'
+import getUnixTime from 'date-fns/getUnixTime'
+import axios from 'axios';
 
 class EditShift extends Component {
     constructor(props){
         super()
-        this.state = {employee: null, start_time: null, end_time: null}
-      }
+        this.state = {employee: null, netid: null, start_time: null, end_time: null}
+    }
+
+    componentDidMount = () => {
+        this.setState({
+            employee: this.props.shift.employee ? this.props.shift.employee.name : null, 
+            netid: this.props.shift.employee ? this.props.shift.employee.netid : null, 
+            start_time: this.props.shift.start_time, 
+            end_time: this.props.shift.end_time
+        })
+    }
 
     submitForm = (event) => {
         this.props.toggleModal()
         event.preventDefault();
-        // let url = "http://localhost:8080/schedule/assign_shifts/" + this.state.group + '/' + this.state.start_date + '/' + this.state.end_date
-        // axios.put(url).then((response) => {
-        //     console.log(response.data)
-        //     this.props.toggleBuildSchedule(response.data)
-        // }).catch(function (err){  
-        //     console.log(err)
-        // });
+
+        let form_data = new FormData();
+        for (let [key, value] of Object.entries(this.state)) {
+            if(value) {
+                form_data.append(key, value)
+            };
+        }
+        form_data.append("shift_id", this.props.shift._id)
+
+        let url = "http://localhost:8080/schedule/edit_shift/" + this.props.schedule
+        axios.put(url, form_data, { headers: {'content-type': 'multipart/form-data'}}).then((response) => {
+            this.props.updateSchedule()
+        }).catch(function (err){  
+            console.log(err)
+        });
     }
 
     changeHandler = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        this.setState({
-            [name]: value
-        }); 
+        if(name==="user") {
+            this.setState({
+                netid: this.props.employees.find( ({ name }) => name === value ).netid
+            });
+        }
+        if(name==="start_time" || name==="end_time") {
+            var time = value.split(":")
+            var date = this.props.shift[name]*1000
+            this.setState({
+                [name]: getUnixTime(toDate(new Date(getYear(date), getMonth(date), getDate(date), time[0], time[1], 0)))
+            })
+        }
+        else {
+            this.setState({
+                [name]: value
+            }); 
+        }
     }
 
     employeeOptions = () => {
