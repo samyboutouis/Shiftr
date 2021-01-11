@@ -57,21 +57,18 @@ code {
 
 .transparent-box {
   background: rgba(255, 255, 255, 0.3);
-  width: 79%;
-  height: 12em;
 	color: white;
 	margin-left: 10%;
   margin-right: 10%;
   margin-top: 40px;
-  display: flex;
+  padding: 25px 25px 25px 25px;
+  display: inline-block;
   align-items: center;
 }
 
 .no-shifts {
   font-size: 40px;
   text-align: center;
-  margin-left: 10%;
-  margin-right: 10%;
 }
 
 .clock-in {
@@ -103,23 +100,20 @@ code {
 }
 
 .shift-time {
-  font-size: 35px;
-  margin-left: 15px;
+  font-size: 30px;
 }
 
 .pm {
-  font-size: 25px;
+  font-size: 20px;
   color: #888888;
 }
 
 .shift-location {
   font-size: 20px;
-  margin-left: 15px;
 }
 
 .shift-role {
   font-size: 20px;
-  margin-left: 15px;
 }
 
 .upcoming-shift {
