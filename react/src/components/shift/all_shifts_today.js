@@ -24,43 +24,27 @@ class AllShiftsToday extends Component {
     let shifts = this.props.shifts;
     let timeFormat = "hh:mm";
     let pm = "a";
-    if(localStorage.getItem('role')==='employee'){
-      return shifts.map((shift,index) => 
+    return shifts.map((shift,index) => {
+      let person = "Open Shift";
+      let location = <p className="shift-location"> {shift.location} </p>;
+      if(shift.hasOwnProperty("employee") && (localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin')){
+        let firstName = shift.employee.name.split(" ")[0];
+        let lastName = shift.employee.name.split(" ")[1];
+        person = firstName + " " + lastName.charAt(0) + ".";
+        location = <p className="shift-location">{person} @ {shift.location} </p>;
+      }
+      return (
         <div key={index}>
           <div className="transparent-box">
             <div>
               <p className="shift-time">{format(shift.start_time * 1000, timeFormat)}<span className="pm">{format(shift.start_time * 1000, pm)}</span> &#8594; {format(shift.end_time * 1000, timeFormat)}<span className="pm">{format(shift.end_time * 1000, pm)}</span></p>
-              <br />
-              <p className="shift-location"> {shift.location} </p>
-              <br />
+              {location}
               <p className="shift-role"> {shift.group} </p>
             </div>
           </div>
         </div>
-      );
-    } else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
-      return shifts.map((shift,index) => {
-        let person = "Open Shift";
-        if(shift.hasOwnProperty("employee")){
-          let firstName = shift.employee.name.split(" ")[0];
-          let lastName = shift.employee.name.split(" ")[1];
-          person = firstName + " " + lastName.charAt(0) + ".";
-        }
-        return (
-          <div key={index}>
-            <div className="transparent-box">
-              <div>
-                <p className="shift-time">{format(shift.start_time * 1000, timeFormat)}<span className="pm">{format(shift.start_time * 1000, pm)}</span> &#8594; {format(shift.end_time * 1000, timeFormat)}<span className="pm">{format(shift.end_time * 1000, pm)}</span></p>
-                  <br />
-                <p className="shift-location">{person} @ {shift.location} </p>
-                  <br />
-                <p className="shift-role"> {shift.group} </p>
-              </div>
-            </div>
-          </div>
-        ); 
-      });
-    }
+      ); 
+    });
   }
 
   handleClick = () => {
