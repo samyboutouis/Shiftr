@@ -87,7 +87,7 @@ class HomeIndex extends Component {
         <p className="shift-pool-title">Shift Pool</p>
       </div>];
       if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
-        shiftPool.push(<div className="column is-3" key="add"><button key="add" className='add-shift-button' onClick={this.toggleModal.bind(this)}>Add</button></div>);
+        shiftPool.push(<div className="column is-3" key="add"><button key="add" className='add-shift-button' onClick={this.showModal}>Add</button></div>);
       }
       return( 
         <div className='tile is-ancestor'>
@@ -228,8 +228,12 @@ class HomeIndex extends Component {
     }
   }
 
-  toggleModal = () => {
-    this.setState({modal: !this.state.modal});
+  showModal = () => {
+    this.setState({modal: true});
+  }
+
+  hideModal = () => {
+    this.setState({modal: false});
   }
 
   componentDidMount() {
@@ -275,7 +279,7 @@ class HomeIndex extends Component {
     );
     return (
       <div className="tile is-gapless is-ancestor">
-        {/*<AddOpen modal={this.state.modal} onClose={this.toggleModal}/>*/}
+        <AddOpen modal={this.state.modal} onClose={this.hideModal} getOpenShifts={this.getOpenShifts}/>
         {home}
       </div>
     );

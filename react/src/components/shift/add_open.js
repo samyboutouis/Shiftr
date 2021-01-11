@@ -6,11 +6,6 @@ import getUnixTime from 'date-fns/getUnixTime';
 class AddOpen extends Component {
   constructor(props){
     super();
-    this.state = {};
-  }
-
-  onClose = e => {
-    this.props.onClose && this.props.onClose(e);
   }
 
   formModal = () => {
@@ -21,7 +16,7 @@ class AddOpen extends Component {
             <div className="modal-card">
               <header className="modal-card-head">
                 <p className="modal-card-title">Add Open Shift</p>
-                <button onClick={this.onClose} className="delete" aria-label="close"></button>
+                <button onClick={this.props.onClose} className="delete" aria-label="close"></button>
               </header>
               <section className="modal-card-body">
                 <form>
@@ -47,6 +42,17 @@ class AddOpen extends Component {
                     <label className="label">Group</label>
                     <div className="control">
                       {this.groupOptions()}
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="label">Location</label>
+                    <div className="control">
+                      <div className="select">
+                        <select defaultValue="select_a_location" name="location" onChange={this.changeHandler}>
+                          <option disabled="disabled" value="select_a_location" hidden="hidden">Select a Location</option>
+                          <option value="Remote">Remote</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                   <div className="field">
@@ -100,11 +106,28 @@ class AddOpen extends Component {
   submitForm = (event) => {
     event.preventDefault();
     this.setState({day: parseISO(this.state.day)});
-    axios.post("http://localhost:8080/shifts", {start_time: getUnixTime(this.state.start_time), end_time: getUnixTime(this.state.end_time)}).then((response) => {
-      this.getOpenShifts();
-    }).catch(function (err){  
-        console.log(err)
-    });
+    let start = new Date(this.state.day + " " + this.state.start_time);
+    let end = new Date(this.state.day + " " + this.state.end_time);
+    if(start <= Date.now() || end <= Date.now()){
+      alert("You cannot create an open shift in the past.");
+    } else if (start >= end) {
+      alert("You cannot have a shift end before its start time.")
+    }
+    else {
+      axios.post("http://localhost:8080/shifts", {
+        start_time: getUnixTime(start), 
+        end_time: getUnixTime(end), 
+        group: this.state.group, 
+        location: this.state.location, 
+        status: "open"
+      }).then((response) => {
+        this.props.getOpenShifts();
+        alert("Open shift added successfully.");
+        this.props.onClose();
+      }).catch(function (err){  
+          console.log(err)
+      });
+    }
   }
 
   render() {
