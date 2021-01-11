@@ -81,8 +81,8 @@ class ShowDay extends Component {
       if(shifts[i]){
         shifts[i].data.map((shift,index) =>
             cells.push(
-              <div className={"calendar-day-entry " + shift.group} key={i+' '+index, shift} style={{position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/2)+110, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/2.5)-20)}}>
-                <div onClick={this.handleClick.bind(this, shift)}>
+              <div onClick={this.handleClick.bind(this, shift)}>
+                <div className={"calendar-day-entry " + shift.group} key={i+' '+index, shift} style={{position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/2)+110, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/2.5)-20)}}>
                     {format(shift.start_time*1000, "HH:mm")} - {format(shift.end_time*1000, "HH:mm")}
                     <br />
                     {shift.group}

@@ -68,7 +68,6 @@ class Shift {
     }
   }
 
-// find shifts in time range (for calendar view)
   static findByTime = async (start, end)  => {
     try {
       return await shiftsCollection.find({"start_time": {$gte: parseInt(start)}, "end_time": {$lte: parseInt(end)}}).toArray();
@@ -77,11 +76,11 @@ class Shift {
     }
   }
 
-  // group shifts by hour
+  // group shifts by hour (week and day calendars)
   static findByHour = async (start, end)  => {
     try {
       return await shiftsCollection.aggregate([
-        { "$match": {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }}, //shifts within time range
+        { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }, {"checked": true}]}}, //shifts within time range
         { "$group": {
           "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
           "data":{
@@ -147,7 +146,7 @@ class Shift {
   static findSupervisorHours = async (group, date)  => {
     try {
       var employees = await shiftsCollection.aggregate([
-        { $match: {"group": { $in: group }, "clocked_in": {$exists: true}, "clocked_out": {$exists: true}, "end_time": {$lte: Date.now()/1000}, "start_time": {$gte: date}} }, 
+        { $match: {"group": { $in: group }, "clocked_in": {$exists: true}, "clocked_out": {$exists: true}, "end_time": {$lte: Date.now()/1000}, "start_time": {$gte: date}} },
         { $group: { "_id": "$employee.netid", "name": { "$first": "$employee.name" }, "total_hours": { $sum: { $subtract: ["$clocked_out", "$clocked_in"] }}}} ]).toArray();
       for (var i=0; i<employees.length; i++) {
         employees[i].details = await this.findEmployeeHours(employees[i]._id, date)
@@ -181,6 +180,30 @@ class Shift {
       console.log(err);
     }
   }
+
+  //checkbox shows and unshows shift in CALENDAR CHECK ON THIS attempt w aggregate!!!!!
+  // static check = async (newValues)  => {
+  //   try {
+  //     var shifts = await shiftsCollection.aggregate([
+  //       { $match: {
+  //         "group": group
+  //
+  //       }]).toArray();
+  //     return {
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  //failed attempt at check
+  // static check = async (newValues) => {
+  //   try{
+  //     return shiftsCollection.updateMany({"group": this.body.group}, {$set: newValues})
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
+
 // for stacking shifts in calendar
   // static findOverlap = async (start, end) => {
   //   try {
