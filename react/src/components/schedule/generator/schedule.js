@@ -18,26 +18,28 @@ class GeneratedSchedule extends Component {
         var cells=[];
         var data = this.state.schedule ? this.state.schedule : this.props.data
         var first_shift = data.shifts[0]
-        var day = getDay(first_shift.start_time*1000)
-        var starting_height = (getHours(first_shift.start_time*1000)*60+getMinutes(first_shift.start_time*1000))*6/5-100
-        data.shifts.map((shift,index) => {
-            if (getDay(shift.start_time*1000)>day) {
-                starting_height = (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5-100
-                day = getDay(shift.start_time*1000)
-            }
-            cells.push( <div 
-                onClick={this.toggleModal.bind(this, shift)} 
-                className="calendar-week-entry click-me" 
-                key={index} 
-                style={{
-                    position: "absolute", 
-                    left: getDay(shift.start_time*1000)*200, 
-                    width: 150, 
-                    top: (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5-starting_height, 
-                    height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10}}>
-                <Shift shift={shift} group={this.props.data.group} />
-            </div>
-        )})
+        if(first_shift) {
+            var day = getDay(first_shift.start_time*1000)
+            var starting_height = (getHours(first_shift.start_time*1000)*60+getMinutes(first_shift.start_time*1000))*6/5-100
+            data.shifts.map((shift,index) => {
+                if (getDay(shift.start_time*1000)>day) {
+                    starting_height = (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5-100
+                    day = getDay(shift.start_time*1000)
+                }
+                cells.push( <div 
+                    onClick={this.toggleModal.bind(this, shift)} 
+                    className="calendar-week-entry click-me" 
+                    key={index} 
+                    style={{
+                        position: "absolute", 
+                        left: getDay(shift.start_time*1000)*200, 
+                        width: 150, 
+                        top: (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5-starting_height, 
+                        height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10}}>
+                    <Shift shift={shift} group={this.props.data.group} />
+                </div>
+            )})
+        }
         return cells
     }
 

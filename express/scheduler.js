@@ -61,7 +61,7 @@ async function createSchedule(group) {
     var tempUsers = await tempUsersCollection.aggregate([
       { $match: {group: group} }, 
       { $sort: {rank: 1} },
-      { $project: { name: 1, netid: 1, availability: 1 }}]).toArray();
+      { $project: { name: 1, netid: 1, availability: 1, previous_availability: 1 }}]).toArray();
     // insert document in schedulesCollection
     schedule = await schedulesCollection.insertOne({
       group: group,
@@ -301,8 +301,8 @@ exports.temp_users = async function() {
   // removes all documents from shifts and users collections
   exports.delete_data = async function(group) {
     try {
-      // shiftsCollection.deleteMany( { } );
-      // usersCollection.deleteMany( { } );
+      shiftsCollection.deleteMany( { } );
+      usersCollection.deleteMany( { } );
       // schedulesCollection.deleteMany( { } );
       // db.get().collection('temp').deleteMany( { } );
     } catch (err) {
@@ -338,11 +338,17 @@ exports.get_schedule = async function(id) {
 
 exports.publish_schedule = async function(id) {
   try {
-    return await schedulesCollection.aggregate([
+    await schedulesCollection.aggregate([
       { $match: { "_id": ObjectId(id)} },
       { $unwind : "$shifts" },
       { $replaceRoot: { newRoot: "$shifts" } },
       {$merge: {into: "shifts", on: "_id"}}
+    ]).toArray();
+    await schedulesCollection.aggregate([
+      { $match: { "_id": ObjectId(id)} },
+      { $unwind : "$users" },
+      { $replaceRoot: { newRoot: "$users" } },
+      {$merge: {into: "users", on: "_id"}}
     ]).toArray();
   } catch (err) {
     console.log(err);
