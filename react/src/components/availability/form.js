@@ -4,12 +4,12 @@ import axios from 'axios';
 class AvailabilityForm extends Component {
   constructor(props){
     super()
-    this.state = {day: "", start_time: null, end_time: null, location: null, preference: null}
+    this.state = {day: "", start_time: null, end_time: null} // location: null, preference: null
   }
 
   submitForm = (event) => {
     event.preventDefault();
-    alert("You have submitted your availability for " + this.state.day + "s: " + this.state.start_time + "-" + this.state.end_time);
+    alert("You have submitted your availability for " + this.state.day + ": " + this.state.start_time + "-" + this.state.end_time);
     let form_data = new FormData();
     let request;
     let url; 
@@ -40,9 +40,9 @@ class AvailabilityForm extends Component {
 
   render(){
     return(
-      <form className = "form">
-        <div className = "ml-5 mt-5"> 
-        <label>Day </label>
+      <form className = "field">
+        <div className = "ml-5 mt-2"> 
+        <label className = "label">Day </label>
         <select name = 'day' value = {this.state.day} onChange ={this.changeHandler}>
           <option value = "Monday">Monday</option>
           <option value = "Tuesday">Tuesday</option>
@@ -54,16 +54,16 @@ class AvailabilityForm extends Component {
         </select>
         </div>
 
-        <div className = "ml-5" >
-        <label>Start Time </label>
+        <div className = "ml-5 mt-2" >
+        <label className = "label">Start Time </label>
         <input name='start_time' type="text" placeholder="Enter time" onChange={this.changeHandler} />
         </div>
         
-        <div className = "ml-5" >
-        <label>End Time </label>
+        <div className = "ml-5 mt-2" >
+        <label className = "label">End Time </label>
         <input name='end_time' type="text" placeholder="Enter time" onChange={this.changeHandler} />
         </div>
-
+    {/* 
         <div className = "ml-5"> 
         <label>Location </label>
         <select name = 'location' value = {this.state.location} onChange ={this.changeHandler}>
@@ -76,7 +76,7 @@ class AvailabilityForm extends Component {
           <option value = "Perkins Library">Perkins Library</option>
         </select>
         </div>
-
+        
         <div className = "ml-5"> 
         <label>Preference </label>
         <select name = 'preference' value = {this.state.preference} onChange ={this.changeHandler}> 
@@ -86,12 +86,14 @@ class AvailabilityForm extends Component {
           <option value = "Unavailable">Unavailable</option>
         </select>
         </div>
-        <input onClick={this.submitForm} type='submit' class = "ml-5"/>
+        */}
+        <div className = "mt-2">
+        <input onClick={this.submitForm} type='submit' class = "button ml-5"/>
+        </div>
       </form>
   
     )
   }
 }
-
 
 export default AvailabilityForm
