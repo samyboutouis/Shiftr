@@ -19,7 +19,7 @@ class AvailabilityForm extends Component {
     }
 
     // for testing, change the id to an object id in your own database
-    url = "http://localhost:8080/users/add_availability/5ff77f271ac8c8017476b008" //change later
+    url = "http://localhost:8080/users/add_availability/5ff77f271ac8c8017476b008" //change later ?? make sure in database when u test
     request =  axios.put(url, form_data, {
     headers: {'content-type': 'multipart/form-data'}
       })
