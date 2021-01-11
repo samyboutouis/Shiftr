@@ -51,11 +51,16 @@ class ShowMonth extends Component {
 
   getEmployee = (shift) => {
     if (this.state.isModal) {
-      let shift = this.state.activeItem
-      return(
-        <p>Employee Assigned: {shift.employee.name}</p>
-      )}
-  }
+      // let shift = this.state.activeItem
+      if (shift.employee === undefined) {
+        return(
+          <p>Employee Assigned: None</p>)}
+      else {
+        return(
+        <p>Employee Assigned: {shift.employee.name}</p>)}
+      }
+    }
+
 /* format queries */
   mapShifts = () => {
     let shifts = this.state.shifts
