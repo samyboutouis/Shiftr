@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import parseISO from 'date-fns/parseISO';
 import getUnixTime from 'date-fns/getUnixTime';
+import fromUnixTime from 'date-fns/fromUnixTime';
+import getDate from 'date-fns/getDate';
+import getMonth from 'date-fns/getMonth';
+import getYear from 'date-fns/getYear';
 
 class ShiftModal extends Component {
   constructor(props){
@@ -9,11 +13,15 @@ class ShiftModal extends Component {
   }
 
   formModal = () => {
-    let header;
+    let header, day, time;
     if(this.props.editShift){
       header = "Edit Open Shift";
+      time = fromUnixTime(this.props.editShift.start_time)
+      day = getYear(time) + "-" + getMonth(time) + 1 + "-" + getDate(time);
+      console.log(day);
     } else {
       header = "Add Open Shift";
+      day = "";
     }
     if(this.props.modal) {
       return (

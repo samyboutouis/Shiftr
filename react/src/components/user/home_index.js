@@ -64,6 +64,7 @@ class HomeIndex extends Component {
   }
 
   getOpenShifts = () => {
+    // Add groups to open call
     let self = this;
     axios.get("http://localhost:8080/shifts/find_open/open").then((response) => {
       let sortedShifts = response.data;
