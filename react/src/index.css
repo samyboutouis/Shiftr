@@ -56,11 +56,10 @@ code {
 }
 
 .transparent-box {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.22);
 	color: white;
 	margin-left: 10%;
-  margin-right: 10%;
-  margin-top: 40px;
+  margin-top: 20px;
   padding: 25px 25px 25px 25px;
   display: inline-block;
   align-items: center;
@@ -100,16 +99,17 @@ code {
 }
 
 .shift-time {
-  font-size: 30px;
+  font-size: 40px;
 }
 
 .pm {
-  font-size: 20px;
+  font-size: 30px;
   color: #888888;
 }
 
 .shift-location {
   font-size: 20px;
+  margin-bottom: 9px;
 }
 
 .shift-role {
@@ -175,12 +175,23 @@ code {
 }
 
 .open-shift-button {
-  margin-top: 25px;
+  margin-top: 21px;
   border: none;
   background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
   background-size: 100% 100%;
-  padding: .8em 2em;
+  padding: .8em 1.6em;
+  cursor: pointer;
+}
+
+.edit-shift-button {
+  margin-top: 2px;
+  border: none;
+  background: url('./button.png') no-repeat scroll 0 0 transparent;
+  color: white;
+  background-size: 100% 100%;
+  padding: .8em 0 .8em 0;
+  width: 79px;
   cursor: pointer;
 }
 
@@ -517,4 +528,14 @@ th{
 
 .capitalize-me {
   text-transform: capitalize;
+}
+
+@media only screen and (max-width: 600px) {
+  .shift-time {
+    font-size: 30px;
+  }
+
+  .pm {
+    font-size: 20px;
+  }
 }

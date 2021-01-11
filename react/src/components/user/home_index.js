@@ -121,10 +121,17 @@ class HomeIndex extends Component {
       let shifts = this.state.openShifts;
       return shifts.map((shift,index) => {
         let person = "Open Shift";
+        let button;
         if(shift.hasOwnProperty("employee")){
           if(shift.employee.hasOwnProperty("name")){
             person = shift.employee.name.split(" ")[0] + " " + shift.employee.name.split(" ")[1].charAt(0) + ".";
           }
+        }
+        if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
+          button = <div><button className='edit-shift-button'>Edit</button><button className='edit-shift-button'>Delete</button></div>;
+        }
+        else {
+          button = <button className='open-shift-button' onClick={this.handleOpenClick.bind(this, shift)}>Claim</button>;
         }
         return (
           <div key={index} className='tile is-child columns is-mobile'>
@@ -137,7 +144,7 @@ class HomeIndex extends Component {
               <p className='upcoming-shift-text'> {shift.group} </p>
             </div>
             <div className='column is-3'>
-              <button className='open-shift-button' onClick={this.handleOpenClick.bind(this, shift)}>Claim</button>
+              {button}
             </div>
           </div>
         );
