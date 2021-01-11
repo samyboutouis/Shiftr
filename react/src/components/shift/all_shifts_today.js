@@ -51,7 +51,7 @@ class AllShiftsToday extends Component {
     let self = this;
     let time = getUnixTime(Date.now());
     if(time + 600 < this.props.shifts[0].start_time && !this.state.clockedIn){
-      alert("It is too early to clock in to your shift!"); // 10 minutes before or earlier
+      alert("It is too early to clock in to your shift! Please wait until 10 minutes before to clock in."); // 10 minutes before or earlier
     } else if(this.state.clockedIn && window.confirm("Are you sure you want to clock out?")){
       axios.put("http://localhost:8080/shifts/update/" + this.props.shifts[0]._id, {clocked_out: time, status: "completed"}).then((response) => {
         self.setState({clockedIn: false, clockedOut: true});

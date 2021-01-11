@@ -12,7 +12,7 @@ import format from "date-fns/format";
 class HomeIndex extends Component {
   constructor(props){
     super(props);
-    this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: [], upcomingShifts: [], openShifts: [], modal: false, newShift: false};
+    this.state = {name: "", shiftsToday: 0, shifts: [], additionalShifts: [], upcomingShifts: [], openShifts: [], modal: false, editShift: false};
   }
 
   getShiftsToday = () => {
@@ -128,9 +128,13 @@ class HomeIndex extends Component {
           }
         }
         if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
-          button = <div><button className='edit-shift-button'>Edit</button><button className='edit-shift-button' onClick={this.deleteOpen.bind(this, shift)}>Delete</button></div>;
-        }
-        else {
+          button = (
+            <div>
+              <button className='edit-shift-button' onClick={this.editModal.bind(this, shift)}>Edit</button>
+              <button className='edit-shift-button' onClick={this.deleteOpen.bind(this, shift)}>Delete</button>
+            </div>
+          );
+        } else {
           button = <button className='open-shift-button' onClick={this.handleOpenClick.bind(this, shift)}>Claim</button>;
         }
         return (
@@ -248,11 +252,15 @@ class HomeIndex extends Component {
   }
 
   showModal = () => {
-    this.setState({modal: true, newShift: true});
+    this.setState({modal: true, editShift: false});
+  }
+
+  editModal = (shift) => {
+    this.setState({modal: true, editShift: shift});
   }
 
   hideModal = () => {
-    this.setState({modal: false, newShift: false});
+    this.setState({modal: false, editShift: false});
   }
 
   componentDidMount() {
@@ -298,7 +306,7 @@ class HomeIndex extends Component {
     );
     return (
       <div className="tile is-gapless is-ancestor">
-        <ShiftModal modal={this.state.modal} onClose={this.hideModal} getOpenShifts={this.getOpenShifts} newShift={this.state.newShift}/>
+        <ShiftModal modal={this.state.modal} onClose={this.hideModal} getOpenShifts={this.getOpenShifts} editShift={this.state.editShift}/>
         {home}
       </div>
     );
