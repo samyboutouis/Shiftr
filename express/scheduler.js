@@ -317,9 +317,8 @@ exports.temp_users = async function() {
           "shifts.$[elem].employee.name" : body.user,
           "shifts.$[elem].status": "scheduled", 
           "shifts.$[elem].employee.netid" : body.netid, 
-          "shifts.$[elem].start_time" : body.start_time, 
-          "shifts.$[elem].end_time" : body.end_time 
-        } 
+          "shifts.$[elem].start_time" : parseInt(body.start_time), 
+          "shifts.$[elem].end_time" : parseInt(body.end_time) } 
         },
         { arrayFilters: [ { "elem._id": ObjectId(body.shift_id) } ] }
       );

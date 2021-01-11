@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import format from 'date-fns/format'
+import toDate from 'date-fns/toDate'
+import getYear from 'date-fns/getYear'
+import getMonth from 'date-fns/getMonth'
+import getDate from 'date-fns/getDate'
+import getUnixTime from 'date-fns/getUnixTime'
 import axios from 'axios';
 
 class EditShift extends Component {
@@ -42,12 +47,22 @@ class EditShift extends Component {
         const name = event.target.name;
         const value = event.target.value;
         if(name==="user") {
-            console.log(this.props.employees.find( ({ name }) => name === value ).netid)
-            this.setState({netid: this.props.employees.find( ({ name }) => name === value ).netid});
+            this.setState({
+                netid: this.props.employees.find( ({ name }) => name === value ).netid
+            });
         }
-        this.setState({
-            [name]: value
-        }); 
+        if(name==="start_time" || name==="end_time") {
+            var time = value.split(":")
+            var date = this.props.shift[name]*1000
+            this.setState({
+                [name]: getUnixTime(toDate(new Date(getYear(date), getMonth(date)+1, getDate(date), time[0], time[1], 0)))
+            })
+        }
+        else {
+            this.setState({
+                [name]: value
+            }); 
+        }
     }
 
     employeeOptions = () => {
