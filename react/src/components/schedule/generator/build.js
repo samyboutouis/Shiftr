@@ -58,7 +58,7 @@ class BuildSchedule extends Component {
     var options = []
     groups.forEach((group) =>
       options.push(
-        <option className="capitalize-me" value={group}>{group}</option>
+        <option key={group} className="capitalize-me" value={group}>{group}</option>
       )
     )
     return options

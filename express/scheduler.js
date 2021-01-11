@@ -309,6 +309,25 @@ exports.temp_users = async function() {
     }
   }
 
+  exports.edit_shift = async function(id, body) {
+    try {
+      await schedulesCollection.updateOne(
+        {"_id": ObjectId(id)},
+        { $set: { 
+          "shifts.$[elem].employee.name" : body.user,
+          "shifts.$[elem].status": "scheduled", 
+          "shifts.$[elem].employee.netid" : body.netid, 
+          "shifts.$[elem].start_time" : body.start_time, 
+          "shifts.$[elem].end_time" : body.end_time 
+        } 
+        },
+        { arrayFilters: [ { "elem._id": ObjectId(body.shift_id) } ] }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   // creates one hour Code+ shifts from 9AM-5PM Dec 9-11, 14-15 2020 eastern (for testing)
 async function basicTestShifts() {
   var start = 1607522400;

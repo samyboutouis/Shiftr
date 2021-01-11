@@ -33,7 +33,7 @@ class GeneratedSchedule extends Component {
                     width: 150, 
                     top: (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5-starting_height, 
                     height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10}}>
-                <Shift shift={shift} group={this.props.data.group}/>
+                <Shift shift={shift} group={this.props.data.group} />
             </div>
         )})
         return cells
@@ -43,7 +43,6 @@ class GeneratedSchedule extends Component {
         if(shift){
             this.setState({modal: shift})
         } else {
-            console.log("here")
             this.setState({modal: false})
         }
     }
@@ -51,7 +50,7 @@ class GeneratedSchedule extends Component {
     editShift = () => {
         if(this.state.modal){
             return <div>
-                <EditShift toggleModal={this.toggleModal} shift={this.state.modal} employees={this.props.data.users}/>
+                <EditShift toggleModal={this.toggleModal} shift={this.state.modal} employees={this.props.data.users} schedule={this.props.data._id}/>
             </div>
         }
     }    

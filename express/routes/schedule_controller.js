@@ -56,4 +56,9 @@ router.get('/rank_users/:group', (req, res) => {
   shifts.then(result => { res.json(result) });
 })
 
+router.put('/edit_shift/:_id', (req, res) => {
+  let shifts = scheduler.edit_shift(req.params._id, req.body);
+  shifts.then(result => { res.json(result) });
+})
+
 module.exports = router
