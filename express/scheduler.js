@@ -301,9 +301,10 @@ exports.temp_users = async function() {
   // removes all documents from shifts and users collections
   exports.delete_data = async function(group) {
     try {
-      shiftsCollection.deleteMany( { } );
-      // await basicTestShifts();
-      usersCollection.deleteMany( { } );
+      // shiftsCollection.deleteMany( { } );
+      // usersCollection.deleteMany( { } );
+      // schedulesCollection.deleteMany( { } );
+      // db.get().collection('temp').deleteMany( { } );
     } catch (err) {
       console.log(err);
     }
@@ -327,13 +328,26 @@ exports.temp_users = async function() {
     }
   }
 
-  exports.get_schedule = async function(id) {
-    try {
-      return await schedulesCollection.findOne({"_id": ObjectId(id)});
-    } catch (err) {
-      console.log(err);
-    }
+exports.get_schedule = async function(id) {
+  try {
+    return await schedulesCollection.findOne({"_id": ObjectId(id)});
+  } catch (err) {
+    console.log(err);
   }
+}
+
+exports.publish_schedule = async function(id) {
+  try {
+    return await schedulesCollection.aggregate([
+      { $match: { "_id": ObjectId(id)} },
+      { $unwind : "$shifts" },
+      { $replaceRoot: { newRoot: "$shifts" } },
+      {$merge: {into: "shifts", on: "_id"}}
+    ]).toArray();
+  } catch (err) {
+    console.log(err);
+  }
+}
 
   // creates one hour Code+ shifts from 9AM-5PM Dec 9-11, 14-15 2020 eastern (for testing)
 async function basicTestShifts() {

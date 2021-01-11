@@ -70,7 +70,20 @@ class GeneratedSchedule extends Component {
                 />
             </div>
         }
+    } 
+
+    saveSchedule = () => {
+        return <button className='build-schedule-button' onClick={this.publishSchedule.bind(this)}>Publish Schedule</button>
     }    
+
+    publishSchedule = () => {
+        let self = this
+        axios.put("http://localhost:8080/schedule/publish_schedule/"+this.props.data._id).then( (response) => {
+            console.log(response.data)
+         }).catch( (error) => {
+            console.log(error)
+         });
+    }
 
     drawUsers = () => {
         return this.props.data.users.map((user,index) =>
@@ -84,6 +97,7 @@ class GeneratedSchedule extends Component {
         return <div>
             {this.editShift()}
             {this.drawShifts()}
+            {this.saveSchedule()}
             <div className="unscheduled-availability">
                 {this.drawUsers()}
             </div>

@@ -66,4 +66,9 @@ router.get('/:_id', (req, res) => {
   shifts.then(result => { res.json(result) });
 })
 
+router.put('/publish_schedule/:_id', (req, res) => {
+  let shifts = scheduler.publish_schedule(req.params._id);
+  shifts.then(result => { res.json(result) });
+})
+
 module.exports = router
