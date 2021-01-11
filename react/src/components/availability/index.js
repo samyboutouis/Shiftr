@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import Key from './Key'
 import * as Constants from '../../constants'
 import AvailabilityForm from './form'
@@ -8,22 +9,31 @@ class AvailabilityIndex extends Component {
   constructor(props){
     super();
   }
+  getTimes = () => {
+    let self = this;
+    axios.get("http://localhost:8080/users/add_availability/5fc904d7fa4da396bc85401c").then( (response) => {
+          self.setState({data: response.data})
+       }).catch( (error) => {
+          console.log(error)
+       });
+    }
+
   mapTimes = () => {
-    let times = [];
-
-      for(let i = 0; i < 7; i++){
-          times.push(<td></td>);
-      }
-
-    return times
+    return this.state.data.user.map((user,index) =>
+          <tr key={index}>
+              <td> {user.start_time}</td>
+              <td> {user.end_time}</td>
+          </tr>
+        )
+    }
     
    
     //fix this so that it at least displays empty cal to be filled 
     //change color based on availability 
-  }
+  
   drawCalendar = () => {
-    return <div>
-      <div className= "days-of-week availability-table">
+    if(this.props.data){
+      return <div className= "days-of-week availability-table">
         <table className = "table is-bordered is-fullwidth">
             <thead>
                 <tr className="week">
@@ -37,14 +47,11 @@ class AvailabilityIndex extends Component {
                 </tr>
             </thead>
             <tbody>
-            <tr>{this.mapTimes()}</tr>
-            <tr>{this.mapTimes()}</tr>
-            
-
-  
+            {this.mapTimes()}
             </tbody>
         </table>
         </div>
+    }
         {/*
         <div className = "ml-5">Location: </div>
         <Key groups={[
@@ -62,18 +69,20 @@ class AvailabilityIndex extends Component {
             {group: 'Least Preferred', color: Constants.LIGHTORANGE},
             {group: 'Unavailable', color: Constants.DARKRED}]}/>
             */}
-            <AvailabilityForm />
-    </div>
-  }
+      
+
+}
 
   render(){
     return(
         <div>
+          <div>
+            <AvailabilityForm />
+      </div>
           {this.drawCalendar()}
-          
         </div>
     )
   }
-}
 
+}
 export default AvailabilityIndex

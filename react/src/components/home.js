@@ -5,7 +5,6 @@ import ScheduleIndex from './schedule/index'
 import HomeIndex from './user/home_index'
 import UserIndex from './user/index'
 import Nbar from './navbar'
-//import CalIndex from './availability/indexTwo'
 
 class Home extends Component {
   constructor(props){
