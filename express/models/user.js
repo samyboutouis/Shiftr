@@ -159,10 +159,10 @@ class User {
       console.log(err);
     }
   }
-  //add a users availability --> fix so that it also stores location, and preference 
+ 
   static add_availability = async (id, newValues) => {
     try{
-      return usersCollection.updateOne({"_id": ObjectId(id)}, {$push: {"availability.times" : {"day": newValues.day, "start_time": parseInt(newValues.start_time), "end_time": parseInt(newValues.end_time) }}})
+      return usersCollection.updateOne({"_id": ObjectId(id)}, {$push: {"availability.times" : {"day": newValues.day, "start_time": parseInt(newValues.start_time), "end_time": parseInt(newValues.end_time)}}})
     } catch (err) {
       console.log(err)
  }
