@@ -322,7 +322,7 @@ code {
 
 /* THE CHECKBOXES */
 /* hide defaults */
-.container input {
+.container .check-input {
   opacity: 0;
   cursor: pointer;
   height: 0;
@@ -347,39 +347,36 @@ code {
   -ms-user-select: none;
   user-select: none;
 }
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-/* .container input:checked ~ .checkmark {
+.container .check-input:checked ~ .checkmark {
   background-color: #2196F3;
-} */
+}
 .checkmark:after {
   content: "";
   display: none;
 }
-.container input:checked ~ .checkmark:after {
+.container .check-input:checked ~ .checkmark:after {
   display: block;
 }
 
-.container input:checked ~ .mps-box{
+.container .check-input:checked ~ .mps-box{
   background-color: rgba(255, 0, 0, .4);
 }
-.container input:checked ~ .services-box {
+.container .check-input:checked ~ .services-box {
   background-color:rgba(245, 66, 170, .4);
 }
-.container input:checked ~ .tutors-box {
+.container .check-input:checked ~ .tutors-box {
   background-color: rgba(10, 12, 266, .4);
 }
-.container input:checked ~ .labTrain-box{
+.container .check-input:checked ~ .labTrain-box{
   background-color: rgba(245, 113, 12, .4);
 }
-.container input:checked ~ .officeHours-box{
+.container .check-input:checked ~ .officeHours-box{
   background-color: rgba(12, 202, 245, .4);
 }
-.container input:checked ~ .designhub-box {
+.container .check-input:checked ~ .designhub-box {
   background-color: rgba(150, 12, 200, .4);
 }
-.container input:checked ~ .codePlus-box {
+.container .check-input:checked ~ .codePlus-box {
   background-color: rgba(255, 255, 0, .4);
 }
 

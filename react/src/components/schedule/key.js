@@ -29,7 +29,7 @@ class ScheduleKey extends React.Component {
   render() {
     // define what a checkbox has
     const Checkbox = ({ type = 'checkbox', name, checked = true, onChange, styletag}) => (
-      <input type={type} name={name} checked={checked} onChange={onChange} styletag={styletag}/>
+      <input className="check-input" type={type} name={name} checked={checked} onChange={onChange} styletag={styletag}/>
     );
     // hardcoded checkbox data below
     const checkboxcontent = [
