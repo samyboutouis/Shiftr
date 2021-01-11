@@ -238,24 +238,6 @@ async function splitAndAssignShifts(match, user) {
   }
 }
 
-// return all shifts in tempShifts belonging to group in ascending time order
-exports.temp_shifts = async function(group) {
-  try {
-    return await tempShiftsCollection.find({"group": group } ).sort({"start_time":1}).toArray();
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-// return all users in tempUsers
-exports.temp_users = async function() {
-  try {
-    return await tempUsersCollection.find().toArray();
-  } catch (err) {
-    console.log(err);
-  }
-}
-
   // resets shifts and users collections to test on a larger data set
   exports.set_data = async function(group) {
     try {
