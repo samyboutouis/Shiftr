@@ -48,6 +48,29 @@ class ShowWeek extends Component {
     if (this.state.isModal) {
       return(<ShiftTimes shift={shift}/>)}
   }
+
+  getEmployee = (shift) => {
+    if (this.state.isModal) {
+      // let shift = this.state.activeItem
+      if (shift.employee === undefined) {
+        return(
+          <div>
+            <p>Current Shift Status: {this.state.activeItem.status}</p>
+            <p>Employee Assigned: None</p>
+            <br/>
+            <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+          </div>
+        )}
+      else {
+        return(
+          <div>
+            <p>Current Shift Status: {this.state.activeItem.status}</p>
+            <p>Employee Assigned: {shift.employee.name}</p>
+            <br/>
+            <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+          </div>)}
+      }
+    }
 /* format and size the display of queries */
   mapShifts = () => {
     let shifts = this.state.shifts
@@ -56,16 +79,14 @@ class ShowWeek extends Component {
       if(shifts[i]){
     shifts[i].data.map((shift,index) =>
         cells.push(
-          <div className="heyo" onClick={this.handleClick.bind(this, shift)}>
-          <div className={"calendar-week-entry " + shift.group} key={i+' '+index, shift} style={{position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
-            <div >
+          <div onClick={this.handleClick.bind(this, shift)}>
+            <div className={"calendar-week-entry " + shift.group} key={i+' '+index, shift} style={{position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
                 {format(shift.start_time*1000, "HH:mm")} - {format(shift.end_time*1000, "HH:mm")}
                 <br />
                 {shift.group}
                 <br />
                 {shift.location}
             </div>
-          </div>
           </div>
 
     ))}}
@@ -80,13 +101,11 @@ class ShowWeek extends Component {
         {this.drawShifts()}
         <div className="spacing-cell"> &nbsp;
         </div>
-
         {/*create one modal, and use state to change out displayed info*/}
         <div className={`modal ${active}`}>
           <div className="modal-background" />
               <div className="modal-card">
                 <header className="modal-card-head">
-
                   <div className="modal-card-title"> {this.drawTimes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
                   <button
                     onClick={this.handleClick.bind(this, '')}
@@ -95,14 +114,11 @@ class ShowWeek extends Component {
                 </header>
                 <section className="modal-card-body">
                     <p>{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
-                    <br/>
-                    <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+                    <div>{this.getEmployee(this.state.activeItem)}</div>
                 </section>
                 <footer className="modal-card-foot"></footer>
               </div>
           </div>
-
-
       </div>
     )
   }

@@ -108,4 +108,13 @@ router.put('/update/:_id', (req, res) => {
   })
 })
 
+//CHECKBOX DEPENDENT VIEWS IN CALENDAR
+// router.put('/check/:group/:boole', (req, res) => {
+//   const body = req.body;
+//   let shift = Shift.updateShowStatus(req.params.group, boole); //this is all shifts that have the group of the button
+//   shift.then(shift => {
+//     let updateShift = shift.update(body)
+//     updateShift.then(result => res.json(result))
+//   })
+// })
 module.exports = router
