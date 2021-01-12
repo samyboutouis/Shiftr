@@ -72,17 +72,17 @@ class ScheduleIndex extends Component {
     if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
       if(this.state.buildSchedule === true){
         return <div>
-          <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+          <button className='back-to-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
           <BuildSchedule toggleBuildSchedule={this.toggleBuildSchedule} />
         </div>
       }
       else if(this.state.buildSchedule) {
         return <div>
-            <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
+            <button className='back-to-schedule-button' onClick={this.toggleBuildSchedule.bind(this, false)}>Back To Schedule </button>
             <GeneratedSchedule data = {this.state.buildSchedule} />
           </div>
       } else {
-        return <div><br/> <button className='is-pulled-right mx-6 build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button></div>
+        return <div><br/> <button className='build-schedule-button' onClick={this.toggleBuildSchedule.bind(this, true)}>Go To Schedule Generator </button></div>
       }
     }
   }
@@ -94,8 +94,8 @@ class ScheduleIndex extends Component {
   render(){
     return(
         <div>
-          {this.displayCalendar()}
           {this.buildSchedule()}
+          {this.displayCalendar()}
         </div>
     )
   }
