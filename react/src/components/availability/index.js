@@ -11,7 +11,7 @@ class AvailabilityIndex extends Component {
   }
   getTimes = () => {
     let self = this;
-    axios.get("http://localhost:8080/users/add_availability/5ff77f271ac8c8017476b008").then( (response) => { //need to change this 
+    axios.get("http://localhost:8080/users/add_availability/").then( (response) => { //need to change this 
           self.setState({data: response.data})
        }).catch( (error) => {
           console.log(error)
@@ -75,7 +75,7 @@ class AvailabilityIndex extends Component {
     return(
         <div>
           <div>
-            <AvailabilityForm />
+            <AvailabilityForm  />
       </div>
           {this.drawCalendar()}
         </div>

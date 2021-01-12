@@ -160,9 +160,9 @@ class User {
     }
   }
  
-  static add_availability = async (id, newValues) => {
+  static add_availability = async (netid, newValues) => {
     try{
-      return usersCollection.updateOne({"_id": ObjectId(id)}, {$push: {"availability.times" : {"day": newValues.day, "start_time": parseInt(newValues.start_time), "end_time": parseInt(newValues.end_time)}}})
+      return usersCollection.updateOne({"netid": netid}, {$push: {"availability.times" : {"day": newValues.day, "start_time": parseInt(newValues.start_time), "end_time": parseInt(newValues.end_time)}}})
     } catch (err) {
       console.log(err)
  }
