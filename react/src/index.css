@@ -14,6 +14,75 @@ code {
     monospace;
 }
 
+/* LOGIN THINGS */
+.login_header {
+  color: white;
+  font-weight: 700;
+  font-size: 35px;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+}
+
+.login-background {
+	background-image: url('./gradient.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 100vh;
+}
+
+.login-container {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 20px;
+  height: 250px;
+  width: 50%;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 7px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 1px;
+}
+
+.login-button {
+  border: none;
+  background: rgb(246,116,124);
+  background: linear-gradient(90deg, rgba(246,116,124,1) 0%, rgba(246,116,124,1) 21%, rgba(247,167,255,1) 100%); 
+  color: white;
+  background-size: 100% 100%;
+  padding: .8em 2em;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 5px;
+  margin: 0;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+}
+
+.login-message {
+  background-color: rgb(246,116,124);
+  background-image: linear-gradient(90deg, rgba(246,116,124,1) 0%, rgba(246,116,124,1) 21%, rgba(247,167,255,1) 100%);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent; 
+  font-size: 25px;
+  margin: 0;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -35%);
+}
+
 /* NAVBAR THINGS */
 .logo {
 	float: left;
@@ -537,5 +606,15 @@ th{
 
   .pm {
     font-size: 20px;
+  }
+
+  .login_header {
+    top: 20%;
+    font-size: 30px;
+  }
+
+  .login-container {
+    height: 150px;
+    width: 300px;
   }
 }
