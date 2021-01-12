@@ -60,7 +60,7 @@ router.post('/consume', (req, res) => {
       // Set a new secure cookie for future auth
       res.cookie("shiftr-saml", token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 24 * 7 // 1 week
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
       })
       
       User.createIfAbsent(attributes);

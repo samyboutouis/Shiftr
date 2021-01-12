@@ -3,26 +3,30 @@ import format from 'date-fns/format'
 
 class EmployeeShow extends Component {
     drawShifts = () => {
-        if(this.props.data){
-          return <div className = "hours-table">
-              <table className = "table is-bordered is-striped is-narrow is-fullwidth">
-                 <thead> 
-                    <tr>
-                       <th>Date</th>
-                       <th>Shift Time</th>
-                       <th>Clocked In</th>
-                       <th>Clocked Out</th>
-                       {/* <th>Regular Hours</th>
-                       <th>OT Hours</th>
-                       <th>Total Hours</th> */}
-                        <th>Hours</th>
-                    </tr>
-                 </thead> 
-                 <tbody>
-                    {this.mapShifts()}
-                 </tbody>
-              </table>
-          </div>
+      var sizing = ""
+      if(localStorage.getItem('role')==='employee') {
+         sizing = "container is-max-widescreen"
+      }
+      if(this.props.data){
+         return <div className = {sizing}>
+            <table className = "table is-bordered is-striped is-narrow is-fullwidth">
+               <thead> 
+                  <tr>
+                     <th>Date</th>
+                     <th>Shift Time</th>
+                     <th>Clocked In</th>
+                     <th>Clocked Out</th>
+                     {/* <th>Regular Hours</th>
+                     <th>OT Hours</th>
+                     <th>Total Hours</th> */}
+                     <th>Hours</th>
+                  </tr>
+               </thead> 
+               <tbody>
+                  {this.mapShifts()}
+               </tbody>
+            </table>
+         </div>
         }
       }
   

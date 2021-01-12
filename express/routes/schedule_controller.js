@@ -4,9 +4,9 @@ var scheduler = require('../scheduler');
 var jwt = require('jsonwebtoken');
 
 router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    next()
-  })
+  console.log('Time: ', Date.now())
+  next()
+})
 
 // DELETE OR MAKE SAFER. (ANNA USES FOR TESTING)
 router.put('/set_data', (req, res) => {

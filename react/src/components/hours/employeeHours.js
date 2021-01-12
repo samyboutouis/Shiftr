@@ -6,7 +6,7 @@ class EmployeeHours extends Component {
     drawHeader = () => {
        if(this.props.data) {
          return <div className="container is-max-widescreen">
-         <table className = "is-pulled-right table hours-header-table is-fullwidth">
+         <table className = "table hours-header-table is-fullwidth">
                <thead> 
                   <tr>
                      <th><h2 className="subtitle">Total Hours</h2></th>

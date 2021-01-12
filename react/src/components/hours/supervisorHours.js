@@ -34,7 +34,7 @@ class SupervisorHours extends Component {
 
      drawShifts = () => {
        if(this.props.data){
-         return <div className = "hours-table">
+         return <div className = "container is-max-widescreen">
              <table className = "table is-bordered is-striped is-narrow is-fullwidth">
                 <thead> 
                    <tr>
