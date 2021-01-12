@@ -513,17 +513,9 @@ th{
 }
 
 .parent {
-  height: 80vh; /* set height as you need */
+  height: 70vh; /* set height as you need */
   display: flex;
   flex-direction: column;
-}
-
-.employee-card {
-  box-shadow: none;
-  background-color: #EBE8E8;
-  border-radius: 2px;
-  padding: 10px;
-  margin: 20px 40px 20px 0;
 }
 
 .click-me {
