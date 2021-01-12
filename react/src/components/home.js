@@ -44,7 +44,13 @@ class Home extends Component {
       }
     }else{
       home.push(
-        <button onClick={this.samlLogin} key="login">Login</button>
+        <div key="login" className="login-background">
+          <h1 className="login_header">WELCOME TO SHIFTR</h1>
+          <div className="login-container">
+            <p className="login-message">LOGIN NOW TO START</p>
+            <button className="login-button" onClick={this.samlLogin}>LOGIN</button>
+          </div>
+        </div>
       );
     } 
     return home;

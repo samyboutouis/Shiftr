@@ -105,6 +105,11 @@ router.post('/', (req, res) => {
   }
 })
 
+router.post('/open_shifts', (req, res) => {
+  let shift = Shift.findByStatusAndGroup(req.body.status, req.body.groups);
+  shift.then(result => {res.json(result)});
+});
+
 router.put('/update/:_id', (req, res) => {
   const body = req.body;
   let shift = Shift.find(req.params._id);

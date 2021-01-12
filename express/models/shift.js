@@ -182,6 +182,14 @@ class Shift {
     }
   }
 
+  static findByStatusAndGroup = async (status, groups) => {
+    try {
+      return await shiftsCollection.find({status: status, group: {$in: groups}}).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   //checkbox shows and unshows shift in CALENDAR CHECK ON THIS attempt w aggregate!!!!!
   // static check = async (newValues)  => {
   //   try {

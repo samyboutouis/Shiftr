@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import parseISO from 'date-fns/parseISO';
 import getUnixTime from 'date-fns/getUnixTime';
+import fromUnixTime from 'date-fns/fromUnixTime';
+import getDate from 'date-fns/getDate';
+import getMonth from 'date-fns/getMonth';
+import getYear from 'date-fns/getYear';
 
 class ShiftModal extends Component {
   constructor(props){
@@ -9,13 +13,23 @@ class ShiftModal extends Component {
   }
 
   formModal = () => {
+    let header, day, time;
+    if(this.props.editShift){
+      header = "Edit Open Shift";
+      time = fromUnixTime(this.props.editShift.start_time)
+      day = getYear(time) + "-" + getMonth(time) + 1 + "-" + getDate(time);
+      console.log(day);
+    } else {
+      header = "Add Open Shift";
+      day = "";
+    }
     if(this.props.modal) {
       return (
         <div className="modal is-active">
           <div className="modal-background">
             <div className="modal-card">
               <header className="modal-card-head">
-                <p className="modal-card-title">Add Open Shift</p>
+                <p className="modal-card-title">{header}</p>
                 <button onClick={this.props.onClose} className="delete" aria-label="close"></button>
               </header>
               <section className="modal-card-body">
@@ -82,8 +96,8 @@ class ShiftModal extends Component {
   }
 
   groupOptions = () => {
-    var groups = localStorage.getItem('group').split(",")
-    var options = []
+    var groups = localStorage.getItem('group').split(",");
+    var options = [];
     groups.forEach((group, index) =>
       options.push(
         <label key={index} className="radio mr-5">
@@ -91,8 +105,8 @@ class ShiftModal extends Component {
           &nbsp;{group}
         </label>
       )
-    )
-    return options
+    );
+    return options;
   }
 
   changeHandler = (event) => {
@@ -114,19 +128,35 @@ class ShiftModal extends Component {
       alert("You cannot have a shift end before its start time.")
     }
     else {
-      axios.post("http://localhost:8080/shifts", {
-        start_time: getUnixTime(start), 
-        end_time: getUnixTime(end), 
-        group: this.state.group, 
-        location: this.state.location, 
-        status: "open"
-      }).then((response) => {
-        this.props.getOpenShifts();
-        alert("Open shift added successfully.");
-        this.props.onClose();
-      }).catch(function (err){  
-          console.log(err)
-      });
+      if(this.props.editShift !== false){
+        axios.put("http://localhost:8080/shifts/update/"+ this.props.editShift._id, {
+          start_time: getUnixTime(start), 
+          end_time: getUnixTime(end), 
+          group: this.state.group, 
+          location: this.state.location, 
+          status: "open"
+        }).then((response) => {
+          this.props.getOpenShifts();
+          alert("Open shift edited successfully.");
+          this.props.onClose();
+        }).catch(function (err){  
+            console.log(err)
+        });
+      } else {
+        axios.post("http://localhost:8080/shifts", {
+          start_time: getUnixTime(start), 
+          end_time: getUnixTime(end), 
+          group: this.state.group, 
+          location: this.state.location, 
+          status: "open"
+        }).then((response) => {
+          this.props.getOpenShifts();
+          alert("Open shift added successfully.");
+          this.props.onClose();
+        }).catch(function (err){  
+            console.log(err)
+        });
+      }
     }
   }
 
