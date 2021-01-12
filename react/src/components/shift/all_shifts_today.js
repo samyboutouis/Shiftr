@@ -7,7 +7,7 @@ import getUnixTime from 'date-fns/getUnixTime'
 class AllShiftsToday extends Component {
   constructor(props){
     super(props);
-    this.state = {clockedIn: false, clockedOut: false};
+    this.state = {clockedIn: false, clockedOut: false, shifts: []};
   }
 
   drawShifts = () => {
@@ -67,7 +67,11 @@ class AllShiftsToday extends Component {
     }
   }
 
-  render() {
+  componentDidMount() {
+    console.log(this.props);
+  }
+
+  showShift = () => {
     let zeroShifts = "Enjoy the time off!"
     if(this.props.numOfShifts === 0 || this.state.clockedOut){
       return (
@@ -99,6 +103,14 @@ class AllShiftsToday extends Component {
         </div>
       );
     }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.showShift()}
+      </div>
+    );
   }
 }
 
