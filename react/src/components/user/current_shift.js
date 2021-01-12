@@ -3,11 +3,10 @@ import axios from 'axios';
 import format from 'date-fns/format'
 import Clock from '../../clock.png';
 import getUnixTime from 'date-fns/getUnixTime'
-import AllShiftsToday from '../shift/all_shifts_today';
 
 class CurrentShift extends Component {
   constructor(props){
-    super();
+    super(props);
     this.state = {clockedIn: false, clockedOut: false, shifts: []};
   }
 
@@ -68,11 +67,36 @@ class CurrentShift extends Component {
     }
   }
 
-  showShift = () => {
+  determineMessage = () => {
+    let landing = "You have no shifts left today."
+    if(localStorage.getItem('role')==='employee'){
+      if(this.props.shiftsToday > 0){
+        if(this.props.shiftsToday === 1){
+          landing = "You have one shift today."
+        } else{
+          landing = "You have " + this.props.shiftsToday + " shifts today."
+        }
+      }
+    }
+    else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
+      if(this.props.shiftsToday === 0){
+        landing = "No employees are scheduled to work today."
+      } else {
+        if(this.props.shiftsToday === 1){
+          landing = "You have one employee working today."
+        } else{
+          landing = "You have " + this.props.shiftsToday + " employees working today."
+        }
+      }
+    }
+    return landing;
+  }
+
+  renderShift = () => {
     let zeroShifts = "Enjoy the time off!"
     if(this.props.shiftsToday === 0 || this.state.clockedOut){
       return (
-        <div className="transparent-box">
+        <div className="transparent-box" key="no-shift">
           <p className="no-shifts">{zeroShifts}</p>
         </div>
       );
@@ -95,7 +119,7 @@ class CurrentShift extends Component {
         );
       }
       return (
-        <div>
+        <div key="shift">
           {shift};
         </div>
       );
@@ -103,27 +127,7 @@ class CurrentShift extends Component {
   }
 
   render() {
-    let landing = "You have no shifts left today."
-    if(localStorage.getItem('role')==='employee'){
-      if(this.props.shiftsToday > 0){
-        if(this.props.shiftsToday === 1){
-          landing = "You have one shift today."
-        } else{
-          landing = "You have " + this.props.shiftsToday + " shifts today."
-        }
-      }
-    }
-    else if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
-      if(this.props.shiftsToday === 0){
-        landing = "No employees are scheduled to work today."
-      } else {
-        if(this.props.shiftsToday === 1){
-          landing = "You have one employee working today."
-        } else{
-          landing = "You have " + this.props.shiftsToday + " employees working today."
-        }
-      }
-    }
+    let landing = this.determineMessage();
     let shift = []
     shift.push(
       <div key="greeting">
@@ -131,7 +135,8 @@ class CurrentShift extends Component {
         <p className="landing-box">{landing}</p>
       </div>
     );
-    shift.push({showShift()});
+    let currentShift = this.renderShift();
+    shift.push(currentShift);
     return (
       <div className="background-pretty-gradient">
         {shift}

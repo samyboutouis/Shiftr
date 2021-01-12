@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import format from 'date-fns/format'
-import Key from './Key'
-import * as Constants from '../../constants'
 import AvailabilityForm from './form'
 
 
