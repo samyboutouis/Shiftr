@@ -6,7 +6,7 @@ import {  faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 class UserForm extends Component {
   constructor(props){
     super()
-    this.state = {uid: null, netid: null, group: [], role: false, modal: false}
+    this.state = {name: null, netid: null, group: [], role: false, modal: false}
   }
 
   changeHandler = (event) => {
@@ -106,18 +106,17 @@ class UserForm extends Component {
 
           <section className="modal-card-body">
             <form>
+              <div className="field">
+                <label className="label">Name</label>
+                <div className="control">
+                  <input className='input' name='name' type="text" placeholder="e.g John Doe" onChange={this.changeHandler} />
+                </div>
+              </div>
 
               <div className="field">
                 <label className="label">NetId</label>
                 <div className="control">
                   <input className='input' name='netid' type="text" placeholder="e.g abc123" onChange={this.changeHandler} />
-                </div>
-              </div>
-
-              <div className="field">
-                <label className="label">Unique ID</label>
-                <div className="control">
-                  <input className='input' name='uid' type="text" placeholder="e.g 0123456" onChange={this.changeHandler} />
                 </div>
               </div>
 
