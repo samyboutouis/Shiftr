@@ -3,7 +3,7 @@ import React from 'react';
 class ScheduleKey extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {checkedItems: new Map(), checkedList: this.props.currentList,showShift: true} //showShift is from backend CB call
+    this.state = {checkedItems: new Map(), checkedList: this.props.currentList, showShift: true} //showShift is from backend CB call
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -19,11 +19,9 @@ class ScheduleKey extends React.Component {
         prechecked.push(key)}
      else
      {prechecked = this.state.checkedList.filter(CheckedId=>CheckedId !== key)}
+// SENDING UPDATED LIST BACK TO PARENT
      this.props.parentCallback({prechecked})
      this.setState({checkedList: prechecked})
-     console.log("CHILDPRE:")
-     console.log(typeof(prechecked))
-
   }
 
   render() {

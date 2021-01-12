@@ -37,19 +37,19 @@ class ShowWeek extends Component {
   //
   //   }
   // THIS DOESNT WORK CORRECTLY THE FIRST TIME, ONLY STARTS CHANGING AFTER TWO ACTIONS
-  console.log("UDPATE")
-  console.log(this.state.checkedList)
 }
 
 /* query shifts by day */
   getShifts = (props) => {
     let self = this
     const end = this.props.start+86400
-    console.log("LIST@SHOWWEEK:")
-    console.log(this.props.checkedList)
+    // two things happening now
+    //1) stops refreshing the list query after two check boxes
+    //2) still doesnt succeed in backend query
+    var querylist = Object.values(this.state.checkedList)[0]
+    console.log("querylist")
+    console.log(querylist)
 
-//THE STATE PASSED THROUGH PROPS AFTER 1ST CHANGE IS AN OBJECT. SCREAMS. THIS IS SUCH A SIMPLE PROBLEM AKJHFLJAK I JUST WANT THE VALUE AS AN ARRAY
-    let querylist = this.state.checkedList
     axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end + "/" + querylist).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {

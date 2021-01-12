@@ -11,8 +11,6 @@ import getUnixTime from "date-fns/getUnixTime"
 
 const WeekCalendar = (props) => {
 const [currentDate, setCurrentDate] = useState(new Date());
-console.log("HOOKSLIST");
-console.log(props.checkedList);
 /* month header */
 /* set the forward and back 1 month fxn */
 const header = () => {
