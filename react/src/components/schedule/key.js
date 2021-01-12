@@ -1,29 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
 
 class ScheduleKey extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {checkedItems: new Map(), showShift: true}
+    this.state = {checkedItems: new Map(), checkedList: this.props.currentList,showShift: true} //showShift is from backend CB call
     this.handleChange = this.handleChange.bind(this);
   }
+
 
   handleChange = (e, key) => {
     const item = e.target.name;
     const isChecked = e.target.checked;
     this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
-    //THE SHOWING STUFF i have a DB field of checked with a boolean value. the query of shifts in the calendar will only take true shifts
+//MODIFYING THE LIST OF CHECKED ITEMS
+    let prechecked = []
+     if(e.target.checked)
+        {prechecked = this.state.checkedList.filter(CheckedId=>CheckedId !== key)
+        prechecked.push(key)}
+     else
+     {prechecked = this.state.checkedList.filter(CheckedId=>CheckedId !== key)}
+     this.props.parentCallback({prechecked})
+     this.setState({checkedList: prechecked})
+     console.log("CHILDPRE:")
+     console.log(typeof(prechecked))
 
-    // let form_data = new FormData();
-
-    // var showShift = (isChecked) ? "true" : "false"
-    // // form_data.append("checked", showShift); // CHANGE FORM DATA TO APPEND USER'S NETID once login/logout is finalized
-    // axios.put("http://localhost:8080/shifts/check/" + key + "/" + showShift).then( (response) => {
-    //   console.log('success, woo! (hopefully)')
-    // }).catch( (error) => {
-    //   console.log(error)
-    // });
   }
 
   render() {

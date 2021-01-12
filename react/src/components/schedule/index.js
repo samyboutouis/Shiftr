@@ -8,15 +8,24 @@ import WeekCalendar from './week.js'
 import DayCalendar from './day.js'
 import BuildSchedule from './generator/build'
 import axios from 'axios';
+// import CheckedBoxes from './checkedBoxes';
 
 class ScheduleIndex extends Component {
   constructor(props){
     super();
-    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false }
+    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false, checkedList: ["mps", "services", "tutors", "labTrain", "officeHours", "designhub", "codePlus"] }
+    this.handleKeyClick = this.handleKeyClick.bind(this);
   }
 
   componentDidMount = () => {
     this.getShifts()
+  }
+
+  handleKeyClick = (list) => {
+    this.setState({checkedList: list})
+    console.log("PARENT:")
+    console.log(this.state.checkedList)
+    // return(<div key={this.state.checkedList} className="not-shown"><CheckedBoxes checkedList={this.state.checkedList.bind(this)}/></div>)
   }
 
   //TODO: get shifts for specific user
@@ -40,7 +49,8 @@ class ScheduleIndex extends Component {
               {this.drawCalendar()}
             </div>
             <div className="key"> {/* legend*/}
-              <ScheduleKey/>
+              {/* i need to recieve checkbox data from child so i can pass it on to their sibling. im storing a list in state with checked boxes and updating using this callback */}
+              <ScheduleKey currentList={this.state.checkedList} parentCallback={this.handleKeyClick}/>
             </div>
           </div>
         </div>
@@ -54,8 +64,8 @@ class ScheduleIndex extends Component {
 
   drawCalendar = () => {
     if (this.state.navState === "Week"){
-      return <div>
-          <WeekCalendar />
+      return <div key={this.state.checkedList}>
+          <WeekCalendar checkedList={this.state.checkedList} />
         </div>
     }else if(this.state.navState === "Day"){
       return <div>
@@ -63,7 +73,7 @@ class ScheduleIndex extends Component {
         </div>
     }else if(this.state.navState === "Month"){
       return <div>
-        <MonthCalendar />
+        <MonthCalendar/>
         </div>
     }
   }
@@ -92,6 +102,7 @@ class ScheduleIndex extends Component {
   }
 
   render(){
+
     return(
         <div>
           {this.displayCalendar()}

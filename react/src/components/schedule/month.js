@@ -10,6 +10,8 @@ import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import subMonths from "date-fns/subMonths";
 import ShowMonth from './showMonth.js';
+import ScheduleIndex from './index';
+
 
 const MonthCalendar = () => {
 /* set the forward and back 1 month fxn */

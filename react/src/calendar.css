@@ -243,6 +243,9 @@ width: calc(100%/7);
   border-left-color: rgba(255, 255, 0, .2);
 }
 
+.not-shown{
+  display: none;
+}
 /* ATTEMPTING TO GET RID OF SHIFT OVERLAP IN CAL */
 /* .heyo{
   display: inline-block;

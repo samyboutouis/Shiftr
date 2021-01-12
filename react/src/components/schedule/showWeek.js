@@ -8,27 +8,49 @@ import differenceInMinutes from "date-fns/differenceInMinutes"
 
 class ShowWeek extends Component {
   constructor(props){
-    super()
-    this.state= {shifts: false, isModal: false, activeItem: ''}
+    super(props)
+    this.state= {shifts: false, isModal: false, activeItem: '', checkedList: this.props.checkedList}
   }
 
   /*changes whether modal is active or not, and which shift's info is shown*/
-    handleClick = (id) => {
-      this.setState({ isModal: !this.state.isModal });
-      console.log(id)
-      this.setState({activeItem: id});
+  handleClick = (id) => {
+    this.setState({ isModal: !this.state.isModal });
+    console.log(id)
+    this.setState({activeItem: id});
 
-    };
+  };
 
   componentDidMount = () => {
     this.getShifts()
   }
 
+  componentDidUpdate = (prevProps, props) => {
+    // if (prevProps.checkedList){
+      if(prevProps.checkedList !== this.props.checkedList) {
+      this.setState({checkedList: this.props.checkedList});
+    }
+  // }
+  //   else{
+  //     if(this.props.checkedList !== this.state.checkedList) {
+  //     this.setState({checkedList: this.props.checkedList});
+  //   }
+  //
+  //   }
+  // THIS DOESNT WORK CORRECTLY THE FIRST TIME, ONLY STARTS CHANGING AFTER TWO ACTIONS
+  console.log("UDPATE")
+  console.log(this.state.checkedList)
+}
+
 /* query shifts by day */
   getShifts = (props) => {
     let self = this
     const end = this.props.start+86400
-    axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end).then( (response) => {
+    console.log("LIST@SHOWWEEK:")
+    console.log(this.props.checkedList)
+
+//THE STATE PASSED THROUGH PROPS AFTER 1ST CHANGE IS AN OBJECT. SCREAMS. THIS IS SUCH A SIMPLE PROBLEM AKJHFLJAK I JUST WANT THE VALUE AS AN ARRAY
+    let querylist = this.state.checkedList
+    axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end + "/" + querylist).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)
@@ -97,7 +119,7 @@ class ShowWeek extends Component {
   render(){
     const active = this.state.isModal ? "is-active" : "";
     return(
-      <div >
+      <div key={this.props.checkedList} >
         {this.drawShifts()}
         <div className="spacing-cell"> &nbsp;
         </div>

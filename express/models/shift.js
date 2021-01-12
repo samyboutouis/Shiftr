@@ -76,12 +76,20 @@ class Shift {
     }
   }
 
-  // group shifts by hour (week and day calendars)
-  static findByHour = async (start, end)  => {
+  // group shifts by hour USED BY WEEK&DAY VIEW CALENDARS
+  static findByHour = async (start, end, checked)  => {
+    console.log("LIST@MODEL:")
+    console.log(checked)
     try {
       return await shiftsCollection.aggregate([
-        { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }//, {"checked": true}
-      ]}}, //shifts within time range
+        { "$match":
+          { "$and":
+            [
+              {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} },
+              { "group": { $in: (checked) } }
+            ]
+          }
+        }, //shifts within time range
         { "$group": {
           "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
           "data":{
@@ -181,29 +189,6 @@ class Shift {
       console.log(err);
     }
   }
-
-  //checkbox shows and unshows shift in CALENDAR CHECK ON THIS attempt w aggregate!!!!!
-  // static check = async (newValues)  => {
-  //   try {
-  //     var shifts = await shiftsCollection.aggregate([
-  //       { $match: {
-  //         "group": group
-  //
-  //       }]).toArray();
-  //     return {
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-  //failed attempt at check
-  // static check = async (newValues) => {
-  //   try{
-  //     return shiftsCollection.updateMany({"group": this.body.group}, {$set: newValues})
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
 
 // for stacking shifts in calendar
   // static findOverlap = async (start, end) => {
