@@ -558,3 +558,16 @@ th{
 .is-full-width {
   width: 100.1%;
 }
+
+.side-by-side {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-child {
+  flex: 0 25%;
+}
+
+.right-child {
+  flex: 0 70%;
+}

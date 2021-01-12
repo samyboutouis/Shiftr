@@ -30,8 +30,7 @@ class AvailabilityForm extends Component {
         form_data, 
         { headers: {'content-type': 'multipart/form-data'} }
         ).then((response) => {
-          alert("You have submitted your availability for " + format(start, "M/d/y h:mm a") + "-" + format(end, "h:mm a"));
-          console.log(response)
+          this.props.updateAvailability()
       }).catch(function (err){  
           console.log(err)
       });
@@ -54,10 +53,9 @@ class AvailabilityForm extends Component {
   
   render(){
     return(
-      <div className="tile is-vertical mt-5 ml-4">
-        <h4 className="tile title is-4">Add Availability</h4>
-        <form className="tile is-vertical is-4">
-
+      <div className="mt-5">
+        <h4 className="title is-4">Add Availability</h4>
+        <form>
         <div className="field">
             <label className="label">Date</label>
             <div className="control">

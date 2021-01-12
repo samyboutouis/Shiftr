@@ -92,4 +92,11 @@ router.put('/add_availability', (req, res) => {
   user.then(result => res.json(result))
  })
 
+ router.get('/get_availability', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  let user = User.get_availability(attributes.netid);
+  user.then(result => res.json(result))
+ })
+
 module.exports = router

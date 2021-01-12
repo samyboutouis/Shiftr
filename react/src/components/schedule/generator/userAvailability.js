@@ -12,8 +12,8 @@ class UserAvailability extends Component {
       return avail.map((shift,index) =>
         <tr key={index}>
           <td> {format(shift.start_time*1000, "M/d/y")}</td>
-          <td> {format(shift.start_time*1000, "HH:mm")}</td>
-          <td> {format(shift.end_time*1000, "HH:mm")}</td>
+          <td> {format(shift.start_time*1000, "h:mm a")}</td>
+          <td> {format(shift.end_time*1000, "h:mm a")}</td>
         </tr>
       )
     }

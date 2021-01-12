@@ -153,12 +153,24 @@ class User {
   //add a users availability --> fix so that it also stores location, and preference 
   static add_availability = async (netid, newValues) => {
     try{
-      return usersCollection.updateOne({"netid": netid}, {$push: {"availability.times" : {"start_time": parseInt(newValues.start_time), "end_time": parseInt(newValues.end_time) }}})
+      return await usersCollection.updateOne({"netid": netid}, {$push: {"availability.times" : {"start_time": parseInt(newValues.start_time), "end_time": parseInt(newValues.end_time) }}})
     } catch (err) {
       console.log(err)
+    }
  }
 
-}
+ static get_availability = async (netid) => {
+  try{
+    var user = await usersCollection.aggregate([
+      { $match: {netid: netid} }, 
+      { $project: { availability: 1, _id: 0 }}
+    ]).toArray();
+    return user[0];
+  } catch (err) {
+    console.log(err)
+  }
+ }
+
 }
 
 module.exports = User
