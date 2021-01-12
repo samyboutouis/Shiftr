@@ -96,8 +96,8 @@ class ShiftModal extends Component {
   }
 
   groupOptions = () => {
-    var groups = localStorage.getItem('group').split(",")
-    var options = []
+    var groups = localStorage.getItem('group').split(",");
+    var options = [];
     groups.forEach((group, index) =>
       options.push(
         <label key={index} className="radio mr-5">
@@ -105,8 +105,8 @@ class ShiftModal extends Component {
           &nbsp;{group}
         </label>
       )
-    )
-    return options
+    );
+    return options;
   }
 
   changeHandler = (event) => {

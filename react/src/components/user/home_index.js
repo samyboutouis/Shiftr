@@ -66,7 +66,7 @@ class HomeIndex extends Component {
   getOpenShifts = () => {
     // Add groups to open call
     let self = this;
-    axios.get("http://localhost:8080/shifts/find_open/open").then((response) => {
+    axios.post("http://localhost:8080/shifts/open_shifts", {status: "open", groups: localStorage.getItem('group').split(",")}).then((response) => {
       let sortedShifts = response.data;
       sortedShifts.sort((a, b) => {
         if (a.start_time < b.start_time || (a.start_time === b.start_time && a.end_time < b.end_time))

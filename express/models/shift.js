@@ -181,6 +181,14 @@ class Shift {
       console.log(err);
     }
   }
+
+  static findByStatusAndGroup = async (status, groups) => {
+    try {
+      return await shiftsCollection.find({status: status, group: {$in: groups}}).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 // for stacking shifts in calendar
   // static findOverlap = async (start, end) => {
   //   try {

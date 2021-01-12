@@ -90,14 +90,16 @@ router.delete('/delete/:_id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  console.log("POST")
   const body = req.body;
-  console.log("BODY")
-  console.log(body)
   let shift = new Shift(body);
   shift = shift.create();
-  shift.then(result => { res.json(result) });
+  shift.then(result => {res.json(result)});
 })
+
+router.post('/open_shifts', (req, res) => {
+  let shift = Shift.findByStatusAndGroup(req.body.status, req.body.groups);
+  shift.then(result => {res.json(result)});
+});
 
 router.put('/update/:_id', (req, res) => {
   const body = req.body;
