@@ -48,10 +48,8 @@ class Home extends Component {
         <div key="login" className="login-background">
           <h1 className="login_header">WELCOME TO SHIFTR</h1>
           <div className="login-container">
-            <div>
-              <p className="login-message">LOGIN NOW TO START</p>
-              <button className="login-button" onClick={this.samlLogin}>LOGIN</button>
-            </div>
+            <p className="login-message">LOGIN NOW TO START</p>
+            <button className="login-button" onClick={this.samlLogin}>LOGIN</button>
           </div>
         </div>
       );
