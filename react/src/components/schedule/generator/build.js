@@ -42,7 +42,7 @@ class BuildSchedule extends Component {
       });
     }
     else {
-      alert("Please complete form.")
+      alert("Please complete the form.")
     }
   }
 
