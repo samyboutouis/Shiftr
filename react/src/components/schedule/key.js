@@ -75,7 +75,7 @@ class ScheduleKey extends React.Component {
         {
           checkboxcontent.map(item => (
             <div>
-              <label key={item.key} className="container">
+              <label key={item.key} className="check-container">
                 {item.name}
                 <Checkbox name={item.name} checked={this.state.checkedItems.get(item.name)} onChange={(e) => this.handleChange(e, item.key)} />
                 <span className={"checkmark "+ item.styletag}></span>

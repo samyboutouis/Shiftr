@@ -21,7 +21,7 @@ class Shift extends Component {
         <p> {this.props.shift.employee ? this.props.shift.employee.name : "unassigned" } @ {this.props.group} </p>
       </div>
     } else {
-      return <div className="scheduled-shift" >
+      return <div className="scheduled-shift pt-0" >
       <p>
         <span>
           {format(start, "h:mm")} - {format(end, "h:mm")}

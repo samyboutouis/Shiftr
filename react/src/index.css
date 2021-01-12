@@ -322,7 +322,7 @@ code {
 
 /* THE CHECKBOXES */
 /* hide defaults */
-.container .check-input {
+.check-container .check-input {
   opacity: 0;
   cursor: pointer;
   height: 0;
@@ -336,7 +336,7 @@ code {
   width: 25px;
   background-color: #eee;
 }
-.container {
+.check-container {
   display: block;
   position: relative;
   padding-left: 35px;
@@ -347,36 +347,36 @@ code {
   -ms-user-select: none;
   user-select: none;
 }
-.container .check-input:checked ~ .checkmark {
+.check-container .check-input:checked ~ .checkmark {
   background-color: #2196F3;
 }
 .checkmark:after {
   content: "";
   display: none;
 }
-.container .check-input:checked ~ .checkmark:after {
+.check-container .check-input:checked ~ .checkmark:after {
   display: block;
 }
 
-.container .check-input:checked ~ .mps-box{
+.check-container .check-input:checked ~ .mps-box{
   background-color: rgba(255, 0, 0, .4);
 }
-.container .check-input:checked ~ .services-box {
+.check-container .check-input:checked ~ .services-box {
   background-color:rgba(245, 66, 170, .4);
 }
-.container .check-input:checked ~ .tutors-box {
+.check-container .check-input:checked ~ .tutors-box {
   background-color: rgba(10, 12, 266, .4);
 }
-.container .check-input:checked ~ .labTrain-box{
+.check-container .check-input:checked ~ .labTrain-box{
   background-color: rgba(245, 113, 12, .4);
 }
-.container .check-input:checked ~ .officeHours-box{
+.check-container .check-input:checked ~ .officeHours-box{
   background-color: rgba(12, 202, 245, .4);
 }
-.container .check-input:checked ~ .designhub-box {
+.check-container .check-input:checked ~ .designhub-box {
   background-color: rgba(150, 12, 200, .4);
 }
-.container .check-input:checked ~ .codePlus-box {
+.check-container .check-input:checked ~ .codePlus-box {
   background-color: rgba(255, 255, 0, .4);
 }
 
@@ -436,6 +436,7 @@ th{
 }
 
 .scheduled-shift h4 {
+  padding-top: 1em;
   font-weight: 500;
   font-size: 11px;
   color: black;
@@ -456,8 +457,14 @@ th{
 }
 
 .unscheduled-availability {
-  position: absolute;
-  top: 1728px;
+  margin-top: 1300px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.availability-item {
+  flex: 0 48%;
 }
 
 .message {
@@ -535,4 +542,19 @@ th{
   .pm {
     font-size: 20px;
   }
+}
+
+.schedule-shift{
+  cursor:pointer;
+  font-size: 12px;
+  padding-left: 1em;
+  /* padding-top: 1em; */
+  /* padding-bottom: var(--padbottom); */
+  background-color: rgba(235, 232, 232, .3);
+  border-left: 5px solid var(--tab);
+  width: 10em;
+}
+
+.is-full-width {
+  width: 100.1%;
 }
