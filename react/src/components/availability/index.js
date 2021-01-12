@@ -11,7 +11,7 @@ class AvailabilityIndex extends Component {
   }
   getTimes = () => {
     let self = this;
-    axios.get("http://localhost:8080/users/add_availability/5fc904d7fa4da396bc85401c").then( (response) => {
+    axios.get("http://localhost:8080/users/add_availability/").then( (response) => { //need to change this 
           self.setState({data: response.data})
        }).catch( (error) => {
           console.log(error)
@@ -21,6 +21,7 @@ class AvailabilityIndex extends Component {
   mapTimes = () => {
     return this.state.data.user.map((user,index) =>
           <tr key={index}>
+              <td>hello there</td>
               <td> {user.start_time}</td>
               <td> {user.end_time}</td>
           </tr>
@@ -69,15 +70,12 @@ class AvailabilityIndex extends Component {
             {group: 'Least Preferred', color: Constants.LIGHTORANGE},
             {group: 'Unavailable', color: Constants.DARKRED}]}/>
             */}
-      
-
 }
-
   render(){
     return(
         <div>
           <div>
-            <AvailabilityForm />
+            <AvailabilityForm  />
       </div>
           {this.drawCalendar()}
         </div>

@@ -85,9 +85,9 @@ router.put('/update/:_id', (req, res) => {
 //update user availability
 // ADD NETID VERIFICATION & MAYBE ROLES
 router.put('/add_availability', (req, res) => {
+  const body = req.body;
   let token = req.cookies["shiftr-saml"];
   let attributes = jwt.verify(token, "make-a-real-secret");
-  const body = req.body;
   let user = User.add_availability(attributes.netid, body);
   user.then(result => res.json(result))
  })
