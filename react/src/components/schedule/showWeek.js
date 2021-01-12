@@ -5,6 +5,7 @@ import format from "date-fns/format";
 import getHours from "date-fns/getHours"
 import getMinutes from "date-fns/getMinutes"
 import differenceInMinutes from "date-fns/differenceInMinutes"
+import areIntervalsOverlapping from 'date-fns/areIntervalsOverlapping'
 
 class ShowWeek extends Component {
   constructor(props){
@@ -15,7 +16,6 @@ class ShowWeek extends Component {
   /*changes whether modal is active or not, and which shift's info is shown*/
     handleClick = (id) => {
       this.setState({ isModal: !this.state.isModal });
-      console.log(id)
       this.setState({activeItem: id});
 
     };
@@ -30,6 +30,7 @@ class ShowWeek extends Component {
     const end = this.props.start+86400
     axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end).then( (response) => {
       self.setState({shifts: response.data})
+      this.findOverlap()
     }).catch( (error) => {
       console.log(error)
     });
@@ -43,6 +44,21 @@ class ShowWeek extends Component {
     }
   }
 
+  findOverlap = () => {
+    if(this.state.shifts && this.state.shifts[0]){
+      let shifts = this.state.shifts[0].data
+      for(var i=0; i<shifts.length-1; i++) {
+        for(var j=i+1; j<shifts.length; j++) {
+          var current_interval = {start: shifts[i].start_time, end: shifts[i].end_time}
+          var next_interval = {start: shifts[j].start_time, end: shifts[j].end_time}
+          if(areIntervalsOverlapping(current_interval, next_interval)) {
+            shifts[i].overlap ? shifts[i].overlap++ : shifts[i].overlap=2
+            shifts[j].overlap ? shifts[j].overlap++ : shifts[j].overlap=2
+          }
+        }
+      }
+    }
+  }
 
   drawTimes = (shift) => {
     if (this.state.isModal) {
@@ -80,8 +96,16 @@ class ShowWeek extends Component {
     shifts[i].data.map((shift,index) =>
         cells.push(
           <div onClick={this.handleClick.bind(this, shift)}>
-            <div className={"calendar-week-entry " + shift.group} key={i+' '+index, shift} style={{position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3))}}>
-                {format(shift.start_time*1000, "HH:mm")} - {format(shift.end_time*1000, "HH:mm")}
+            <div 
+              className={"calendar-week-entry " + shift.group} 
+              key={i+' '+index, shift} 
+              style={{
+                position: "absolute", 
+                top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, 
+                paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3)),
+                width:10/shift.overlap+"em"
+                }}>
+                <span className="bold">{format(shift.start_time*1000, "h:mm a")} - {format(shift.end_time*1000, "h:mm a")}</span>
                 <br />
                 {shift.group}
                 <br />

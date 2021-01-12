@@ -563,3 +563,7 @@ th{
 .right-child {
   flex: 0 70%;
 }
+
+.bold {
+  font-weight: bold;
+}

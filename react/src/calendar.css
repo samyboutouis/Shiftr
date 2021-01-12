@@ -200,7 +200,6 @@ width: calc(100%/7);
   /* padding-bottom: var(--padbottom); */
   background-color: rgba(235, 232, 232, .3);
   border-left: 5px solid var(--tab);
-  width: 10em;
 }
 
 
