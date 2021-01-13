@@ -8,27 +8,37 @@ import differenceInMinutes from "date-fns/differenceInMinutes"
 
 class ShowWeek extends Component {
   constructor(props){
-    super()
-    this.state= {shifts: false, isModal: false, activeItem: ''}
+    super(props)
+    this.state= {shifts: false, isModal: false, activeItem: '', checkedList: this.props.checkedList}
   }
 
   /*changes whether modal is active or not, and which shift's info is shown*/
-    handleClick = (id) => {
-      this.setState({ isModal: !this.state.isModal });
-      console.log(id)
-      this.setState({activeItem: id});
+  handleClick = (id) => {
+    this.setState({ isModal: !this.state.isModal });
+    console.log(id)
+    this.setState({activeItem: id});
 
-    };
+  };
 
   componentDidMount = () => {
     this.getShifts()
   }
 
+  componentDidUpdate = (prevProps, props) => {
+      if(prevProps.checkedList !== this.props.checkedList) {
+        this.setState({checkedList: this.props.checkedList});
+        this.getShifts()
+    }
+}
+
 /* query shifts by day */
   getShifts = (props) => {
     let self = this
     const end = this.props.start+86400
-    axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end).then( (response) => {
+    // cannot pass an array, so we stringify in react and parse in express
+    var querylist = Object.values(this.props.checkedList)
+    var querystring = querylist.toString()
+    axios.get("http://localhost:8080/shifts/find_timetwo/" + this.props.start + "/" + end + "/" + querystring).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)
@@ -97,7 +107,7 @@ class ShowWeek extends Component {
   render(){
     const active = this.state.isModal ? "is-active" : "";
     return(
-      <div >
+      <div key={this.props.checkedList} >
         {this.drawShifts()}
         <div className="spacing-cell"> &nbsp;
         </div>

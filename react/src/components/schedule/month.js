@@ -10,8 +10,10 @@ import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import subMonths from "date-fns/subMonths";
 import ShowMonth from './showMonth.js';
+import ScheduleIndex from './index';
 
-const MonthCalendar = () => {
+
+const MonthCalendar = (props) => {
 /* set the forward and back 1 month fxn */
 const [currentDate, setCurrentDate] = useState(new Date());
 const [selectedDate, setSelectedDate] = useState(new Date());
@@ -81,7 +83,7 @@ days.push(
 
      </div>
 
-     <div className="month-shift-box"><ShowMonth day={day}/> </div>
+     <div className="month-shift-box"><ShowMonth day={day} checkedList={props.checkedList}/> </div>
      </div>
      );
    day = addDays(day, 1);

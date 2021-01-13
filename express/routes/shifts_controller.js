@@ -21,14 +21,28 @@ router.get('/find_open/:status', (req, res) => {
   shift.then(result => { res.json(result) });
 });
 
-// ADD NETID/SUPERVISOR/GROUP CONTROLS
+
+
 router.get('/find_time/:start_time/:end_time', (req, res) => {
   let shift = Shift.findByHour(req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result)
   });
 })
 
-// ADD NETID/SUPERVISOR/GROUP CONTROLS
+//USED BY WEEK&DAY VIEW CALENDAR
+router.get('/find_timetwo/:start_time/:end_time/:group', (req, res) => {
+  let shift = Shift.findByHourTwo(req.params.start_time, req.params.end_time, req.params.group);
+  shift.then(result => { res.json(result)
+  });
+})
+
+//USED BY MONTH CALENDAR
+router.get('/find_daytwo/:start_time/:end_time/:group', (req, res) => {
+  let shift = Shift.findByTimeTwo(req.params.start_time, req.params.end_time, req.params.group);
+  shift.then(result => { res.json(result)
+  });
+})
+
 router.get('/find_day/:start_time/:end_time', (req, res) => {
   let shift = Shift.findByTime(req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result)
@@ -119,13 +133,4 @@ router.put('/update/:_id', (req, res) => {
   })
 })
 
-//CHECKBOX DEPENDENT VIEWS IN CALENDAR
-// router.put('/check/:group/:boole', (req, res) => {
-//   const body = req.body;
-//   let shift = Shift.updateShowStatus(req.params.group, boole); //this is all shifts that have the group of the button
-//   shift.then(shift => {
-//     let updateShift = shift.update(body)
-//     updateShift.then(result => res.json(result))
-//   })
-// })
 module.exports = router

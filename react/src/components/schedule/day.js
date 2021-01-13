@@ -8,7 +8,7 @@ import startOfDay from "date-fns/startOfDay"
 import endOfDay from "date-fns/endOfDay"
 import addHours from "date-fns/addHours"
 
-const DayCalendar = () => {
+const DayCalendar = (props) => {
 const [currentDate, setCurrentDate] = useState(new Date());
 
 /* month header */
@@ -49,7 +49,7 @@ while (day <= endDate) {
   for (let i = 0; i < 24; i++) {
     rows.push(<div>
           <div className="row-day" key={i}> {(hours[i])} </div>
-          <ShowDay start={getUnixTime(day)}/>
+          <ShowDay start={getUnixTime(day)} checkedList={props.checkedList}/>
           </div>
         );
         day = addHours(day, 1);

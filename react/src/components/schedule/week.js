@@ -9,9 +9,8 @@ import subWeeks from "date-fns/subWeeks";
 import ShowWeek from "./showWeek.js";
 import getUnixTime from "date-fns/getUnixTime"
 
-const WeekCalendar = () => {
+const WeekCalendar = (props) => {
 const [currentDate, setCurrentDate] = useState(new Date());
-
 /* month header */
 /* set the forward and back 1 month fxn */
 const header = () => {
@@ -66,11 +65,11 @@ while (day <= endDate) {
 days.push(
       <div
        className={`column week-cell ${!isSameWeek(day, weekStart)}`}
-       key={day}>
+       key={day, props.checkedList}>
        <div className="number">
        {formattedDate}
        </div>
-       <ShowWeek start={getUnixTime(day)}/>
+       <ShowWeek start={getUnixTime(day)} checkedList={props.checkedList}/>
      </div>
      );
    day = addDays(day, 1);

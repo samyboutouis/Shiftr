@@ -76,12 +76,57 @@ class Shift {
     }
   }
 
-  // group shifts by hour (week and day calendars)
+//MONTH CALENDAR
+  static findByTimeTwo = async (start, end, checked)  => {
+    const newchecked = checked.split(",")
+    try {
+      return await shiftsCollection.find({"start_time": {$gte: parseInt(start)}, "end_time": {$lte: parseInt(end)},  "group" : { $in: newchecked } }).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  // group shifts by hour USED BY WEEK&DAY VIEW CALENDARS
+  static findByHourTwo = async (start, end, checked)  => {
+    const newchecked = checked.split(",")
+    try {
+      return await shiftsCollection.aggregate([
+        { "$match":
+          { "$and":
+            [
+              {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} },
+              { "group" : { $in: newchecked } }
+            ]
+          }
+        }, //shifts within time range
+        { "$group": {
+          "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
+          "data":{
+            "$push":{
+              "start_time":"$start_time",
+              "end_time":"$end_time",
+              "location":"$location",
+              "status":"$status",
+              "group":"$group",
+              "employee":"$employee"
+            }
+          }
+        }}
+      ]).toArray();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   static findByHour = async (start, end)  => {
     try {
       return await shiftsCollection.aggregate([
-        { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }//, {"checked": true}
-      ]}}, //shifts within time range
+        { "$match":
+          { "$and":
+            [
+              {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} },
+            ]
+          }
+        }, //shifts within time range
         { "$group": {
           "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
           "data":{
