@@ -45,15 +45,26 @@ class ShowWeek extends Component {
   }
 
   findOverlap = () => {
-    if(this.state.shifts && this.state.shifts[0]){
-      let shifts = this.state.shifts[0].data
+    if(this.state.shifts){
+      let shifts = this.state.shifts
       for(var i=0; i<shifts.length-1; i++) {
         for(var j=i+1; j<shifts.length; j++) {
           var current_interval = {start: shifts[i].start_time, end: shifts[i].end_time}
           var next_interval = {start: shifts[j].start_time, end: shifts[j].end_time}
           if(areIntervalsOverlapping(current_interval, next_interval)) {
-            shifts[i].overlap ? shifts[i].overlap++ : shifts[i].overlap=2
-            shifts[j].overlap ? shifts[j].overlap++ : shifts[j].overlap=2
+            if(shifts[i].overlap) {
+              shifts[i].overlap.count++
+              // shifts[i].position
+            } 
+            else {
+              shifts[i].overlap={count: 2, position: 0}
+            }
+            if (shifts[j].overlap) {
+              shifts[j].overlap.count++
+            }
+            else {
+              shifts[j].overlap={count: shifts[j-1].overlap.count, position: shifts[j-1].overlap.position+1}
+            }
           }
         }
       }
@@ -91,9 +102,11 @@ class ShowWeek extends Component {
   mapShifts = () => {
     let shifts = this.state.shifts
     var cells=[];
-    for(let i=0;i<24; i++) {
-      if(shifts[i]){
-    shifts[i].data.map((shift,index) =>
+    if (shifts[0]) {
+      var top = getHours(shifts[0].start_time*1000)*60+getMinutes(shifts[0].start_time*1000)-250
+    }
+    for(var i=0;i<shifts.length; i++) {
+    shifts.map((shift,index) =>
         cells.push(
           <div onClick={this.handleClick.bind(this, shift)}>
             <div 
@@ -101,11 +114,15 @@ class ShowWeek extends Component {
               key={i+' '+index, shift} 
               style={{
                 position: "absolute", 
-                top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/3)+240, 
-                paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/3)),
-                width:10/shift.overlap+"em"
+                top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top, 
+                height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000),
+                width: shift.overlap ? 11/shift.overlap.count+"em" : "10em",
+                marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*12+"em" : 0
                 }}>
-                <span className="bold">{format(shift.start_time*1000, "h:mm a")} - {format(shift.end_time*1000, "h:mm a")}</span>
+                <span className="bold">
+                  {format(shift.start_time*1000, "h:mm")}&#8203;{format(shift.start_time*1000, "aaaaa")}m&#8203;&#8211;&#8203;
+                  {format(shift.end_time*1000, "h:mm")}&#8203;{format(shift.end_time*1000, "aaaaa")}m
+                </span>
                 <br />
                 {shift.group}
                 <br />
@@ -113,7 +130,7 @@ class ShowWeek extends Component {
             </div>
           </div>
 
-    ))}}
+    ))}
     return cells;
   }
 

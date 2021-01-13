@@ -58,7 +58,7 @@ max-width: 100%;
 .calendar {
 display: block;
 position: relative;
-width: 90%;
+width: 95%;
 height: auto;
 margin: auto;
 }
@@ -109,7 +109,7 @@ scrollbar-width: none;  /* Firefox */
 }
 .calendar .body .week-cell {
 position: relative;
-width: 10em;
+width: 12em;
 overflow: scroll;
 cursor: pointer;
 background: transparent;
@@ -200,6 +200,7 @@ width: calc(100%/7);
   /* padding-bottom: var(--padbottom); */
   background-color: rgba(235, 232, 232, .3);
   border-left: 5px solid var(--tab);
+  /* word-wrap: break-word; */
 }
 
 

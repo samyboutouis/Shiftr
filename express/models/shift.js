@@ -80,21 +80,8 @@ class Shift {
   static findByHour = async (start, end)  => {
     try {
       return await shiftsCollection.aggregate([
-        { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }//, {"group": {$in: group}}
-      ]}}, //shifts within time range
-        { "$group": {
-          "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
-          "data":{
-            "$push":{
-              "start_time":"$start_time",
-              "end_time":"$end_time",
-              "location":"$location",
-              "status":"$status",
-              "group":"$group",
-              "employee":"$employee"
-            }
-          }
-        }}
+        { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }]}},
+        { $sort: {start_time: 1, end_time: 1}}
       ]).toArray();
     } catch (err) {
       console.log(err);
