@@ -42,7 +42,7 @@ class CurrentShift extends Component {
     let pm = "a";
     return shifts.map((shift,index) => {
       let person = "Open Shift";
-      let location = <p className="shift-location">{person} @ {shift.location} </p>;
+      let location = <p className="shift-location">{shift.location} </p>;
       if(shift.hasOwnProperty("employee") && (localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin')){
         let firstName = shift.employee.name.split(" ")[0];
         let lastName = shift.employee.name.split(" ")[1];
