@@ -121,7 +121,7 @@ class HomeIndex extends Component {
       let timeFormat = "hh:mmaaaa";
       let shifts = this.state.openShifts;
       return shifts.map((shift,index) => {
-        let person = "Open Shift";
+        let person = "Open";
         let button;
         if(shift.hasOwnProperty("employee")){
           if(shift.employee.hasOwnProperty("name")){
@@ -145,8 +145,9 @@ class HomeIndex extends Component {
             </div>
             <div className='column is-6'>
               <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-              <p className='upcoming-shift-text'>Location: {/* {person} </p> @ {shift.location}</p> */} {shift.location}</p>
-              <p className='upcoming-shift-text'>Group: {shift.group} </p>
+              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Employee:</span> {person}</p>
+              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Location:</span> {shift.location}</p>
+              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Group:</span> {shift.group} </p>
             </div>
             <div className='column is-3'>
               {button}
@@ -172,16 +173,16 @@ class HomeIndex extends Component {
         tiles.push(
           <div className='column is-9' key="combined">
             <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-            <p className='upcoming-shift-text'> Location: {shift.location}</p>
-            <p className='upcoming-shift-text'> Group: {shift.group} </p>
+            <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Location:</span> {shift.location}</p>
+            <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Group:</span> {shift.group} </p>
           </div>
         );
       } else {
         tiles.push(
           <div className='column is-6' key="info">
             <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-            <p className='upcoming-shift-text'> Location: {shift.location}</p>
-            <p className='upcoming-shift-text'> Group: {shift.group} </p>
+            <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Location:</span> {shift.location}</p>
+            <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Group:</span> {shift.group} </p>
           </div>
         );
         tiles.push(

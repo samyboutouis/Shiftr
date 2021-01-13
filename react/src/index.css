@@ -260,7 +260,7 @@ code {
 }
 
 .open-shift-button {
-  margin-top: 21px;
+  margin-top: 30px;
   border: none;
   background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
@@ -270,7 +270,7 @@ code {
 }
 
 .edit-shift-button {
-  margin-top: 2px;
+  margin-top: 12px;
   border: none;
   background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
