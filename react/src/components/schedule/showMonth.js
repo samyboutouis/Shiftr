@@ -7,8 +7,8 @@ import endOfDay from "date-fns/endOfDay";
 import getUnixTime from "date-fns/getUnixTime";
 class ShowMonth extends Component {
   constructor(props){
-    super()
-    this.state= {shifts: false, isModal: false, activeItem: ''};
+    super(props)
+    this.state= {shifts: false, isModal: false, activeItem: '', checkedList: this.props.checkedList};
   }
 
 
@@ -24,12 +24,22 @@ class ShowMonth extends Component {
     this.getShifts()
   }
 
+  componentDidUpdate = (prevProps, props) => {
+      if(prevProps.checkedList !== this.props.checkedList) {
+        this.setState({checkedList: this.props.checkedList});
+        this.getShifts()
+    }
+}
 /* query shifts by day */
   getShifts = (props) => {
     let self = this
     const start = getUnixTime(startOfDay(this.props.day))
     const end = getUnixTime(endOfDay(this.props.day))
-    axios.get("http://localhost:8080/shifts/find_day/" + start + "/" + end ).then( (response) => {
+    //MODIFY CONTROLLER AND MODEL
+    // cannot pass an array, so we stringify in react and parse in express
+    var querylist = Object.values(this.props.checkedList)
+    var querystring = querylist.toString()
+    axios.get("http://localhost:8080/shifts/find_day/" + start + "/" + end + "/" + querystring).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)

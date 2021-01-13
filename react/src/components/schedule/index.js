@@ -66,11 +66,11 @@ class ScheduleIndex extends Component {
         </div>
     }else if(this.state.navState === "Day"){
       return <div>
-          <DayCalendar/>
+          <DayCalendar checkedList={this.state.checkedList}/>
         </div>
     }else if(this.state.navState === "Month"){
       return <div>
-        <MonthCalendar/>
+        <MonthCalendar checkedList={this.state.checkedList}/>
         </div>
     }
   }

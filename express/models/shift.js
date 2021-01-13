@@ -68,9 +68,10 @@ class Shift {
     }
   }
 
-  static findByTime = async (start, end)  => {
+  static findByTime = async (start, end, checked)  => {
+    const newchecked = checked.split(",")
     try {
-      return await shiftsCollection.find({"start_time": {$gte: parseInt(start)}, "end_time": {$lte: parseInt(end)}}).toArray();
+      return await shiftsCollection.find({"start_time": {$gte: parseInt(start)}, "end_time": {$lte: parseInt(end)},  "group" : { $in: newchecked } }).toArray();
     } catch (err) {
       console.log(err);
     }
@@ -78,8 +79,6 @@ class Shift {
 
   // group shifts by hour USED BY WEEK&DAY VIEW CALENDARS
   static findByHour = async (start, end, checked)  => {
-    console.log("LIST@MODEL:")
-    console.log(checked.split(","))
     const newchecked = checked.split(",")
     try {
       return await shiftsCollection.aggregate([

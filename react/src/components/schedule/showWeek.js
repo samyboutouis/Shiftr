@@ -38,12 +38,6 @@ class ShowWeek extends Component {
     // cannot pass an array, so we stringify in react and parse in express
     var querylist = Object.values(this.props.checkedList)
     var querystring = querylist.toString()
-    console.log("querystring")
-    console.log(querystring)
-
-    console.log("propsstring")
-    console.log(this.state.checkedList)
-
     axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end + "/" + querystring).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
