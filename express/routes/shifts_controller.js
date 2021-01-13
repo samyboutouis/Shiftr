@@ -29,7 +29,7 @@ router.get('/find_open/:status', (req, res) => {
 //USED BY WEEK&DAY VIEW CALENDAR
 router.get('/find_time/:start_time/:end_time/:group', (req, res) => {
   console.log("LIST@CONTROLLER:")
-  console.log(res.body)
+  console.log(req.body)
   let shift = Shift.findByHour(req.params.start_time, req.params.end_time, req.params.group);
   shift.then(result => { res.json(result)
   });

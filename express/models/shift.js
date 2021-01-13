@@ -79,14 +79,15 @@ class Shift {
   // group shifts by hour USED BY WEEK&DAY VIEW CALENDARS
   static findByHour = async (start, end, checked)  => {
     console.log("LIST@MODEL:")
-    console.log(checked)
+    console.log(checked.split(","))
+    const newchecked = checked.split(",")
     try {
       return await shiftsCollection.aggregate([
         { "$match":
           { "$and":
             [
               {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} },
-              { "group": { $in: (checked) } }
+              { "group" : { $in: newchecked } }
             ]
           }
         }, //shifts within time range

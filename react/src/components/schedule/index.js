@@ -13,7 +13,7 @@ import axios from 'axios';
 class ScheduleIndex extends Component {
   constructor(props){
     super();
-    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false, checkedList: [["mps", "services", "tutors", "labTrain", "officeHours", "designhub", "codePlus"]] }
+    this.state= {shifts: false, selectedShift: false, navState: "Week", buildSchedule: false, checkedList:["mps", "services", "tutors", "labTrain", "officeHours", "designhub", "codePlus"] }
     this.handleKeyClick = this.handleKeyClick.bind(this);
   }
 
@@ -23,6 +23,8 @@ class ScheduleIndex extends Component {
 
   handleKeyClick = (list) => {
     this.setState({checkedList: list})
+    console.log("PARENT")
+    console.log(this.state.checkedList)
     // return(<div key={this.state.checkedList} className="not-shown"><CheckedBoxes checkedList={this.state.checkedList.bind(this)}/></div>)
   }
 

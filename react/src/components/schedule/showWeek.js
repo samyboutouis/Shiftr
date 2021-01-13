@@ -28,6 +28,7 @@ class ShowWeek extends Component {
     // if (prevProps.checkedList){
       if(prevProps.checkedList !== this.props.checkedList) {
       this.setState({checkedList: this.props.checkedList});
+      this.getShifts()
     }
   // }
   //   else{
@@ -43,14 +44,18 @@ class ShowWeek extends Component {
   getShifts = (props) => {
     let self = this
     const end = this.props.start+86400
-    // two things happening now
-    //1) stops refreshing the list query after two check boxes
-    //2) still doesnt succeed in backend query
-    var querylist = Object.values(this.state.checkedList)[0]
-    console.log("querylist")
-    console.log(querylist)
 
-    axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end + "/" + querylist).then( (response) => {
+    //1) stops refreshing the list
+
+    var querylist = Object.values(this.props.checkedList)[0]
+    var querystring = querylist.toString()
+    console.log("querystring")
+    console.log(querystring)
+
+    console.log("propsstring")
+    console.log(this.state.checkedList)
+
+    axios.get("http://localhost:8080/shifts/find_time/" + this.props.start + "/" + end + "/" + querystring).then( (response) => {
       self.setState({shifts: response.data})
     }).catch( (error) => {
       console.log(error)

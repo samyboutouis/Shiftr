@@ -20,6 +20,8 @@ class ScheduleKey extends React.Component {
      else
      {prechecked = this.state.checkedList.filter(CheckedId=>CheckedId !== key)}
 // SENDING UPDATED LIST BACK TO PARENT
+     console.log("PRECHECKED")
+     console.log(this.state.checkedList)
      this.props.parentCallback({prechecked})
      this.setState({checkedList: prechecked})
   }
