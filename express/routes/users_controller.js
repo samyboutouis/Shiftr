@@ -70,7 +70,7 @@ router.post('/', (req, res) => {
 router.put('/update/:_id', (req, res) => {
   let token = req.cookies["shiftr-saml"];
   let attributes = jwt.verify(token, "make-a-real-secret");
-  if(attributes.role === 'supervisor' || attributes.role === 'admin') {
+  if(attributes != null) {
     const body = req.body;
     let user = User.find(req.params._id);
     user.then(user => {
@@ -90,13 +90,24 @@ router.put('/add_availability', (req, res) => {
   let attributes = jwt.verify(token, "make-a-real-secret");
   let user = User.add_availability(attributes.netid, body);
   user.then(result => res.json(result))
- })
+ });
 
  router.get('/get_availability', (req, res) => {
   let token = req.cookies["shiftr-saml"];
   let attributes = jwt.verify(token, "make-a-real-secret");
   let user = User.get_availability(attributes.netid);
   user.then(result => res.json(result))
+ });
+
+ router.get('/find/:netid' , (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  if(attributes.netid === req.params.netid){
+    let user = User.findByNetID(attributes.netid);
+    user.then(result => res.json(result));
+  } else {
+    res.sendStatus(403);
+  }
  })
 
 module.exports = router

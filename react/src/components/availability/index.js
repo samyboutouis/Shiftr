@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import format from 'date-fns/format'
-import Key from './Key'
-import * as Constants from '../../constants'
 import AvailabilityForm from './form'
+import PreferredHours from './preferred_hours';
 
 
 class AvailabilityIndex extends Component {
@@ -19,12 +18,12 @@ class AvailabilityIndex extends Component {
   getTimes = () => {
     let self = this;
     axios.get("http://localhost:8080/users/get_availability/").then( (response) => { //need to change this 
-          self.setState({data: response.data})
-          console.log(response.data)
-       }).catch( (error) => {
-          console.log(error)
-       });
-    }
+      self.setState({data: response.data})
+      console.log(response.data)
+    }).catch( (error) => {
+      console.log(error)
+    });
+  }
 
   mapTimes = () => {
     if(this.state.data.availability){
@@ -40,7 +39,8 @@ class AvailabilityIndex extends Component {
 
   drawTimes = () => {
     if(this.state.data){
-      return <div className="message my-5">
+      return (
+        <div className="message my-5">
           <div className="message-header">
               <p>All Availability</p>
               <p>Preferred Hours:   {this.state.data.availability ? this.state.data.availability.preferred_hours : 'Unknown' }</p>
@@ -60,6 +60,7 @@ class AvailabilityIndex extends Component {
             </table>
           </div>
         </div>
+      );
     }
   }
     
@@ -113,6 +114,7 @@ class AvailabilityIndex extends Component {
           <div className="side-by-side">
             <div className="left-child">
               <AvailabilityForm  updateAvailability={this.getTimes}/>
+              <PreferredHours updateAvailability={this.getTimes}/>
             </div>
             <div className="right-child">
               {this.drawTimes()}
