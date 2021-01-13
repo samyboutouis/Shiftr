@@ -70,7 +70,7 @@ router.post('/', (req, res) => {
 router.put('/update/:_id', (req, res) => {
   let token = req.cookies["shiftr-saml"];
   let attributes = jwt.verify(token, "make-a-real-secret");
-  if(attributes.role === 'supervisor' || attributes.role === 'admin') {
+  if(attributes != null) {
     const body = req.body;
     let user = User.find(req.params._id);
     user.then(user => {

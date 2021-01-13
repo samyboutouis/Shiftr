@@ -11,19 +11,22 @@ class PreferredHours extends Component {
     event.preventDefault();
     if(this.state.hours) {
       let form_data = new FormData();
-      form_data.append("hours", this.state.hours);
-      let id;
-      axios.get("http://localhost:8080/users/find/" + localStorage.getItem('netid'))
-      axios.put(
-        "http://localhost:8080/users/update/", 
-        form_data, 
-        { 
-          headers: {'content-type': 'multipart/form-data'} 
-        }
-      ).then((response) => {
-        this.props.updateAvailability();
-      }).catch(function (err){  
-          console.log(err);
+      form_data.append("availability.preferred_hours", this.state.hours);
+      axios.get("http://localhost:8080/users/find/" + localStorage.getItem('netid')).then((response) => {
+        let id = response.data._id;
+        axios.put(
+          "http://localhost:8080/users/update/" + id, 
+          form_data, 
+          { 
+            headers: {'content-type': 'multipart/form-data'} 
+          }
+        ).then((response) => {
+          this.props.updateAvailability();
+        }).catch(function (err){  
+            console.log(err);
+        });
+      }).catch((error) => {
+        console.log(error);
       });
     } else {
       alert("Please complete the form.")

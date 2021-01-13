@@ -118,7 +118,7 @@ class User {
 
   static findByNetID = async (netID) => {
     try {
-      return await usersCollection.find({netid: netID});
+      return await usersCollection.findOne({netid: netID});
     } catch (err) {
       console.log(err);
     }
