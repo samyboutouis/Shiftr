@@ -145,8 +145,8 @@ class HomeIndex extends Component {
             </div>
             <div className='column is-6'>
               <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-              <p className='upcoming-shift-text'>{person} @ {shift.location}</p>
-              <p className='upcoming-shift-text'> {shift.group} </p>
+              <p className='upcoming-shift-text'>Location: {/* {person} </p> @ {shift.location}</p> */} {shift.location}</p>
+              <p className='upcoming-shift-text'>Group: {shift.group} </p>
             </div>
             <div className='column is-3'>
               {button}
@@ -172,16 +172,16 @@ class HomeIndex extends Component {
         tiles.push(
           <div className='column is-9' key="combined">
             <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-            <p className='upcoming-shift-text'> @ {shift.location}</p>
-            <p className='upcoming-shift-text'> {shift.group} </p>
+            <p className='upcoming-shift-text'> Location: {shift.location}</p>
+            <p className='upcoming-shift-text'> Group: {shift.group} </p>
           </div>
         );
       } else {
         tiles.push(
           <div className='column is-6' key="info">
             <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-            <p className='upcoming-shift-text'> @ {shift.location}</p>
-            <p className='upcoming-shift-text'> {shift.group} </p>
+            <p className='upcoming-shift-text'> Location: {shift.location}</p>
+            <p className='upcoming-shift-text'> Group: {shift.group} </p>
           </div>
         );
         tiles.push(
