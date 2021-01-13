@@ -27,14 +27,15 @@ class AvailabilityForm extends Component {
       axios.put(
         "http://localhost:8080/users/add_availability", 
         form_data, 
-        { headers: {'content-type': 'multipart/form-data'} }
-        ).then((response) => {
-          this.props.updateAvailability()
+        { 
+          headers: {'content-type': 'multipart/form-data'} 
+        }
+      ).then((response) => {
+        this.props.updateAvailability();
       }).catch(function (err){  
-          console.log(err)
+        console.log(err)
       });
-      }
-    else {
+    } else {
       alert("Please complete the form.")
     }
   }

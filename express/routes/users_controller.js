@@ -108,6 +108,15 @@ router.put('/add_availability', (req, res) => {
   } else {
     res.sendStatus(403);
   }
+ });
+
+ router.delete('/delete_avaibility/:start/:end', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret", (err) => {
+    res.sendStatus(err.status);
+  });
+  let user = User.findByNetID(attributes.netid);
+  
  })
 
 module.exports = router

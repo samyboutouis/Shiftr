@@ -165,20 +165,34 @@ class User {
     } catch (err) {
       console.log(err)
     }
- }
-
- static get_availability = async (netid) => {
-  try{
-    var user = await usersCollection.aggregate([
-      { $match: {netid: netid} }, 
-      { $project: { availability: 1, _id: 0 }}
-    ]).toArray();
-    return user[0];
-  } catch (err) {
-    console.log(err)
   }
- }
 
+  static get_availability = async (netid) => {
+    try {
+      var user = await usersCollection.aggregate([
+        { $match: {netid: netid} },
+        { $project: { availability: 1, _id: 0 }}
+      ]).toArray();
+      return user[0];
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  static deleteAvailability = async (netid, start, end) => {
+    try {
+      let user = await usersCollection.update(
+        {
+          netid: netid
+        },
+        {
+          $pull: {}
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 module.exports = User

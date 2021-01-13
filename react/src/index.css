@@ -320,7 +320,12 @@ code {
 
   margin-right: 80%;
   margin-left: 5%;
- }
+}
+
+.trash {
+  float: right;
+  cursor: pointer;
+}
 
 /* SCHEDULE THINGS */
 .days-of-week {
