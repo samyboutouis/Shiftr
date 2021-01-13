@@ -11,10 +11,26 @@ class CurrentShift extends Component {
   }
 
   drawShifts = () => {
+    let message = "";
+    let shifts = [];
     if(this.props.shifts){
+      shifts.push(this.mapShifts());
+      if(localStorage.getItem('role')==='employee'){
+        if(this.props.shifts[0].hasOwnProperty('clocked_in')){
+          message = "Clock Out";
+        } else {
+          message = "Clock In";
+        }
+        shifts.push(
+          <button className="clock-in" key="button" onClick={this.handleClick.bind(this, this.props.shifts[0])}> 
+            <img className="clock" src={Clock} alt="Clock"/>
+            <span className="clock-text">{message}</span>
+          </button>
+        );
+      }
       return (
         <div>
-          {this.mapShifts()}
+          {shifts}
         </div>
       );
     }
@@ -26,7 +42,7 @@ class CurrentShift extends Component {
     let pm = "a";
     return shifts.map((shift,index) => {
       let person = "Open Shift";
-      let location = <p className="shift-location"> {shift.location} </p>;
+      let location = <p className="shift-location">{person} @ {shift.location} </p>;
       if(shift.hasOwnProperty("employee") && (localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin')){
         let firstName = shift.employee.name.split(" ")[0];
         let lastName = shift.employee.name.split(" ")[1];
@@ -47,20 +63,19 @@ class CurrentShift extends Component {
     });
   }
 
-  handleClick = () => {
-    let self = this;
+  handleClick = (shift) => {
     let time = getUnixTime(Date.now());
-    if(time + 600 < this.props.shifts[0].start_time && !this.state.clockedIn){
+    if(time + 600 < shift.start_time && !shift.hasOwnProperty('clocked_in')){
       alert("It is too early to clock in to your shift! Please wait until 10 minutes before to clock in."); // 10 minutes before or earlier
-    } else if(this.state.clockedIn && window.confirm("Are you sure you want to clock out?")){
+    } else if(shift.hasOwnProperty('clocked_in') && window.confirm("Are you sure you want to clock out?")){
       axios.put("http://localhost:8080/shifts/update/" + this.props.shifts[0]._id, {clocked_out: time, status: "completed"}).then((response) => {
-        self.setState({clockedIn: false, clockedOut: true});
+        this.props.getShifts();
       }).catch(function (err){  
         console.log(err)
       });
     } else if(window.confirm("Are you sure you want to clock in?")){
       axios.put("http://localhost:8080/shifts/update/" + this.props.shifts[0]._id, {clocked_in: time}).then((response) => {
-        self.setState({clockedIn: true});
+        this.props.getShifts();
       }).catch(function (err){  
         console.log(err)
       });
@@ -102,25 +117,9 @@ class CurrentShift extends Component {
       );
     }
     else {
-      let shift = [];
-      shift.push(<div key="shifts">{this.drawShifts()}</div>);
-      if(localStorage.getItem('role')==='employee'){
-        let message = "";
-        if(this.state.clockedIn){
-          message = "Clock Out";
-        } else {
-          message = "Clock In";
-        }
-        shift.push(
-          <button className="clock-in" key="button" onClick={this.handleClick}> 
-            <img className="clock" src={Clock} alt="Clock"/>
-            <span className="clock-text">{message}</span>
-          </button>
-        );
-      }
       return (
         <div key="shift">
-          {shift};
+          {this.drawShifts()}
         </div>
       );
     }

@@ -64,7 +64,6 @@ class HomeIndex extends Component {
   }
 
   getOpenShifts = () => {
-    // Add groups to open call
     let self = this;
     axios.post("http://localhost:8080/shifts/open_shifts", {status: "open", groups: localStorage.getItem('group').split(",")}).then((response) => {
       let sortedShifts = response.data;
@@ -276,7 +275,7 @@ class HomeIndex extends Component {
       home.push(
         <div className="tile is-7 is-vertical is-parent" key="vertical">
           <div className="tile is-child">
-            <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
+            <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts} getShifts={this.getShiftsToday}/>
             <div className="upcoming-shift">
               <p className="upcoming-shift-title">Your upcoming shifts</p>
               {this.drawUpcomingShifts()}
@@ -289,7 +288,7 @@ class HomeIndex extends Component {
       home.push(
         <div className="tile is-7 is-parent" key="supervisor">
           <div className="tile is-child">
-            <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts}/>
+            <CurrentShift name={this.state.name} shiftsToday={this.state.shiftsToday} shifts={this.state.shifts} getShifts={this.getShiftsToday}/>
           </div>
         </div>
       );
