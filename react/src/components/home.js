@@ -5,6 +5,8 @@ import ScheduleIndex from './schedule/index'
 import HomeIndex from './user/home_index'
 import UserIndex from './user/index'
 import Nbar from './navbar'
+import MonthCalendar from './schedule/month'
+import ScheduleKey from './schedule/key'
 
 class Home extends Component {
   constructor(props){
@@ -44,15 +46,26 @@ class Home extends Component {
       }
     }else{
       home.push(
+        <div>
         <div key="login" className="login-background">
           <h1 className="login_header">WELCOME TO SHIFTR</h1>
           <div className="login-container">
             <p className="login-message">LOGIN NOW TO START</p>
             <button className="login-button" onClick={this.samlLogin}>LOGIN</button>
+            {/*<button className="login-calendar-button">CALENDAR</button>*/}
+          </div>
+        </div>
+          <div className="login-month-container">
+          <div className="key"> {/* legend*/}
+            <ScheduleKey/>
+          </div>
+          <div className="schedule-calendar">
+            <MonthCalendar/>
+          </div>
           </div>
         </div>
       );
-    } 
+    }
     return home;
   }
 
@@ -67,4 +80,3 @@ class Home extends Component {
 
 
 export default Home;
-

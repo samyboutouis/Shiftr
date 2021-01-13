@@ -61,11 +61,73 @@ class ShowMonth extends Component {
       }
     }
 
+  createModal = () => {
+    const active = this.state.isModal ? "is-active" : "";
+    let modal = []
+    if (localStorage.getItem('loggedIn')){
+      modal.push(
+        <div className={`modal ${active}`}>
+        <div className="modal-background" />
+            <div className="modal-card">
+              <header className="modal-card-head">
+
+                <div className="modal-card-title"> {this.drawTimes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
+                <button
+                  onClick={this.handleClick.bind(this, '')}
+                  className="delete"
+                />
+              </header>
+              <section className="modal-card-body">
+                  <p>{this.state.activeItem.group}  || {this.state.activeItem.location}</p>
+                  <p>Current Shift Status: {this.state.activeItem.status}</p>
+                  <div>{this.getEmployee(this.state.activeItem)}</div>
+                  <br/>
+
+                  <div>
+                  <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+                  <br/>
+                  <p></p>
+                  {/*<Notes shift={this.state.activeItem}/>*/}
+                  </div>
+              </section>
+              <footer className="modal-card-foot"></footer>
+            </div>
+
+        </div>
+      )
+    }
+    else {modal.push(
+      <div className={`modal ${active}`}>
+      <div className="modal-background" />
+          <div className="modal-card">
+            <header className="modal-card-head">
+
+              <div className="modal-card-title"> {this.drawTimes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
+              <button
+                onClick={this.handleClick.bind(this, '')}
+                className="delete"
+              />
+            </header>
+            <section className="modal-card-body">
+                <p>{this.state.activeItem.group}</p>
+                <p>Location : {this.state.activeItem.location}</p>
+                <p>Current Shift Status: {this.state.activeItem.status}</p>
+                <br/>
+                <p>If shift status is open, there is no one currently scheduled to work this shift!</p>
+            </section>
+            <footer className="modal-card-foot"></footer>
+          </div>
+
+      </div>
+
+    )}
+    return modal
+  }
 /* format queries */
   mapShifts = () => {
     let shifts = this.state.shifts
     let dateFormat = "HH:mm"
-    const active = this.state.isModal ? "is-active" : "";
+
     return(
     /* extra div added so modal can be on same hierarchical level as mapping, (not creating modals within the map)*/
     <div>
@@ -79,35 +141,10 @@ class ShowMonth extends Component {
 
     ))}
     {/*create one modal, and use state to change out displayed info*/}
-    <div className={`modal ${active}`}>
-    <div className="modal-background" />
-        <div className="modal-card">
-          <header className="modal-card-head">
 
-            <div className="modal-card-title"> {this.drawTimes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
-            <button
-              onClick={this.handleClick.bind(this, '')}
-              className="delete"
-            />
-          </header>
-          <section className="modal-card-body">
-              <p>{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
-              <p>Current Shift Status: {this.state.activeItem.status}</p>
-              <div>{this.getEmployee(this.state.activeItem)}</div>
-              <br/>
-
-              <div>
-              <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
-              <br/>
-              <p></p>
-              {/*<Notes shift={this.state.activeItem}/>*/}
-              </div>
-          </section>
-          <footer className="modal-card-foot"></footer>
-        </div>
-
+    <div>
+      {this.createModal()}
     </div>
-
     </div>)
   }
 
