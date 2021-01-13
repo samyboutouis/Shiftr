@@ -17,11 +17,11 @@ class AvailabilityIndex extends Component {
   getTimes = () => {
     let self = this;
     axios.get("http://localhost:8080/users/get_availability/").then( (response) => { //need to change this 
-          self.setState({data: response.data})
-          console.log(response.data)
-       }).catch( (error) => {
-          console.log(error)
-       });
+        self.setState({data: response.data})
+        console.log(response.data)
+      }).catch( (error) => {
+        console.log(error)
+      });
     }
 
   mapTimes = () => {

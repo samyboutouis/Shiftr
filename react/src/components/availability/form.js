@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import toDate from 'date-fns/toDate'
 import getUnixTime from 'date-fns/getUnixTime'
-import format from 'date-fns/format'
 
 class AvailabilityForm extends Component {
   constructor(props){
