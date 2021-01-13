@@ -9,7 +9,8 @@ import getYear from 'date-fns/getYear';
 
 class ShiftModal extends Component {
   constructor(props){
-    super();
+    super(props);
+    this.state = {day: null, start_time: null, end_time: null, group: null, location: null}
   }
 
   formModal = () => {
@@ -69,18 +70,6 @@ class ShiftModal extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="field">
-                    <label className="label">Role</label>
-                    <div className="control">
-                      <div className="select">
-                        <select defaultValue="select_a_role" name="role" onChange={this.changeHandler}>
-                          <option disabled="disabled" value="select_a_role" hidden="hidden">Select a Role</option>
-                          <option value="employee">Employee</option>
-                          <option value="supervisor">Supervisor</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
                 </form>
               </section>
               <footer className="modal-card-foot">
@@ -118,45 +107,50 @@ class ShiftModal extends Component {
   }
 
   submitForm = (event) => {
-    event.preventDefault();
-    this.setState({day: parseISO(this.state.day)});
-    let start = new Date(this.state.day + " " + this.state.start_time);
-    let end = new Date(this.state.day + " " + this.state.end_time);
-    if(start <= Date.now() || end <= Date.now()){
-      alert("You cannot create an open shift in the past.");
-    } else if (start >= end) {
-      alert("You cannot have a shift end before its start time.")
+    if(this.state.day && this.state.start_time && this.state.end_time && this.state.group && this.state.location){
+      event.preventDefault();
+      this.setState({day: parseISO(this.state.day)});
+      let start = new Date(this.state.day + " " + this.state.start_time);
+      let end = new Date(this.state.day + " " + this.state.end_time);
+      if(start <= Date.now() || end <= Date.now()){
+        alert("You cannot create an open shift in the past.");
+      } else if (start >= end) {
+        alert("You cannot have a shift end before its start time.")
+      }
+      else {
+        if(this.props.editShift !== false){
+          axios.put("http://localhost:8080/shifts/update/"+ this.props.editShift._id, {
+            start_time: getUnixTime(start), 
+            end_time: getUnixTime(end), 
+            group: this.state.group, 
+            location: this.state.location, 
+            status: "open"
+          }).then((response) => {
+            this.props.getOpenShifts();
+            alert("Open shift edited successfully.");
+            this.props.onClose();
+          }).catch(function (err){  
+              console.log(err)
+          });
+        } else {
+          axios.post("http://localhost:8080/shifts", {
+            start_time: getUnixTime(start), 
+            end_time: getUnixTime(end), 
+            group: this.state.group, 
+            location: this.state.location, 
+            status: "open"
+          }).then((response) => {
+            this.props.getOpenShifts();
+            alert("Open shift added successfully.");
+            this.props.onClose();
+          }).catch(function (err){  
+              console.log(err)
+          });
+        }
+      }
     }
     else {
-      if(this.props.editShift !== false){
-        axios.put("http://localhost:8080/shifts/update/"+ this.props.editShift._id, {
-          start_time: getUnixTime(start), 
-          end_time: getUnixTime(end), 
-          group: this.state.group, 
-          location: this.state.location, 
-          status: "open"
-        }).then((response) => {
-          this.props.getOpenShifts();
-          alert("Open shift edited successfully.");
-          this.props.onClose();
-        }).catch(function (err){  
-            console.log(err)
-        });
-      } else {
-        axios.post("http://localhost:8080/shifts", {
-          start_time: getUnixTime(start), 
-          end_time: getUnixTime(end), 
-          group: this.state.group, 
-          location: this.state.location, 
-          status: "open"
-        }).then((response) => {
-          this.props.getOpenShifts();
-          alert("Open shift added successfully.");
-          this.props.onClose();
-        }).catch(function (err){  
-            console.log(err)
-        });
-      }
+      alert("Please complete the form.")
     }
   }
 

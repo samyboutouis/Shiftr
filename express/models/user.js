@@ -116,6 +116,14 @@ class User {
     }
   }
 
+  static findByNetID = async (netID) => {
+    try {
+      return await usersCollection.find({netid: netID});
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   //create user if absent
   static createIfAbsent = async (values) => {
     try {
