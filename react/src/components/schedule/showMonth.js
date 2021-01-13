@@ -73,6 +73,7 @@ class ShowMonth extends Component {
       }
     }
 
+// MODAL CREATES DIFFERENTLY DEPENDING ON IF YOURE LOGGIN IN RN (WHICH IS WRONG), BUT CHANGE IT TO ROLES LATER
   createModal = () => {
     const active = this.state.isModal ? "is-active" : "";
     let modal = []
