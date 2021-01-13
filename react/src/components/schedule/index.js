@@ -23,9 +23,6 @@ class ScheduleIndex extends Component {
 
   handleKeyClick = (list) => {
     this.setState({checkedList: list})
-    console.log("PARENT")
-    console.log(this.state.checkedList)
-    // return(<div key={this.state.checkedList} className="not-shown"><CheckedBoxes checkedList={this.state.checkedList.bind(this)}/></div>)
   }
 
   //TODO: get shifts for specific user

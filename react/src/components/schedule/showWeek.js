@@ -25,29 +25,18 @@ class ShowWeek extends Component {
   }
 
   componentDidUpdate = (prevProps, props) => {
-    // if (prevProps.checkedList){
       if(prevProps.checkedList !== this.props.checkedList) {
-      this.setState({checkedList: this.props.checkedList});
-      this.getShifts()
+        this.setState({checkedList: this.props.checkedList});
+        this.getShifts()
     }
-  // }
-  //   else{
-  //     if(this.props.checkedList !== this.state.checkedList) {
-  //     this.setState({checkedList: this.props.checkedList});
-  //   }
-  //
-  //   }
-  // THIS DOESNT WORK CORRECTLY THE FIRST TIME, ONLY STARTS CHANGING AFTER TWO ACTIONS
 }
 
 /* query shifts by day */
   getShifts = (props) => {
     let self = this
     const end = this.props.start+86400
-
-    //1) stops refreshing the list
-
-    var querylist = Object.values(this.props.checkedList)[0]
+    // cannot pass an array, so we stringify in react and parse in express
+    var querylist = Object.values(this.props.checkedList)
     var querystring = querylist.toString()
     console.log("querystring")
     console.log(querystring)
