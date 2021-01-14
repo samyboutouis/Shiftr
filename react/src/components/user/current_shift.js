@@ -14,11 +14,8 @@ class CurrentShift extends Component {
     let message = "";
     let shifts = [];
     if(this.props.shifts){
-      shifts.push(<div className="landing-page-shifts">
-        {this.mapShifts()}
-      </div>
-      );
       if(localStorage.getItem('role')==='employee'){
+        shifts.push(this.mapShifts());
         if(this.props.shifts[0].hasOwnProperty('clocked_in')){
           message = "Clock Out";
         } else {
@@ -29,6 +26,12 @@ class CurrentShift extends Component {
             <img className="clock" src={Clock} alt="Clock"/>
             <span className="clock-text">{message}</span>
           </button>
+        );
+      } else {
+        shifts.push(
+          <div key="shifts" className="landing-page-shifts">
+            {this.mapShifts()}
+          </div>
         );
       }
       return (
@@ -52,17 +55,30 @@ class CurrentShift extends Component {
         person = firstName + " " + lastName.charAt(0) + ".";
         location = <p className="shift-location">{person} @ {shift.location} </p>;
       }
-      return (
-        <div key={index}>
-          <div className="transparent-box landing-page-shift-item">
-            <div>
-              <p className="shift-time">{format(shift.start_time * 1000, timeFormat)}<span className="pm">{format(shift.start_time * 1000, pm)}</span> &#8594; {format(shift.end_time * 1000, timeFormat)}<span className="pm">{format(shift.end_time * 1000, pm)}</span></p>
-              {location}
-              <p className="shift-role"> {shift.group} </p>
+      let item = (
+        <div>
+          <p className="shift-time">{format(shift.start_time * 1000, timeFormat)}<span className="pm">{format(shift.start_time * 1000, pm)}</span> &#8594; {format(shift.end_time * 1000, timeFormat)}<span className="pm">{format(shift.end_time * 1000, pm)}</span></p>
+            {location}
+          <p className="shift-role"> {shift.group} </p>
+        </div>
+      );
+      if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
+        return (
+          <div key={index}>
+            <div className="transparent-box landing-page-shift-item">
+              {item}
             </div>
           </div>
-        </div>
-      ); 
+        ); 
+      } else {
+        return (
+          <div key={index}>
+            <div className="transparent-box landing-employee">
+              {item}
+            </div>
+          </div>
+        );
+      }
     });
   }
 
