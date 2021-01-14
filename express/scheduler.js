@@ -357,7 +357,7 @@ async function basicTestShifts() {
 // creates three weeks of completed shifts
 exports.hoursTestShifts = async function() {
   var employees = [
-    {name: "Anna Mollard", netid: "acm105", email: "anna.mollard@duke.edu", role: "employee", group: ["codePlus"], hours: 8, location: ["Remote", "TEC"]}, 
+    {name: "Anna Mollard", netid: "acm1051", email: "anna.mollard@duke.edu", role: "employee", group: ["codePlus"], hours: 8, location: ["Remote", "TEC"]}, 
     {name: "Sunny Li", netid: "l616", email: "sunny.li@duke.edu", role: "employee", group: ["codePlus"], hours: 11, location: ["Remote", "TEC"]}, 
     {name: "Samy Boutouis", netid: "sb590", email: "samy.boutouis@duke.edu", role: "employee", group: ["codePlus"], hours: 9, location: ["Remote", "TEC"]}, 
     {name: "Ryleigh Byrne", netid: "rmb96", email: "ryleigh.byrne@duke.edu", role: "employee", group: ["codePlus"], hours: 5, location: ["Remote", "TEC"]},
@@ -365,6 +365,26 @@ exports.hoursTestShifts = async function() {
     {name: "Elizabeth Zhang", netid: "eyz3", email: "elizabeth.zhang@duke.edu", role: "employee", group: ["codePlus"], hours: 7, location: ["Remote", "TEC"]}, 
     {name: "Maryam Shahid", netid: "ms858", email: "maryam.shahid@duke.edu", role: "employee", group: ["codePlus"], hours: 6, location: ["Remote", "TEC"]}, 
   ]
+  var groups = ["mps","services","designhub"]
+  for (var i=0; i<100; i++) {
+    var first_name = faker.name.firstName()
+    var last_name = faker.name.lastName()
+    await usersCollection.insertOne({
+      name: first_name+" "+last_name,
+      netid: first_name.substring(0,2).toLowerCase() + last_name.substring(0,1).toLowerCase() + "" + (Math.floor(Math.random() * 900) + 100),
+      email: first_name.toLowerCase() + "." + last_name.toLowerCase() + "@duke.edu",
+      role: "employee",
+      group: groups[Math.floor(Math.random() * groups.length)],
+      availability: {preferred_hours: Math.floor(Math.random() * 20) + 2}
+    })
+  }
+  await usersCollection.insertOne({
+    name: "Super Visor",
+    netid: "acm105",
+    email: "super.visor@duke.edu",
+    role: "supervisor",
+    group: groups
+  })
   var start = 1608559200;
   for (var e = 0; e < employees.length; e++) {
     await usersCollection.insertOne({

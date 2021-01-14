@@ -68,7 +68,7 @@ class User {
           "email": { "$first": "$email" }, 
           "role": { "$first": "$role" } 
         } },
-        { "$sort": { role: -1, name: 1 } }
+        { "$sort": { role: -1, group: 1, name: 1 } }
        ]).toArray();
     } catch (err) {
       console.log(err)
