@@ -713,3 +713,9 @@ th{
 .bold {
   font-weight: bold;
 }
+
+.loading {
+  font-size: 36px;
+  color: rgba(161, 149, 247, 52.6%);
+  padding-left: 10px;
+}

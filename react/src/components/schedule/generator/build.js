@@ -4,6 +4,8 @@ import lastDayOfWeek from "date-fns/lastDayOfWeek";
 import getUnixTime from 'date-fns/getUnixTime'
 import format from 'date-fns/format'
 import toDate from 'date-fns/toDate'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 class BuildSchedule extends Component {
   constructor(props){
@@ -13,7 +15,9 @@ class BuildSchedule extends Component {
       modal: true, 
       data: null, 
       start_date: null, 
-      end_date: null}
+      end_date: null,
+      submitted: null
+    }
     window.scrollTo(0,0)
   }
 
@@ -28,6 +32,7 @@ class BuildSchedule extends Component {
   submitForm = (event) => {
     event.preventDefault();
     if(this.state.group && this.state.start_date && this.state.end_date) {
+      this.setState({submitted: true})
       var start_parts = this.state.start_date.split("-")
       var start = toDate(new Date(start_parts[0], start_parts[1]-1, start_parts[2], 0, 0, 0))
       var end_parts = this.state.end_date.split("-")
@@ -62,6 +67,19 @@ class BuildSchedule extends Component {
       )
     )
     return options
+  }
+
+  submitOrLoading = () => {
+    if(this.state.submitted) {
+      return <div className="loading">
+        <FontAwesomeIcon className="fa-spin" icon={faCircleNotch} />
+      </div>
+    }
+    else {
+      return <div className="control">
+        <input className="button" onClick={this.submitForm} type='submit' />
+      </div>
+    }
   }
 
   render(){
@@ -110,9 +128,7 @@ class BuildSchedule extends Component {
             </div>
           </div>
 
-          <div className="control">
-            <input className="button" onClick={this.submitForm} type='submit' />
-          </div>
+          {this.submitOrLoading()}
         </form>
 
     </div>
