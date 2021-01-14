@@ -25,12 +25,12 @@ class AvailabilityForm extends Component {
       form_data.append("end_time", getUnixTime(end))
 
       axios.put(
-        "http://localhost:8080/users/add_availability", 
-        form_data, 
+        "http://localhost:8080/users/add_availability",
+        form_data,
         { headers: {'content-type': 'multipart/form-data'} }
         ).then((response) => {
           this.props.updateAvailability()
-      }).catch(function (err){  
+      }).catch(function (err){
           console.log(err)
       });
       }
@@ -38,18 +38,18 @@ class AvailabilityForm extends Component {
       alert("Please complete the form.")
     }
   }
-   
+
   changeHandler = (event) => {
     const name = event.target.name;
     console.log(name);
     const value = event.target.value;
     this.setState({
         [name]: value
-    }); 
+    });
     console.log(this.state.value);
   }
-  
-  
+
+
   render(){
     return(
       <div className="mt-5">
@@ -58,11 +58,12 @@ class AvailabilityForm extends Component {
         <div className="field">
             <label className="label">Date</label>
             <div className="control">
-              <input 
-                className="input" 
-                type="date" 
+              <input
+                className="input"
+                type="date"
                 name="day"
                 onChange={this.changeHandler}
+                placeholder="yyyy-mm-dd"
               />
             </div>
           </div>
@@ -70,11 +71,12 @@ class AvailabilityForm extends Component {
           <div className="field">
             <label className="label">Start Time</label>
             <div className="control">
-              <input 
-                className="input" 
-                type="time" 
+              <input
+                className="input"
+                type="time"
                 name="start_time"
-                onChange={this.changeHandler} 
+                onChange={this.changeHandler}
+                placeholder="--:--"
               />
             </div>
           </div>
@@ -82,11 +84,12 @@ class AvailabilityForm extends Component {
           <div className="field">
             <label className="label">End Time</label>
             <div className="control">
-              <input 
-                className="input" 
-                type="time" 
+              <input
+                className="input"
+                type="time"
                 name="end_time"
                 onChange={this.changeHandler}
+                placeholder="--:--"
               />
             </div>
           </div>
@@ -98,7 +101,7 @@ class AvailabilityForm extends Component {
 
     </div>
     //   <form className = "field">
-    //     <div className = "ml-5 mt-2"> 
+    //     <div className = "ml-5 mt-2">
     //     <label className = "label">Day </label>
     //     <select name = 'day' value = {this.state.day} onChange ={this.changeHandler}>
     //       <option value = "Monday">Monday</option>
@@ -115,13 +118,13 @@ class AvailabilityForm extends Component {
     //     <label className = "label">Start Time </label>
     //     <input name='start_time' type="text" placeholder="Enter time" onChange={this.changeHandler} />
     //     </div>
-        
+
     //     <div className = "ml-5 mt-2" >
     //     <label className = "label">End Time </label>
     //     <input name='end_time' type="text" placeholder="Enter time" onChange={this.changeHandler} />
     //     </div>
-    // {/* 
-    //     <div className = "ml-5"> 
+    // {/*
+    //     <div className = "ml-5">
     //     <label>Location </label>
     //     <select name = 'location' value = {this.state.location} onChange ={this.changeHandler}>
     //       <option value = "Lilly Library">Lilly Library</option>
@@ -133,10 +136,10 @@ class AvailabilityForm extends Component {
     //       <option value = "Perkins Library">Perkins Library</option>
     //     </select>
     //     </div>
-        
-    //     <div className = "ml-5"> 
+
+    //     <div className = "ml-5">
     //     <label>Preference </label>
-    //     <select name = 'preference' value = {this.state.preference} onChange ={this.changeHandler}> 
+    //     <select name = 'preference' value = {this.state.preference} onChange ={this.changeHandler}>
     //       <option value = "Most Preferred">Most Preferred</option>
     //       <option value = "Somewhat Preferred">Somewhat Preferred</option>
     //       <option value = "Least Preferred">Least Preferred</option>
@@ -148,7 +151,7 @@ class AvailabilityForm extends Component {
     //     <input onClick={this.submitForm} type='submit' class = "button ml-5"/>
     //     </div>
     //   </form>
-  
+
     )
   }
 }
