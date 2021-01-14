@@ -78,7 +78,10 @@ class Shift {
 
 //MONTH CALENDAR
   static findByTimeTwo = async (start, end, checked)  => {
-    const newchecked = checked.split(",")
+    var newchecked = checked
+    if(typeof checked === "string") {
+      newchecked = checked.split(",")
+    }
     try {
       return await shiftsCollection.find({"start_time": {$gte: parseInt(start)}, "end_time": {$lte: parseInt(end)},  "group" : { $in: newchecked } }).toArray();
     } catch (err) {

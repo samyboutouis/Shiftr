@@ -45,6 +45,18 @@ router.get('/find_daytwo/:start_time/:end_time/:group', (req, res) => {
   });
 })
 
+router.get('/find_daytwo/:start_time/:end_time', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
+  if(attributes.role === "supervisor" || attributes.role === "admin") {
+    let shift = Shift.findByTimeTwo(req.params.start_time, req.params.end_time, attributes.group);
+    shift.then(result => { res.json(result)
+    });
+  } else {
+    res.sendStatus(403);
+  }
+})
+
 router.get('/find_day/:start_time/:end_time', (req, res) => {
   let shift = Shift.findByTime(req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result)
