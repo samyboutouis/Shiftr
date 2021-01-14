@@ -431,13 +431,13 @@ th{
   background-size: 100% 100%;
   cursor: pointer;
   position: absolute;
-  left: 3em;
-  top:60em;
+  left: 140px;
+  top:1350px;
 }
 
 .scheduled-shift h4 {
   padding-top: 1em;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 11px;
   color: black;
 }
@@ -450,17 +450,43 @@ th{
   overflow: hidden;
 }
 
+.overlap {
+  padding-top: 1em;
+  font-size: 10px;
+  color: #484848;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.short-overlap {
+  font-size: 10px;
+  color: #484848;
+  overflow: hidden;
+}
+
+.overlap h4 {
+  font-weight: 600;
+  font-size: 11px;
+  color: black;
+}
+
 .scheduled-shift span {
   font-size: 11px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   color: black !important;
 }
 
 .unscheduled-availability {
-  margin-top: 1300px;
+  margin-top: 1380px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.schedule-builder {
+  position: absolute;
+  top: 1450px;
+  left: 160px;
 }
 
 .availability-item {

@@ -64,6 +64,14 @@ class ShowWeek extends Component {
             }
             else {
               shifts[j].overlap={count: shifts[j-1].overlap.count, position: shifts[j-1].overlap.position+1}
+              // shifts[j].overlap={count:2}
+              // if(shifts[j-1].overlap.count===shifts[j].overlap.count){
+              //   shifts[j].overlap.position=shifts[j-1].overlap.position+1
+              // }
+              // else {
+              //   shifts[j].overlap.count=shifts[j-1].overlap.count
+              //   shifts[j].overlap.position=shifts[j-1].overlap.position-1
+              // }
             }
           }
         }
@@ -105,35 +113,46 @@ class ShowWeek extends Component {
     if (shifts[0]) {
       var top = getHours(shifts[0].start_time*1000)*60+getMinutes(shifts[0].start_time*1000)-250
     }
-    for(var i=0;i<shifts.length; i++) {
     shifts.map((shift,index) =>
         cells.push(
           <div onClick={this.handleClick.bind(this, shift)}>
             <div 
               className={"calendar-week-entry " + shift.group} 
-              key={i+' '+index, shift} 
+              key={index, shift} 
               style={{
                 position: "absolute", 
                 top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top, 
-                height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000),
+                height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10,
                 width: shift.overlap ? 11/shift.overlap.count+"em" : "10em",
                 marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*12+"em" : 0
-                }}>
-                <span className="bold">
-                  {format(shift.start_time*1000, "h:mm")}&#8203;{format(shift.start_time*1000, "aaaaa")}m&#8203;&#8211;&#8203;
-                  {format(shift.end_time*1000, "h:mm")}&#8203;{format(shift.end_time*1000, "aaaaa")}m
-                </span>
-                <br />
-                {shift.group}
-                <br />
-                {shift.location}
+                }}
+              >
+              {this.shiftDetails(shift)}
             </div>
           </div>
 
-    ))}
+    ))
     return cells;
   }
 
+
+  shiftDetails(shift) {
+   if(shift.overlap && shift.overlap.count>2) {
+      return null
+    }
+    else {
+      return <div>
+        <span className="bold">
+          {format(shift.start_time * 1000, "h:mm")}&#8203;{format(shift.start_time * 1000, "aaaaa")}m&#8203; &#8211; &#8203;
+          {format(shift.end_time * 1000, "h:mm")}&#8203;{format(shift.end_time * 1000, "aaaaa")}m
+        </span>
+        <br />
+        {shift.group}
+        <br />
+        {shift.location}
+      </div>
+    }
+  }
 
   render(){
     const active = this.state.isModal ? "is-active" : "";
