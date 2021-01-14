@@ -193,9 +193,9 @@ width: calc(100%/7);
 .calendar-week-entry{
   /* margin: var(--marg); */
   cursor:pointer;
-  font-size: 12px;
+  font-size: 11px;
   padding-left: 1em;
-  padding-top: 1em;
+  /* padding-top: 1em; */
   /* padding-bottom: var(--padbottom); */
   background-color: rgba(235, 232, 232, .3);
   border-left: 5px solid var(--tab);

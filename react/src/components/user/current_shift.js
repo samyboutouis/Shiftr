@@ -14,7 +14,10 @@ class CurrentShift extends Component {
     let message = "";
     let shifts = [];
     if(this.props.shifts){
-      shifts.push(this.mapShifts());
+      shifts.push(<div className="landing-page-shifts">
+        {this.mapShifts()}
+      </div>
+      );
       if(localStorage.getItem('role')==='employee'){
         if(this.props.shifts[0].hasOwnProperty('clocked_in')){
           message = "Clock Out";
@@ -51,7 +54,7 @@ class CurrentShift extends Component {
       }
       return (
         <div key={index}>
-          <div className="transparent-box">
+          <div className="transparent-box landing-page-shift-item">
             <div>
               <p className="shift-time">{format(shift.start_time * 1000, timeFormat)}<span className="pm">{format(shift.start_time * 1000, pm)}</span> &#8594; {format(shift.end_time * 1000, timeFormat)}<span className="pm">{format(shift.end_time * 1000, pm)}</span></p>
               {location}
@@ -111,7 +114,7 @@ class CurrentShift extends Component {
     let zeroShifts = "Enjoy the time off!"
     if(this.props.shiftsToday === 0 || this.state.clockedOut){
       return (
-        <div className="transparent-box" key="no-shift">
+        <div className="transparent-box tab" key="no-shift">
           <p className="no-shifts">{zeroShifts}</p>
         </div>
       );

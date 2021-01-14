@@ -133,8 +133,8 @@ class ShowWeek extends Component {
                 position: "absolute",
                 top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top,
                 height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10,
-                width: shift.overlap ? 11/shift.overlap.count+"em" : "10em",
-                marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*12+"em" : 0
+                width: shift.overlap ? 12/shift.overlap.count+"em" : "12em",
+                marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*13+"em" : 0
                 }}
               >
               {this.shiftDetails(shift)}
@@ -150,17 +150,22 @@ class ShowWeek extends Component {
    if(shift.overlap && shift.overlap.count>2) {
       return null
     }
+    else if(differenceInMinutes(shift.end_time*1000, shift.start_time*1000) < 45) {
+      return <p>
+        <span className="bold">
+          {format(shift.start_time*1000, "h:mm")} - {format(shift.end_time*1000, "h:mm")}
+        </span>
+        &nbsp;
+        {shift.group} </p>
+     }
     else {
-      console.log(shift)
-      return <div>
+      return <div className="pt-2">
         <span className="bold">
           {format(shift.start_time * 1000, "h:mm")}&#8203;{format(shift.start_time * 1000, "aaaaa")}m&#8203; &#8211; &#8203;
           {format(shift.end_time * 1000, "h:mm")}&#8203;{format(shift.end_time * 1000, "aaaaa")}m
         </span>
         <br />
-        {shift.group}
-        <br />
-        {shift.location}
+        {shift.group} | {shift.location}
       </div>
     }
   }

@@ -33,14 +33,14 @@ class GeneratedSchedule extends Component {
             var starting_height = (getHours(first_shift.start_time*1000)*60+getMinutes(first_shift.start_time*1000))*6/5-150
             data.shifts.map((shift,index) => {
                 if(shift.start_time > getUnixTime(endOfWeek(first_shift.start_time*1000))) {
-                    week= 600
+                    week= 640
                 }
                 if (getDay(shift.start_time*1000)>day) {
                     starting_height = (getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))*6/5-150
                     day = getDay(shift.start_time*1000)
                 }
                 cells.push(
-                    <div style={{position: "absolute", left: getDay(shift.start_time*1000)*200+20, top:week+115}}>
+                    <div style={{position: "absolute", left: getDay(shift.start_time*1000)*200+20, top:week+120}}>
                         <h2 className="subtitle">{format(shift.start_time*1000,"M/d/y")}</h2>
                     </div>
                 )
@@ -131,10 +131,10 @@ class GeneratedSchedule extends Component {
 
     saveSchedule = () => {
         if(this.state.published) {
-            return <h2 className="build-schedule-button">Successfully Published</h2>
+            return <h2 className="build-schedule-button publish-schedule">Successfully Published</h2>
         }
         else {
-            return <button className='build-schedule-button' onClick={this.publishSchedule.bind(this)}>Publish Schedule</button>
+            return <button className='build-schedule-button publish-schedule-button' onClick={this.publishSchedule.bind(this)}>Publish Schedule</button>
         }
     }    
 
@@ -168,7 +168,7 @@ class GeneratedSchedule extends Component {
             {this.editShift()}
             {this.drawShifts()}
             {this.saveSchedule()}
-            <h1 className="title schedule-builder">Availability</h1>
+            <h1 className="title schedule-builder">Remaining Availability</h1>
             <div className="container is-max-widescreen unscheduled-availability">
                 {this.drawUsers()}
             </div>

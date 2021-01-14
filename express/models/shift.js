@@ -135,13 +135,14 @@ class Shift {
   // get hours stats (for employee 'hours' page)
   static findEmployeeHours = async (netid, date)  => {
     try {
+      console.log(Date.now()/1000)
       var shifts = await shiftsCollection.aggregate([
         // check netid matches, employee clocked in and clocked out, and the shift was within the page's time range
         { $match: {
           "employee.netid": netid,
           "clocked_in": {$exists: true},
-          "clocked_out": {$exists: true},
-          "end_time": {$lte: Date.now()/1000},
+          "clocked_out": {$exists: true, $lte: Date.now()/1000},
+          // "end_time": {$lte: Date.now()/1000},
           "start_time": {$gte: date} }
         },
         { $project: {
