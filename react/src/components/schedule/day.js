@@ -3,6 +3,7 @@ import format from "date-fns/format";
 import addDays from "date-fns/addDays";
 import subDays from "date-fns/subDays";
 import ShowDay from "./showDay.js"
+import ShowWeek from "./showWeek.js"
 import getUnixTime from "date-fns/getUnixTime"
 import startOfDay from "date-fns/startOfDay"
 import endOfDay from "date-fns/endOfDay"
@@ -45,18 +46,16 @@ const rows = []; /* rows containing each day's hours */
 let day = startDate;
 
 /*filling rows with 24 hours and querying for shifts*/
-while (day <= endDate) {
-  for (let i = 0; i < 24; i++) {
-    rows.push(<div>
-          <div className="row-day" key={i}> {(hours[i])} </div>
-          <ShowDay start={getUnixTime(day)} checkedList={props.checkedList}/>
-          </div>
-        );
-        day = addHours(day, 1);
-    }
-   }
+// while (day <= endDate) {
+//     rows.push(<div>
+//           <ShowDay start={getUnixTime(day)}/>
+//           </div>
+//         );
+//         day = addHours(day, 1);
+    
+//    }
    return(<div>
-   <div className="body" key={day}>{rows} </div>
+   <div className="body" key={day}><ShowDay start={getUnixTime(day)} checkedList={props.checkedList}/></div>
     </div>)
 
  }

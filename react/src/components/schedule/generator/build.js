@@ -90,7 +90,7 @@ class BuildSchedule extends Component {
                 type="date" 
                 name="start_date"
                 onChange={this.changeHandler} 
-                defaultValue={format(lastDayOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd")}
+                //defaultValue={format(lastDayOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd")}
               />
             </div>
           </div>
@@ -103,7 +103,8 @@ class BuildSchedule extends Component {
                 type="date" 
                 name="end_date"
                 onChange={this.changeHandler}
-                defaultValue={format(lastDayOfWeek(lastDayOfWeek(new Date(), { weekStartsOn: 1 })), "yyyy-MM-dd")}/>
+                //defaultValue={format(lastDayOfWeek(lastDayOfWeek(new Date(), { weekStartsOn: 1 })), "yyyy-MM-dd")}
+                />
             </div>
           </div>
 

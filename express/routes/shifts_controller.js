@@ -24,6 +24,8 @@ router.get('/find_open/:status', (req, res) => {
 
 
 router.get('/find_time/:start_time/:end_time', (req, res) => {
+  let token = req.cookies["shiftr-saml"];
+  let attributes = jwt.verify(token, "make-a-real-secret");
   let shift = Shift.findByHour(req.params.start_time, req.params.end_time);
   shift.then(result => { res.json(result)
   });

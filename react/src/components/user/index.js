@@ -26,24 +26,15 @@ class UserIndex extends Component {
   drawUsers = () => {
     if(this.state.users && !this.state.selectedUser){
       return <div className="container is-max-widescreen">
+        <h1 className="title my-5">Employees</h1>
         <div className="columns mt-5 pr-6">
           <div className="column">
-            <div className="rainbow-gradient">Admins</div>
-            {this.mapUsers(this.state.users.admins)}
-          </div>
-          <div className="column">
-            <div className="rainbow-gradient">Supervisors</div>
-            {this.mapUsers(this.state.users.supervisors)}
-          </div>
-          <div className="column">
-            <div className="rainbow-gradient">Employees</div>
-            {this.mapUsers(this.state.users.employees)}
+            {this.drawEmployees(this.state.users)}
           </div>
           <div className="column is-2">
             <UserForm updateUsers={this.componentDidMount} reqType="create" />
           </div>
         </div>
-        {/* <div onClick={this.addUser} className="rainbow-gradient right-button">Add Employee</div> */}
       </div>
     }
   }
@@ -57,15 +48,32 @@ class UserIndex extends Component {
     });
   }
 
+  drawEmployees = (users) => {
+    return <table className = "table is-bordered is-striped is-narrow is-fullwidth">
+        <thead> 
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+              <th>NetID</th>
+              <th>Email</th>
+              <th>Groups</th>
+            </tr>
+        </thead> 
+        <tbody>
+            {this.mapUsers(users)}
+        </tbody>
+      </table>
+  }
+
   mapUsers = (users) => {
     return users.map((user,index) =>
-      <div className="card employee-card" key={index}>
-        {/* <button onClick={this.selectUser.bind(this, user)}>Select User</button> */}
-        <p className="title is-4">{user.name}</p>
-        <p className="subtitle is-6 mb-2">{user.netid}</p>
-        <p>{Array.isArray(user.group) ? user.group.join(', ') : user.group}</p>
-        <p>{user.email}</p>
-      </div>
+      <tr key={index}>
+        <td> {user.name}</td>
+        <td> {user.role}</td>
+        <td> {user.netid}</td>
+        <td> {user.email}</td>
+        <td>{Array.isArray(user.group) ? user.group.join(', ') : user.group} </td>
+      </tr>
     )
   }
 
@@ -78,7 +86,6 @@ class UserIndex extends Component {
       <div>
         {this.drawUsers()}
         {this.drawSelectedUser()}
-        
       </div>
     )
   }

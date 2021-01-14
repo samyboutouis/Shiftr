@@ -56,8 +56,8 @@ class User {
   // also checks that netid isn't the current supervisor
   static employeeList = async (group, netid)  => {
     try{
-      var employees = await usersCollection.aggregate([ 
-        { "$match" : { "role": "employee", "netid": { "$ne": netid}}},
+      return await usersCollection.aggregate([ 
+        { "$match" : { "netid": { "$ne": netid}}},
         { "$unwind" : "$group" },
         { "$match"  : { "group" : { "$in" : group } } },
         { "$group"  : { 
@@ -67,40 +67,9 @@ class User {
           "name": { "$first": "$name" }, 
           "email": { "$first": "$email" }, 
           "role": { "$first": "$role" } 
-        } }
+        } },
+        { "$sort": { role: -1, name: 1 } }
        ]).toArray();
-       
-       var admins = await usersCollection.aggregate([ 
-        { "$match" : { "role": "admin", "netid": { "$ne": netid}}},
-        { "$unwind" : "$group" },
-        { "$match"  : { "group" : { "$in" : group } } },
-        { "$group"  : { 
-          "_id" : "$_id", 
-          "group" : { "$push" : "$group" }, 
-          "netid": { "$first": "$netid" }, 
-          "name": { "$first": "$name" }, 
-          "email": { "$first": "$email" }, 
-          "role": { "$first": "$role" } 
-        } }
-       ]).toArray();
-       
-       var supervisors = await usersCollection.aggregate([ 
-        { "$match" : { "role": "supervisor", "netid": { "$ne": netid}}},
-        { "$unwind" : "$group" },
-        { "$match"  : { "group" : { "$in" : group } } },
-        { "$group"  : { 
-          "_id" : "$_id", 
-          "group" : { "$push" : "$group" }, 
-          "netid": { "$first": "$netid" }, 
-          "name": { "$first": "$name" }, 
-          "email": { "$first": "$email" }, 
-          "role": { "$first": "$role" } 
-        } }
-       ]).toArray();
-      // var admins = await usersCollection.find({role: "admin", group: { $in: group }, netid: { $ne: netid}}).sort({"role":1}).toArray();
-      // var supervisors = await usersCollection.find({role: "supervisor", group: { $in: group }, netid: { $ne: netid}}).sort({"role":1}).toArray();
-      // var employees = await usersCollection.find({role: "employee", group: { $in: group }, netid: { $ne: netid}}).sort({"role":1}).toArray();
-      return {admins: admins, supervisors: supervisors, employees: employees};
     } catch (err) {
       console.log(err)
     }

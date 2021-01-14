@@ -16,20 +16,57 @@ class Shift extends Component {
     var start = this.props.shift.start_time*1000
     var end = this.props.shift.end_time*1000
     if(differenceInMinutes(end, start) > 30) {
-      return  <div className="scheduled-shift" >
-        <h4>{format(start, "h:mm")} - {format(end, "h:mm")}</h4>
-        <p> {this.props.shift.employee ? this.props.shift.employee.name : "unassigned" } @ {this.props.group} </p>
-      </div>
+      return  this.longShiftDetails(start, end)
     } else {
-      return <div className="scheduled-shift pt-0" >
+      return this.shortShiftDetails(start, end)
+    }
+  }
+
+  shortShiftDetails(start, end) {
+    if(this.props.shift.overlap) {
+      return <p className="short-overlap">{this.props.shift.employee ? this.props.shift.employee.name : "unassigned"}</p>
+    }
+    else {
+      return <div className="scheduled-shift pt-0">
       <p>
-        <span>
+        <span className="bold">
           {format(start, "h:mm")} - {format(end, "h:mm")}
         </span>
         &nbsp;
-        {this.props.shift.employee ? this.props.shift.employee.name : "unassigned" } </p>
-        {/* <button className='build-schedule-button' >Edit Shift </button> */}
+        {this.props.shift.employee ? this.props.shift.employee.name : "unassigned"} </p>
     </div>
+    }
+  }
+
+  longShiftDetails(start, end) {
+    if(this.props.shift.overlap && this.props.shift.overlap.count>2) {
+      if(differenceInMinutes(end, start) <= 60  || this.props.shift.overlap.count>3) {
+        return <div className="overlap">
+        <p> {this.props.shift.employee ? this.props.shift.employee.netid : "none"} </p>
+      </div>
+      }
+      else {
+        return <div className="overlap">
+        <h4 className="bold">
+          {this.formatShortDate(start)}&#8211;{this.formatShortDate(end)}</h4>
+        <p> {this.props.shift.employee ? this.props.shift.employee.netid : "none"} </p>
+      </div>
+      }
+    }
+    else {
+      return <div className="scheduled-shift">
+        <h4 className="bold">{format(start, "h:mm")}&#8211;{format(end, "h:mm")}</h4>
+        <p> {this.props.shift.employee ? this.props.shift.employee.name : "unassigned"} @{this.props.group} </p>
+      </div>
+    }
+  }
+
+  formatShortDate(date) {
+    if(format(date, "m")==="0") {
+      return format(date, "h")
+    }
+    else {
+      return format(date, "h:mm")
     }
   }
 

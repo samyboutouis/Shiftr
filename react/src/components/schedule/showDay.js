@@ -5,6 +5,7 @@ import format from "date-fns/format";
 import getHours from "date-fns/getHours"
 import getMinutes from "date-fns/getMinutes"
 import differenceInMinutes from "date-fns/differenceInMinutes"
+import areIntervalsOverlapping from 'date-fns/areIntervalsOverlapping'
 
 class ShowDay extends Component {
   constructor(props){
@@ -32,15 +33,19 @@ class ShowDay extends Component {
 }
 
 /* query database by hour */
-  getShifts = (props) => {
+  getShifts = () => {
     let self = this
-    const end = this.props.start+3600
+    const end = this.props.start+86400
+    var querylist = []
+    console.log(this.props)
+    console.log(this.state)
     var querylist = Object.values(this.props.checkedList)
     var querystring = querylist.toString()
     // console.log("START:"+this.props.start)
     // console.log("END:"+ end)
     axios.get("http://localhost:8080/shifts/find_timetwo/" + this.props.start + "/" + end+ "/" + querystring).then( (response) => {
       self.setState({shifts: response.data})
+      this.findOverlap()
     }).catch( (error) => {
       console.log(error)
     });
@@ -86,21 +91,81 @@ class ShowDay extends Component {
   mapShifts = () => {
     let shifts = this.state.shifts
     var cells=[];
-    for(let i=0;i<24; i++) {
-      if(shifts[i]){
-        shifts[i].data.map((shift,index) =>
-            cells.push(
-              <div onClick={this.handleClick.bind(this, shift)}>
-                <div className={"calendar-day-entry " + shift.group} key={i+' '+index, shift} style={{position: "absolute", top: ((getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000))/2)+110, paddingBottom: ((differenceInMinutes(shift.end_time*1000, shift.start_time*1000)/2.5)-20)}}>
-                    {format(shift.start_time*1000, "HH:mm")} - {format(shift.end_time*1000, "HH:mm")}
-                    <br />
-                    {shift.group}
-                    <br />
-                    {shift.location}
-                  </div>
+    if (shifts[0]) {
+      var top = getHours(shifts[0].start_time*1000)*60+getMinutes(shifts[0].start_time*1000)-100
+    }
+    shifts.map((shift,index) =>
+        cells.push(
+          <div onClick={this.handleClick.bind(this, shift)}>
+            <div 
+              className={"calendar-day-entry " + shift.group} 
+              key={index, shift} 
+              style={{
+                position: "absolute", 
+                top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top, 
+                height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10,
+                width: shift.overlap ? 40/shift.overlap.count+"em" : "40em",
+                marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*42+"em" : 0}}
+              >
+                {this.shiftDetails(shift)}
               </div>
-        ))}}
+          </div>
+        ))
     return cells;
+  }
+
+  shiftDetails(shift) {
+    if(shift.overlap && shift.overlap.count>2) {
+       return null
+     }
+     else if(differenceInMinutes(shift.end_time*1000, shift.start_time*1000) < 60) {
+      return <p>
+        <span className="bold">
+          {format(shift.start_time*1000, "h:mm")} - {format(shift.end_time*1000, "h:mm")}
+        </span>
+        &nbsp;
+        {shift.group} </p>
+     }
+     else {
+       return <div className="pt-3">
+         <span className="bold">
+           {format(shift.start_time * 1000, "h:mm")}&#8203;{format(shift.start_time * 1000, "aaaaa")}m&#8203; &#8211; &#8203;
+           {format(shift.end_time * 1000, "h:mm")}&#8203;{format(shift.end_time * 1000, "aaaaa")}m
+         </span>
+         <br />
+         {shift.group}
+         <br />
+         {shift.location}
+       </div>
+     }
+   }
+
+  findOverlap = () => {
+    console.log(this.state)
+    if(this.state.shifts){
+      let shifts = this.state.shifts
+      for(var i=0; i<shifts.length-1; i++) {
+        for(var j=i+1; j<shifts.length; j++) {
+          var current_interval = {start: shifts[i].start_time, end: shifts[i].end_time}
+          var next_interval = {start: shifts[j].start_time, end: shifts[j].end_time}
+          if(areIntervalsOverlapping(current_interval, next_interval)) {
+            if(shifts[i].overlap) {
+              shifts[i].overlap.count++
+              // shifts[i].position
+            } 
+            else {
+              shifts[i].overlap={count: 2, position: 0}
+            }
+            if (shifts[j].overlap) {
+              shifts[j].overlap.count++
+            }
+            else {
+              shifts[j].overlap={count: shifts[j-1].overlap.count, position: shifts[j-1].overlap.position+1}
+            }
+          }
+        }
+      }
+    }
   }
 
 

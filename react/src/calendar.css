@@ -58,7 +58,7 @@ max-width: 100%;
 .calendar {
 display: block;
 position: relative;
-width: 90%;
+width: 95%;
 height: auto;
 margin: auto;
 }
@@ -109,7 +109,7 @@ scrollbar-width: none;  /* Firefox */
 }
 .calendar .body .week-cell {
 position: relative;
-width: 10em;
+width: 12em;
 overflow: scroll;
 cursor: pointer;
 background: transparent;
@@ -172,7 +172,6 @@ width: calc(100%/7);
   font-size: 12px;
   padding-left: 3.5em;
   padding-right: 3.5em;
-  padding-top:1em;
   /* background-color: #EBE8E8; */
   background-color: rgba(235, 232, 232, .6);
   border-left: 5px solid pink;
@@ -200,7 +199,7 @@ width: calc(100%/7);
   /* padding-bottom: var(--padbottom); */
   background-color: rgba(235, 232, 232, .3);
   border-left: 5px solid var(--tab);
-  width: 10em;
+  /* word-wrap: break-word; */
 }
 
 
@@ -250,3 +249,7 @@ width: calc(100%/7);
 /* .heyo{
   display: inline-block;
 } */
+
+.short-shift {
+  padding-top: 0 !important;
+}

@@ -90,28 +90,32 @@ class Shift {
     const newchecked = checked.split(",")
     try {
       return await shiftsCollection.aggregate([
-        { "$match":
-          { "$and":
-            [
-              {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} },
-              { "group" : { $in: newchecked } }
-            ]
-          }
-        }, //shifts within time range
-        { "$group": {
-          "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
-          "data":{
-            "$push":{
-              "start_time":"$start_time",
-              "end_time":"$end_time",
-              "location":"$location",
-              "status":"$status",
-              "group":"$group",
-              "employee":"$employee"
-            }
-          }
-        }}
-      ]).toArray();
+      { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }, { "group" : { $in: newchecked } }]}},
+      { $sort: {start_time: 1, end_time: 1}}
+    ]).toArray();
+    // return await shiftsCollection.aggregate([
+    //     { "$match":
+    //       { "$and":
+    //         [
+    //           {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} },
+    //           { "group" : { $in: newchecked } }
+    //         ]
+    //       }
+    //     }, //shifts within time range
+    //     { "$group": {
+    //       "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
+    //       "data":{
+    //         "$push":{
+    //           "start_time":"$start_time",
+    //           "end_time":"$end_time",
+    //           "location":"$location",
+    //           "status":"$status",
+    //           "group":"$group",
+    //           "employee":"$employee"
+    //         }
+    //       }
+    //     }}
+    //   ]).toArray();
     } catch (err) {
       console.log(err);
     }
@@ -120,26 +124,8 @@ class Shift {
   static findByHour = async (start, end)  => {
     try {
       return await shiftsCollection.aggregate([
-        { "$match":
-          { "$and":
-            [
-              {"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} },
-            ]
-          }
-        }, //shifts within time range
-        { "$group": {
-          "_id": { "$hour": { "$toDate": { "$toLong": {"$multiply": ["$start_time",1000]}}} }, //group by hour
-          "data":{
-            "$push":{
-              "start_time":"$start_time",
-              "end_time":"$end_time",
-              "location":"$location",
-              "status":"$status",
-              "group":"$group",
-              "employee":"$employee"
-            }
-          }
-        }}
+        { "$match": { "$and":[{"start_time":  {$gte: parseInt(start), $lt: parseInt(end)} }]}},
+        { $sort: {start_time: 1, end_time: 1}}
       ]).toArray();
     } catch (err) {
       console.log(err);
