@@ -92,8 +92,8 @@ class ShowDay extends Component {
                 position: "absolute", 
                 top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top, 
                 height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10,
-                width: shift.overlap ? 11/shift.overlap.count+"em" : "20em",
-                marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*12+"em" : 0}}
+                width: shift.overlap ? 40/shift.overlap.count+"em" : "40em",
+                marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*42+"em" : 0}}
               >
                 {this.shiftDetails(shift)}
               </div>
