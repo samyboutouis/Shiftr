@@ -87,7 +87,8 @@ class BuildSchedule extends Component {
             <div className="control">
               <input 
                 className="input" 
-                type="date" 
+                type="date"
+                placeholder="yyyy-mm-dd"
                 name="start_date"
                 onChange={this.changeHandler} 
                 defaultValue={format(lastDayOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd")}
@@ -101,6 +102,7 @@ class BuildSchedule extends Component {
               <input 
                 className="input" 
                 type="date" 
+                placeholder="yyyy-mm-dd"
                 name="end_date"
                 onChange={this.changeHandler}
                 defaultValue={format(lastDayOfWeek(lastDayOfWeek(new Date(), { weekStartsOn: 1 })), "yyyy-MM-dd")}/>

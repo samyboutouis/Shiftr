@@ -57,7 +57,8 @@ class AvailabilityForm extends Component {
             <div className="control">
               <input 
                 className="input" 
-                type="date" 
+                type="date"
+                placeholder="yyyy-mm-dd"
                 name="day"
                 onChange={this.changeHandler}
               />
