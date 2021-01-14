@@ -96,13 +96,7 @@ class ShowMonth extends Component {
                   <p>Current Shift Status: {this.state.activeItem.status}</p>
                   <div>{this.getEmployee(this.state.activeItem)}</div>
                   <br/>
-
-                  <div>
                   <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
-                  <br/>
-                  <p></p>
-                  {/*<Notes shift={this.state.activeItem}/>*/}
-                  </div>
               </section>
               <footer className="modal-card-foot"></footer>
             </div>

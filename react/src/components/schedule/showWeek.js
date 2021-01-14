@@ -102,6 +102,7 @@ class ShowWeek extends Component {
           <div>
             <p> Current Shift Status : {this.state.activeItem.status}</p>
             <p> Employee Assigned : None</p>
+            <br/>
             <p> Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
           </div>
         )}
@@ -110,6 +111,7 @@ class ShowWeek extends Component {
           <div>
             <p>Current Shift Status : {this.state.activeItem.status}</p>
             <p>Employee Assigned : {shift.employee.name}</p>
+            <br/>
             <p>  Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
           </div>)}
       }

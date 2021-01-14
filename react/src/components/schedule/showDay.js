@@ -189,6 +189,7 @@ class ShowDay extends Component {
                 </header>
                 <section className="modal-card-body">
                     <p className="bold">{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
+                    <br/>
                     <div>{this.getEmployee(this.state.activeItem)}</div>
                 </section>
                 <footer className="modal-card-foot"></footer>
