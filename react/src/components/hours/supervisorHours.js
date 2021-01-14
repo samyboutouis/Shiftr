@@ -12,7 +12,7 @@ class SupervisorHours extends Component {
     }
 
     selectEmployee = (employee) => {
-      console.log(employee)
+      window.scrollTo(0,document.body.scrollHeight);
       this.setState({selectedEmployee: employee})
     }
 

@@ -109,7 +109,7 @@ class EditShift extends Component {
                         <input 
                             className="input" 
                             name="start_time" 
-                            defaultValue={format(this.props.shift.start_time*1000, "HH:mm")} 
+                            defaultValue={format(this.props.shift.start_time*1000, "h:mm")} 
                             type="time"
                             onChange={this.changeHandler}
                         />
@@ -122,7 +122,7 @@ class EditShift extends Component {
                         <input 
                             className="input" 
                             name="end_time" 
-                            defaultValue={format(this.props.shift.end_time*1000, "HH:mm")} 
+                            defaultValue={format(this.props.shift.end_time*1000, "h:mm")} 
                             type="time" 
                             onChange={this.changeHandler}
                         />

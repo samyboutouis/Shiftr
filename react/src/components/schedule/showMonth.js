@@ -133,7 +133,7 @@ class ShowMonth extends Component {
 /* format queries */
   mapShifts = () => {
     let shifts = this.state.shifts
-    let dateFormat = "HH:mm"
+    let dateFormat = "h:mm"
 
     return(
     /* extra div added so modal can be on same hierarchical level as mapping, (not creating modals within the map)*/

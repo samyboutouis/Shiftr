@@ -17,7 +17,7 @@ class ShiftTimes extends Component {
     const newshift = shift
     let start = newshift.start_time
     let end = newshift.end_time
-    let dateformat = "HH:mm"
+    let dateformat = "h:mm"
     let startTime = format(start * 1000, dateformat)
     let endTime = format(end  * 1000, dateformat)
     return(<div>{startTime} -  {endTime}</div>)

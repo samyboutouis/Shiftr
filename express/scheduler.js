@@ -434,11 +434,16 @@ exports.hoursTestShifts = async function() {
     group: ["codePlus"]
   })
   for (var day = 0; day < 30; day++) {
-    if(day < 19) {
+    if(day < 20) {
       var time = start
       for (var i = 0; i < 8; i++) {
         var emp = employees[Math.floor(Math.random() * employees.length)]
         var emp2 = more_employees[Math.floor(Math.random() * more_employees.length)]
+        var emp3 = more_employees[Math.floor(Math.random() * more_employees.length)]
+        var emp4 = more_employees[Math.floor(Math.random() * more_employees.length)]
+        var emp5 = more_employees[Math.floor(Math.random() * more_employees.length)]
+        var emp6 = more_employees[Math.floor(Math.random() * more_employees.length)]
+        var emp7 = more_employees[Math.floor(Math.random() * more_employees.length)]
         await shiftsCollection.insertOne({
           employee: emp,
           start_time: time,
@@ -459,6 +464,58 @@ exports.hoursTestShifts = async function() {
           location: "TEC",
           status: "completed"
         });
+        if(day < 14) {
+          await shiftsCollection.insertOne({
+            employee: emp3,
+            start_time: time,
+            clocked_in: time+(Math.floor(Math.random() * 14)-7)*60,
+            end_time: time+3600,
+            clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60,
+            group: emp3.group[0],
+            location: "TEC",
+            status: "completed"
+          });
+          await shiftsCollection.insertOne({
+            employee: emp4,
+            start_time: time,
+            clocked_in: time+(Math.floor(Math.random() * 14)-7)*60,
+            end_time: time+3600,
+            clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60,
+            group: emp4.group[0],
+            location: "TEC",
+            status: "completed"
+          });
+          await shiftsCollection.insertOne({
+            employee: emp7,
+            start_time: time,
+            clocked_in: time+(Math.floor(Math.random() * 14)-7)*60,
+            end_time: time+3600,
+            clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60,
+            group: emp7.group[0],
+            location: "TEC",
+            status: "completed"
+          });
+          await shiftsCollection.insertOne({
+            employee: emp5,
+            start_time: time,
+            clocked_in: time+(Math.floor(Math.random() * 14)-7)*60,
+            end_time: time+3600,
+            clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60,
+            group: emp5.group[0],
+            location: "TEC",
+            status: "completed"
+          });
+          await shiftsCollection.insertOne({
+            employee: emp6,
+            start_time: time,
+            clocked_in: time+(Math.floor(Math.random() * 14)-7)*60,
+            end_time: time+3600,
+            clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60,
+            group: emp6.group[0],
+            location: "TEC",
+            status: "completed"
+          });
+        }
         time += 3600
       }
      }
