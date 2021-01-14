@@ -376,27 +376,37 @@ exports.hoursTestShifts = async function() {
   //   }
   //   start+=57600;
   // }
-  // var groups = ["mps","services","designhub"]
-  // for (var i=0; i<100; i++) {
-  //   var first_name = faker.name.firstName()
-  //   var last_name = faker.name.lastName()
-  //   var large_avail_array=[];
-  //   var early = 1610712000; // earliest start time (Jan 15 2021, 7 AM eastern)
-  //   var avail=Math.floor(Math.random() * 5);  // random number of availabilities (0-5)
-  //   while(avail<5) {
-  //     var start = early + (Math.floor(Math.random() * 40) + 4)*900; // random shift start time (7AM-5PM, 15 minute interval)
-  //     large_avail_array.push({start_time: start, end_time: start + (Math.floor(Math.random() * 20) + 4)*900 }); // add availability object to array. random shift length (1-6 hours, 15 minute interval)
-  //     early+=86400; // increase earliest start time (next day at 7AM)
-  //     avail++;
-  //   }
-    await usersCollection.insertOne({
+  var groups = ["mps","services","designhub"]
+  var more_employees = []
+  for (var i=0; i<100; i++) {
+    var first_name = faker.name.firstName()
+    var last_name = faker.name.lastName()
+    // var large_avail_array=[];
+    // var early = 1610712000; // earliest start time (Jan 15 2021, 7 AM eastern)
+    // var avail=Math.floor(Math.random() * 5);  // random number of availabilities (0-5)
+    // while(avail<5) {
+    //   var start = early + (Math.floor(Math.random() * 40) + 4)*900; // random shift start time (7AM-5PM, 15 minute interval)
+    //   large_avail_array.push({start_time: start, end_time: start + (Math.floor(Math.random() * 20) + 4)*900 }); // add availability object to array. random shift length (1-6 hours, 15 minute interval)
+    //   early+=86400; // increase earliest start time (next day at 7AM)
+    //   avail++;
+    // }
+    var emp = {
       name: first_name+" "+last_name,
       netid: first_name.substring(0,2).toLowerCase() + last_name.substring(0,1).toLowerCase() + "" + (Math.floor(Math.random() * 900) + 100),
       email: first_name.toLowerCase() + "." + last_name.toLowerCase() + "@duke.edu",
       role: "employee",
-      group: groups[Math.floor(Math.random() * groups.length)],
+      group: [groups[Math.floor(Math.random() * groups.length)]],
       availability: {preferred_hours: Math.floor(Math.random() * 20) + 2} //times: large_avail_array, 
-    })
+    };
+    more_employees.push(emp);
+    await usersCollection.insertOne({
+      name: emp.name,
+      netid: emp.netid,
+      email: emp.email,
+      role: emp.role,
+      group: emp.group,
+      availability: emp.availability 
+    });
   }
   await usersCollection.insertOne({
     name: "Super Visor",
@@ -428,6 +438,7 @@ exports.hoursTestShifts = async function() {
       var time = start
       for (var i = 0; i < 8; i++) {
         var emp = employees[Math.floor(Math.random() * employees.length)]
+        var emp2 = more_employees[Math.floor(Math.random() * more_employees.length)]
         await shiftsCollection.insertOne({
           employee: emp,
           start_time: time,
@@ -435,6 +446,16 @@ exports.hoursTestShifts = async function() {
           end_time: time+3600,
           clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60,
           group: "codePlus",
+          location: "TEC",
+          status: "completed"
+        });
+        await shiftsCollection.insertOne({
+          employee: emp2,
+          start_time: time,
+          clocked_in: time+(Math.floor(Math.random() * 14)-7)*60,
+          end_time: time+3600,
+          clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60,
+          group: emp2.group[0],
           location: "TEC",
           status: "completed"
         });
@@ -449,10 +470,38 @@ exports.hoursTestShifts = async function() {
           {netid: employees[e].netid},
           {$push: {"availability.times" : {"start_time": first, "end_time": last }}});
       }
+      for (var e = 0; e < more_employees.length; e++) {
+        var first = start + (Math.floor(Math.random() * 20) + 4)*900;
+        var last = first + (Math.floor(Math.random() * 10) + 4)*900;
+        await usersCollection.updateOne(
+          {netid: more_employees[e].netid},
+          {$push: {"availability.times" : {"start_time": first, "end_time": last }}});
+      }
       await shiftsCollection.insertOne({
         start_time: start,
         end_time: start+28800,
         group: "codePlus",
+        location: "TEC",
+        status: "open"
+      });
+      await shiftsCollection.insertOne({
+        start_time: start,
+        end_time: start+28800,
+        group: "mps",
+        location: "TEC",
+        status: "open"
+      });
+      await shiftsCollection.insertOne({
+        start_time: start,
+        end_time: start+28800,
+        group: "services",
+        location: "TEC",
+        status: "open"
+      });
+      await shiftsCollection.insertOne({
+        start_time: start,
+        end_time: start+28800,
+        group: "designhub",
         location: "TEC",
         status: "open"
       });
