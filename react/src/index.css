@@ -123,11 +123,15 @@ code {
 .transparent-box {
   background: rgba(255, 255, 255, 0.22);
 	color: white;
-	margin-left: 10%;
+	/* margin-left: 10%; */
   margin-top: 20px;
-  padding: 25px 25px 25px 25px;
+  padding: 25px;
   display: inline-block;
   align-items: center;
+}
+
+.tab {
+  	margin-left: 10%;
 }
 
 .no-shifts {
@@ -164,21 +168,21 @@ code {
 }
 
 .shift-time {
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .pm {
-  font-size: 30px;
+  font-size: 24px;
   color: #888888;
 }
 
 .shift-location {
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 9px;
 }
 
 .shift-role {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .upcoming-shift {
@@ -500,6 +504,17 @@ th{
   margin-left:5%;
 }
 
+.publish-schedule-button {
+  left: 120px;
+  top: 1310px;
+}
+
+.publish-schedule {
+  left: 120px;
+  top: 1310px;
+  cursor: auto;
+}
+
 .back-to-schedule-button{
   margin: 1rem;
   padding: .8rem .8rem;
@@ -571,6 +586,16 @@ th{
 }
 
 .availability-item {
+  flex: 0 48%;
+}
+
+.landing-page-shifts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.landing-page-shift-item{
   flex: 0 48%;
 }
 

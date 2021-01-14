@@ -55,8 +55,8 @@ async function createSchedule(group) {
     // get all tempShifts matching group in time order
     var tempShifts = await tempShiftsCollection.aggregate([
       { $match: {group: group} }, 
-      { $sort: {"start_time":1} },
-      { $project: { group: 0 }}]).toArray();
+      { $sort: {"start_time":1} }
+    ]).toArray();
     // get all tempUsers matching group in rank order
     var tempUsers = await tempUsersCollection.aggregate([
       { $match: {group: group} }, 
@@ -357,10 +357,13 @@ async function basicTestShifts() {
 // creates three weeks of completed shifts
 exports.hoursTestShifts = async function() {
   var employees = [
-    {name: "Anna Mollard", netid: "acm105", email: "anna.mollard@duke.edu", role: "supervisor", group: ["Code+", "CoLab"], hours: 40, location: ["Remote", "CoLab"]}, 
-    {name: "Sunny Li", netid: "l616", email: "sunny.li@duke.edu", role: "employee", group: ["Code+", "CoLab"], hours: 35, location: ["Remote", "CoLab"]}, 
-    {name: "Samy Boutouis", netid: "sb590", email: "samy.boutouis@duke.edu", role: "employee", group: ["Code+"], hours: 30, location: ["Remote", "CoLab"]}, 
-    {name: "Ryleigh Byrne", netid: "rmb96", email: "ryleigh.byrne@duke.edu", role: "employee", group: ["Code+"], hours: 25, location: ["Remote", "CoLab"]}
+    {name: "Anna Mollard", netid: "acm105", email: "anna.mollard@duke.edu", role: "employee", group: ["codePlus"], hours: 8, location: ["Remote", "TEC"]}, 
+    {name: "Sunny Li", netid: "l616", email: "sunny.li@duke.edu", role: "employee", group: ["codePlus"], hours: 11, location: ["Remote", "TEC"]}, 
+    {name: "Samy Boutouis", netid: "sb590", email: "samy.boutouis@duke.edu", role: "employee", group: ["codePlus"], hours: 9, location: ["Remote", "TEC"]}, 
+    {name: "Ryleigh Byrne", netid: "rmb96", email: "ryleigh.byrne@duke.edu", role: "employee", group: ["codePlus"], hours: 5, location: ["Remote", "TEC"]},
+    {name: "Vaishvi Patel", netid: "vkp3", email: "vaishvi.patel@duke.edu", role: "employee", group: ["codePlus"], hours: 10, location: ["Remote", "TEC"]}, 
+    {name: "Elizabeth Zhang", netid: "eyz3", email: "elizabeth.zhang@duke.edu", role: "employee", group: ["codePlus"], hours: 7, location: ["Remote", "TEC"]}, 
+    {name: "Maryam Shahid", netid: "ms858", email: "maryam.shahid@duke.edu", role: "employee", group: ["codePlus"], hours: 6, location: ["Remote", "TEC"]}, 
   ]
   var start = 1608559200;
   for (var e = 0; e < employees.length; e++) {
@@ -378,21 +381,24 @@ exports.hoursTestShifts = async function() {
     netid: "da129",
     email: "danai.adkisson@duke.edu",
     role: "admin",
-    group: ["CoLab", "Code+", "OIT"]
+    group: ["codePlus"]
   })
-  for (var day = 0; day < 25; day++) {
-    if(day < 15) {
-      for (var e = 0; e < employees.length; e++) {
+  for (var day = 0; day < 30; day++) {
+    if(day < 19) {
+      var time = start
+      for (var i = 0; i < 8; i++) {
+        var emp = employees[Math.floor(Math.random() * employees.length)]
         await shiftsCollection.insertOne({ 
-          employee: employees[e], 
-          start_time: start, 
-          clocked_in: start+(Math.floor(Math.random() * 30)-15)*60, 
-          end_time: start+28800, 
-          clocked_out: start+28800+(Math.floor(Math.random() * 30)-15)*60, 
-          group: "Code+", 
-          location: "Remote",
+          employee: emp, 
+          start_time: time, 
+          clocked_in: time+(Math.floor(Math.random() * 14)-7)*60, 
+          end_time: time+3600, 
+          clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60, 
+          group: "codePlus", 
+          location: "TEC",
           status: "completed"
         });
+        time += 3600
       }
      } 
      else {
@@ -406,8 +412,8 @@ exports.hoursTestShifts = async function() {
       await shiftsCollection.insertOne({ 
         start_time: start, 
         end_time: start+28800, 
-        group: "Code+", 
-        location: "Remote",
+        group: "codePlus", 
+        location: "TEC",
         status: "open"
       });      
     }

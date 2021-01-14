@@ -133,9 +133,7 @@ class ShowDay extends Component {
            {format(shift.end_time * 1000, "h:mm")}&#8203;{format(shift.end_time * 1000, "aaaaa")}m
          </span>
          <br />
-         {shift.group}
-         <br />
-         {shift.location}
+         {shift.group} | {shift.location}
        </div>
      }
    }

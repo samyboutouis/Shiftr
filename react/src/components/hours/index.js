@@ -19,7 +19,7 @@ class HoursIndex extends Component {
 
     getShifts = () => {
       let self = this;
-      let date = subWeeks(startOfWeek(new Date()),1)/1000
+      let date = subWeeks(startOfWeek(new Date()),2)/1000
       if(localStorage.getItem('role')==='employee'){
          axios.get("http://localhost:8080/shifts/employee_hours/"+date).then( (response) => {
             self.setState({data: response.data})
@@ -37,8 +37,8 @@ class HoursIndex extends Component {
 
     drawHeader = () => {
       if(this.state.data) {
-         let start_date = subWeeks(startOfWeek(new Date()),1)
-         let end_date = endOfWeek(new Date())
+         let start_date = subWeeks(startOfWeek(new Date()),2)
+         let end_date = new Date()
         return <div className="container is-max-widescreen">
         <h2 className="subtitle mt-5">Pay Period Displayed:</h2>
         <h1 className="title mb-5">{format(start_date, "MMM d")} &#8211; {format(end_date, "MMM d")}</h1>

@@ -27,57 +27,56 @@ class ShiftModal extends Component {
     if(this.props.modal) {
       return (
         <div className="modal is-active">
-          <div className="modal-background">
-            <div className="modal-card">
-              <header className="modal-card-head">
-                <p className="modal-card-title">{header}</p>
-                <button onClick={this.props.onClose} className="delete" aria-label="close"></button>
-              </header>
-              <section className="modal-card-body">
-                <form>
-                  <div className="field">
-                    <label className="label">Day</label>
-                    <div className="control">
-                      <input name="day" type="date" onChange={this.changeHandler}/>
-                    </div>
+          <div className="modal-background"></div>
+          <div className="modal-card">
+            <header className="modal-card-head">
+              <p className="modal-card-title">{header}</p>
+              <button onClick={this.props.onClose} className="delete" aria-label="close"></button>
+            </header>
+            <section className="modal-card-body">
+              <form>
+                <div className="field">
+                  <label className="label">Day</label>
+                  <div className="control">
+                    <input className="input" name="day" type="date" onChange={this.changeHandler}/>
                   </div>
-                  <div className="field">
-                    <label className="label">Start Time</label>
-                    <div className="control">
-                      <input name="start_time" type="time" onChange={this.changeHandler}/>
-                    </div>
-                  </div>
-                  <div className="field">
-                    <label className="label">End Time</label>
-                    <div className="control">
-                      <input name="end_time" type="time" onChange={this.changeHandler}/>
-                    </div>
-                  </div>
-                  <div className="field">
-                    <label className="label">Group</label>
-                    <div className="control">
-                      {this.groupOptions()}
-                    </div>
-                  </div>
-                  <div className="field">
-                    <label className="label">Location</label>
-                    <div className="control">
-                      <div className="select">
-                        <select defaultValue="select_a_location" name="location" onChange={this.changeHandler}>
-                          <option disabled="disabled" value="select_a_location" hidden="hidden">Select a Location</option>
-                          <option value="Remote">Remote</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </section>
-              <footer className="modal-card-foot">
-                <div className="control">
-                  <input className="button is-success" type='submit' onClick={this.submitForm}/>
                 </div>
-              </footer>
-            </div>
+                <div className="field">
+                  <label className="label">Start Time</label>
+                  <div className="control">
+                    <input className="input" name="start_time" type="time" onChange={this.changeHandler}/>
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">End Time</label>
+                  <div className="control">
+                    <input className="input" name="end_time" type="time" onChange={this.changeHandler}/>
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Group</label>
+                  <div className="control">
+                    {this.groupOptions()}
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Location</label>
+                  <div className="control">
+                    <div className="select">
+                      <select defaultValue="select_a_location" name="location" onChange={this.changeHandler}>
+                        <option disabled="disabled" value="select_a_location" hidden="hidden">Select a Location</option>
+                        <option value="Remote">Remote</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </section>
+            <footer className="modal-card-foot">
+              <div className="control">
+                <input className="button is-success" type='submit' onClick={this.submitForm}/>
+              </div>
+            </footer>
           </div>
         </div>
       );
