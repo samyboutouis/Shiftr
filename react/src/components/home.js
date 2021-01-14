@@ -5,13 +5,11 @@ import ScheduleIndex from './schedule/index'
 import HomeIndex from './user/home_index'
 import UserIndex from './user/index'
 import Nbar from './navbar'
-import MonthCalendar from './schedule/month'
-import ScheduleKey from './schedule/key'
 
 class Home extends Component {
   constructor(props){
     super();
-    this.state = {navState: "Home"}
+    this.state = {navState: "Home" }
   }
 
   samlLogin = () => {
@@ -34,12 +32,7 @@ class Home extends Component {
     if (localStorage.getItem('role')==='none') {
       home.push(
         <div className="login-month-container">
-          <div className="key"> {/* legend*/}
-            <ScheduleKey/>
-          </div>
-          <div className="schedule-calendar">
-            <MonthCalendar/>
-          </div>
+            <ScheduleIndex/>
         </div>)
     }else if (localStorage.getItem('loggedIn')){
       home.push(<Nbar setNavState={this.setNavState} navState={this.state.navState} logout={this.samlLogout} key="nav"/>)

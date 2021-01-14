@@ -169,8 +169,34 @@ class ShowDay extends Component {
 
   render(){
     const active = this.state.isModal ? "is-active" : "";
-    return(
-      <div>
+    let modal = []
+    if (localStorage.getItem('role')==='none'){
+      modal.push(
+        <div className={`modal ${active}`}>
+        <div className="modal-background" />
+            <div className="modal-card">
+              <header className="modal-card-head">
+
+                <div className="modal-card-title"> {this.drawTimes(this.state.activeItem)}</div> {/*<Notes shift={this.state.activeItem}/>*/}
+                <button
+                  onClick={this.handleClick.bind(this, '')}
+                  className="delete"
+                />
+              </header>
+              <section className="modal-card-body">
+                  <p>{this.state.activeItem.group}</p>
+                  <p>Location : {this.state.activeItem.location}</p>
+                  <p>Current Shift Status: {this.state.activeItem.status}</p>
+                  <br/>
+                  <p>If shift status is open, there is no one currently scheduled to work this shift!</p>
+              </section>
+              <footer className="modal-card-foot"></footer>
+            </div>
+
+        </div>
+      )
+    }else{modal.push((
+      <div key={this.props.checkedList} >
         {this.drawShifts()}
         <div className="spacing-cell"> &nbsp;
         </div>
@@ -194,7 +220,12 @@ class ShowDay extends Component {
               </div>
           </div>
       </div>
-    )
+    ))}
+    return(
+      <div key={this.props.checkedList} >
+      {this.drawShifts()}
+      {modal}
+    </div>)
   }
 }
 
