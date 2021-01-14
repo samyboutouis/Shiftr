@@ -250,6 +250,24 @@ width: calc(100%/7);
   display: inline-block;
 } */
 
+
 .short-shift {
   padding-top: 0 !important;
+}
+
+.modal-card {
+  background-color: white;
+  width: 30%;
+}
+.modal-card-body {
+  margin:1em;
+}
+.modal-card-head {
+  background-color: white;
+  margin:1em;
+  width: 90%;
+}
+.modal-card-foot {
+  background-color: white;
+  width: 90%;
 }

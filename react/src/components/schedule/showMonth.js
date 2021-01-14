@@ -91,7 +91,8 @@ class ShowMonth extends Component {
                 />
               </header>
               <section className="modal-card-body">
-                  <p>{this.state.activeItem.group}  || {this.state.activeItem.location}</p>
+                  <p className="bold">{this.state.activeItem.group}  || {this.state.activeItem.location}</p>
+                  <br/>
                   <p>Current Shift Status: {this.state.activeItem.status}</p>
                   <div>{this.getEmployee(this.state.activeItem)}</div>
                   <br/>

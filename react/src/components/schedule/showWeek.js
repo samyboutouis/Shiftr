@@ -65,7 +65,7 @@ class ShowWeek extends Component {
             if(shifts[i].overlap) {
               shifts[i].overlap.count++
               // shifts[i].position
-            } 
+            }
             else {
               shifts[i].overlap={count: 2, position: 0}
             }
@@ -100,19 +100,17 @@ class ShowWeek extends Component {
       if (shift.employee === undefined) {
         return(
           <div>
-            <p>Current Shift Status: {this.state.activeItem.status}</p>
-            <p>Employee Assigned: None</p>
-            <br/>
-            <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+            <p> Current Shift Status : {this.state.activeItem.status}</p>
+            <p> Employee Assigned : None</p>
+            <p> Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
           </div>
         )}
       else {
         return(
           <div>
-            <p>Current Shift Status: {this.state.activeItem.status}</p>
-            <p>Employee Assigned: {shift.employee.name}</p>
-            <br/>
-            <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+            <p>Current Shift Status : {this.state.activeItem.status}</p>
+            <p>Employee Assigned : {shift.employee.name}</p>
+            <p>  Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
           </div>)}
       }
     }
@@ -126,12 +124,12 @@ class ShowWeek extends Component {
     shifts.map((shift,index) =>
         cells.push(
           <div onClick={this.handleClick.bind(this, shift)}>
-            <div 
-              className={"calendar-week-entry " + shift.group} 
-              key={index, shift} 
+            <div
+              className={"calendar-week-entry " + shift.group}
+              key={index, shift}
               style={{
-                position: "absolute", 
-                top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top, 
+                position: "absolute",
+                top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top,
                 height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10,
                 width: shift.overlap ? 11/shift.overlap.count+"em" : "10em",
                 marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*12+"em" : 0
@@ -165,7 +163,9 @@ class ShowWeek extends Component {
     }
   }
 
+
   render(){
+
     const active = this.state.isModal ? "is-active" : "";
     return(
       <div key={this.props.checkedList} >
@@ -184,7 +184,8 @@ class ShowWeek extends Component {
                   />
                 </header>
                 <section className="modal-card-body">
-                    <p>{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
+                    <p className="bold">{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
+                    <br/>
                     <div>{this.getEmployee(this.state.activeItem)}</div>
                 </section>
                 <footer className="modal-card-foot"></footer>

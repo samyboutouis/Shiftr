@@ -97,12 +97,12 @@ class ShowDay extends Component {
     shifts.map((shift,index) =>
         cells.push(
           <div onClick={this.handleClick.bind(this, shift)}>
-            <div 
-              className={"calendar-day-entry " + shift.group} 
-              key={index, shift} 
+            <div
+              className={"calendar-day-entry " + shift.group}
+              key={index, shift}
               style={{
-                position: "absolute", 
-                top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top, 
+                position: "absolute",
+                top: getHours(shift.start_time*1000)*60+getMinutes(shift.start_time*1000)-top,
                 height: differenceInMinutes(shift.end_time*1000, shift.start_time*1000)*9/10,
                 width: shift.overlap ? 40/shift.overlap.count+"em" : "40em",
                 marginLeft: shift.overlap ? shift.overlap.position/shift.overlap.count*42+"em" : 0}}
@@ -152,7 +152,7 @@ class ShowDay extends Component {
             if(shifts[i].overlap) {
               shifts[i].overlap.count++
               // shifts[i].position
-            } 
+            }
             else {
               shifts[i].overlap={count: 2, position: 0}
             }
@@ -188,7 +188,7 @@ class ShowDay extends Component {
                   />
                 </header>
                 <section className="modal-card-body">
-                    <p>{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
+                    <p className="bold">{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
                     <div>{this.getEmployee(this.state.activeItem)}</div>
                 </section>
                 <footer className="modal-card-foot"></footer>
