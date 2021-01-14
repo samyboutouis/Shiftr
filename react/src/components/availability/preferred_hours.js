@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class PreferredHours extends Component {
   constructor(props){
-    super()
+    super(props)
     this.state = {hours: null}
   }
 
@@ -37,7 +37,7 @@ class PreferredHours extends Component {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({
-        [name]: value
+      [name]: value
     }); 
   }
   

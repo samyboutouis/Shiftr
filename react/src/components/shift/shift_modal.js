@@ -38,7 +38,7 @@ class ShiftModal extends Component {
                   <div className="field">
                     <label className="label">Day</label>
                     <div className="control">
-                      <input name="day" type="date" onChange={this.changeHandler}/>
+                      <input name="day" type="date" placeholder="yyyy-mm-dd" onChange={this.changeHandler}/>
                     </div>
                   </div>
                   <div className="field">

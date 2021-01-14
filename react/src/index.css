@@ -240,7 +240,7 @@ code {
 }
 
 .open-shift-button {
-  margin-top: 30px;
+  margin-top: 25px;
   border: none;
   background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
@@ -250,7 +250,7 @@ code {
 }
 
 .edit-shift-button {
-  margin-top: 12px;
+  margin-top: 5px;
   border: none;
   background: url('./button.png') no-repeat scroll 0 0 transparent;
   color: white;
@@ -320,7 +320,12 @@ code {
 
   margin-right: 80%;
   margin-left: 5%;
- }
+}
+
+.trash {
+  float: right;
+  cursor: pointer;
+}
 
 /* SCHEDULE THINGS */
 .days-of-week {

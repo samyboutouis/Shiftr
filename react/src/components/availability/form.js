@@ -17,36 +17,33 @@ class AvailabilityForm extends Component {
       var end_parts = this.state.end_time.split(":")
       var start = toDate(new Date(date_parts[0], date_parts[1]-1, date_parts[2], start_parts[0], start_parts[1], 0))
       var end = toDate(new Date(date_parts[0], date_parts[1]-1, date_parts[2], end_parts[0], end_parts[1], 0))
-      console.log(getUnixTime(start))
-      console.log(getUnixTime(end))
 
       let form_data = new FormData();
       form_data.append("start_time", getUnixTime(start))
       form_data.append("end_time", getUnixTime(end))
 
       axios.put(
-        "http://localhost:8080/users/add_availability",
-        form_data,
-        { headers: {'content-type': 'multipart/form-data'} }
-        ).then((response) => {
-          this.props.updateAvailability()
-      }).catch(function (err){
-          console.log(err)
+        "http://localhost:8080/users/add_availability", 
+        form_data, 
+        { 
+          headers: {'content-type': 'multipart/form-data'} 
+        }
+      ).then((response) => {
+        this.props.updateAvailability();
+      }).catch(function (err){  
+        console.log(err)
       });
-      }
-    else {
+    } else {
       alert("Please complete the form.")
     }
   }
 
   changeHandler = (event) => {
     const name = event.target.name;
-    console.log(name);
     const value = event.target.value;
     this.setState({
-        [name]: value
-    });
-    console.log(this.state.value);
+      [name]: value
+    }); 
   }
 
 
@@ -58,9 +55,10 @@ class AvailabilityForm extends Component {
         <div className="field">
             <label className="label">Date</label>
             <div className="control">
-              <input
-                className="input"
+              <input 
+                className="input" 
                 type="date"
+                placeholder="yyyy-mm-dd"
                 name="day"
                 onChange={this.changeHandler}
                 placeholder="yyyy-mm-dd"

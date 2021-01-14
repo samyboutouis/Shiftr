@@ -120,12 +120,30 @@ class HomeIndex extends Component {
       let timeFormat = "hh:mmaaaa";
       let shifts = this.state.openShifts;
       return shifts.map((shift,index) => {
-        let person = "Open";
+        let info;
+        let person;
         let button;
         if(shift.hasOwnProperty("employee")){
           if(shift.employee.hasOwnProperty("name")){
             person = shift.employee.name.split(" ")[0] + " " + shift.employee.name.split(" ")[1].charAt(0) + ".";
+            info = (
+            <div className='column is-6'>
+              <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
+              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Covering for:</span> {person}</p>
+              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Location:</span> {shift.location}</p>
+              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Group:</span> {shift.group} </p>
+            </div>
+            );
           }
+        }
+        if(info === undefined){
+          info = (
+            <div className='column is-6'>
+              <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
+              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Location:</span> {shift.location}</p>
+              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Group:</span> {shift.group} </p>
+            </div>
+          );
         }
         if(localStorage.getItem('role')==='supervisor' || localStorage.getItem('role')==='admin'){
           button = (
@@ -142,12 +160,7 @@ class HomeIndex extends Component {
             <div className='column is-3 upcoming-shift-date'>
               <p>{format(shift.start_time * 1000, dateFormat)}</p>
             </div>
-            <div className='column is-6'>
-              <p className='upcoming-shift-time'>{format(shift.start_time * 1000, timeFormat)} - {format(shift.end_time * 1000, timeFormat)}</p>
-              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Employee:</span> {person}</p>
-              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Location:</span> {shift.location}</p>
-              <p className='upcoming-shift-text'><span className='upcoming-shift-time'>Group:</span> {shift.group} </p>
-            </div>
+            {info}
             <div className='column is-3'>
               {button}
             </div>
