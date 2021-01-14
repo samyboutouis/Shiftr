@@ -77,8 +77,6 @@ code {
   margin-bottom: 30px;
 }
 
-
-
 /* NAVBAR THINGS */
 .logo {
 	float: left;
@@ -602,6 +600,10 @@ th{
 
 .landing-page-shift-item{
   flex: 0 48%;
+}
+
+.landing-employee {
+  margin-left: 10%;;
 }
 
 .message {
