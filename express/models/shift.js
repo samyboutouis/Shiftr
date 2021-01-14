@@ -221,38 +221,6 @@ class Shift {
       console.log(err);
     }
   }
-
-  //checkbox shows and unshows shift in CALENDAR CHECK ON THIS attempt w aggregate!!!!!
-  // static check = async (newValues)  => {
-  //   try {
-  //     var shifts = await shiftsCollection.aggregate([
-  //       { $match: {
-  //         "group": group
-  //
-  //       }]).toArray();
-  //     return {
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-  //failed attempt at check
-  // static check = async (newValues) => {
-  //   try{
-  //     return shiftsCollection.updateMany({"group": this.body.group}, {$set: newValues})
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
-// for stacking shifts in calendar
-  // static findOverlap = async (start, end) => {
-  //   try {
-  //     return await shiftsCollection.find({start_time: {$lt: parseInt(end)}, end_time: {$gt: parseInt(start)}}).toArray();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
 }
 
 module.exports = Shift

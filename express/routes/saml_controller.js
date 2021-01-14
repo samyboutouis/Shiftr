@@ -44,16 +44,20 @@ router.post('/consume', (req, res) => {
       console.log(err)
       return res.sendStatus(500);
     }
-  
+
     var attributes = mapAttrs(saml_response.user.attributes);
 
     // get role and groups
     let permissions = User.getPermissions(attributes.netid);
-    permissions.then(result => { 
+    permissions.then(result => {
 
       // add role and groups to attributes
+      if (attributes.role){
       attributes.role = result.role;
-      attributes.group = result.group;
+      attributes.group = result.group;}
+      else {
+        attributes.role = "none"
+      }
 
       const token = jwt.sign(attributes, "make-a-real-secret");
 
@@ -62,7 +66,7 @@ router.post('/consume', (req, res) => {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
       })
-      
+
       User.createIfAbsent(attributes);
 
       res.redirect('http://localhost:3000/saml/consume');
@@ -84,7 +88,7 @@ mapAttrs = (attrs) => {
     "display_name": attrs['urn:oid:2.16.840.1.113730.3.1.241'][0],
     "eppn": attrs['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'][0],
     "duid": attrs['urn:mace:duke.edu:idms:unique-id'][0]
-  }     
+  }
 }
 
 module.exports = router

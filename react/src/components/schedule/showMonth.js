@@ -5,6 +5,7 @@ import format from "date-fns/format";
 import startOfDay from "date-fns/startOfDay";
 import endOfDay from "date-fns/endOfDay";
 import getUnixTime from "date-fns/getUnixTime";
+
 class ShowMonth extends Component {
   constructor(props){
     super(props)
@@ -77,7 +78,7 @@ class ShowMonth extends Component {
   createModal = () => {
     const active = this.state.isModal ? "is-active" : "";
     let modal = []
-    if (localStorage.getItem('loggedIn')){
+    if (localStorage.getItem('role')==='none'){
       modal.push(
         <div className={`modal ${active}`}>
         <div className="modal-background" />
@@ -91,12 +92,11 @@ class ShowMonth extends Component {
                 />
               </header>
               <section className="modal-card-body">
-                  <p className="bold">{this.state.activeItem.group}  || {this.state.activeItem.location}</p>
-                  <br/>
+                  <p>{this.state.activeItem.group}</p>
+                  <p>Location : {this.state.activeItem.location}</p>
                   <p>Current Shift Status: {this.state.activeItem.status}</p>
-                  <div>{this.getEmployee(this.state.activeItem)}</div>
                   <br/>
-                  <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+                  <p>If shift status is open, there is no one currently scheduled to work this shift!</p>
               </section>
               <footer className="modal-card-foot"></footer>
             </div>
@@ -117,17 +117,17 @@ class ShowMonth extends Component {
               />
             </header>
             <section className="modal-card-body">
-                <p>{this.state.activeItem.group}</p>
-                <p>Location : {this.state.activeItem.location}</p>
-                <p>Current Shift Status: {this.state.activeItem.status}</p>
+                <p className="bold">{this.state.activeItem.group}  || {this.state.activeItem.location}</p>
                 <br/>
-                <p>If shift status is open, there is no one currently scheduled to work this shift!</p>
+                <p>Current Shift Status: {this.state.activeItem.status}</p>
+                <div>{this.getEmployee(this.state.activeItem)}</div>
+                <br/>
+                <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
             </section>
             <footer className="modal-card-foot"></footer>
           </div>
 
       </div>
-
     )}
     return modal
   }
