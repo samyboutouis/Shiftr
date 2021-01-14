@@ -23,7 +23,7 @@ exports.assign_shifts = async function(group, start_date, end_date) {
     const millis = Date.now() - start;
     console.log('seconds elapsed = '+ Math.floor(millis / 1000));
     console.log('('+millis+' milliseconds)'); // run time
-    return await createSchedule(group); 
+    return await createSchedule(group);
     // return await tempShiftsCollection.find({"group": group } ).sort({"start_time":1}).toArray(); // return tempShifts of group in time order
   } catch (err) {
     console.log(err);
@@ -34,14 +34,14 @@ exports.assign_shifts = async function(group, start_date, end_date) {
 exports.rank_users = async function(group) {
   try {
     return await usersCollection.aggregate([
-      { $match: {group: group} }, 
-      { $project: 
+      { $match: {group: group} },
+      { $project:
         { "availability":1, "netid":1, "name":1, "group":1, "total_available_hours": {
           $reduce: {
             input: "$availability.times",
             initialValue: "$0",
             in: { $sum: [ "$$value", { $subtract: [ "$$this.end_time", "$$this.start_time" ] } ] } } } } }, // add up all availability windows (sum each: end time - start time)
-      { $project: {"total_available_hours":1, "availability":1, "netid":1, "name":1, "group":1, 
+      { $project: {"total_available_hours":1, "availability":1, "netid":1, "name":1, "group":1,
         "rank": { $cond: [ { $eq: [ "$availability.preferred_hours", 0 ] }, "NA", // handles divide by 0: if prefers 0 hours, rank = NA
         { $divide: [ "$total_available_hours", {$multiply: [ "$availability.preferred_hours", 3600] } ] }]}}}, // rank = available/preferred hours
       { $sort: {rank: 1} }]).toArray();
@@ -54,19 +54,19 @@ async function createSchedule(group) {
   try {
     // get all tempShifts matching group in time order
     var tempShifts = await tempShiftsCollection.aggregate([
-      { $match: {group: group} }, 
+      { $match: {group: group} },
       { $sort: {"start_time":1} }
     ]).toArray();
     // get all tempUsers matching group in rank order
     var tempUsers = await tempUsersCollection.aggregate([
-      { $match: {group: group} }, 
+      { $match: {group: group} },
       { $sort: {rank: 1} },
       { $project: { name: 1, netid: 1, availability: 1, previous_availability: 1 }}]).toArray();
     // insert document in schedulesCollection
     schedule = await schedulesCollection.insertOne({
       group: group,
       timestamp: Date.now(),
-      shifts: tempShifts, 
+      shifts: tempShifts,
       users: tempUsers
     });
     return schedule["ops"][0];
@@ -82,43 +82,43 @@ async function cloneCollections(group, start_date, end_date) {
   try {
     await shiftsCollection.aggregate([
       { $match: {
-        group: group, 
-        start_time: {$gte: start_date}, 
-        end_time: {$lte: end_date}, 
-        status: "open"} 
-      }, 
+        group: group,
+        start_time: {$gte: start_date},
+        end_time: {$lte: end_date},
+        status: "open"}
+      },
       { $out: "tempShifts" }
     ]).toArray();
 
-    // await usersCollection.aggregate([ 
+    // await usersCollection.aggregate([
     //   { "$unwind" : "$availability.times" },
     //   { "$match"  : { group: group, "availability.times.start_time" : {$gte: start_date}, "availability.times.end_time": {$lte: end_date} } },
-    //   { "$group"  : { 
-    //     "_id" : "$_id", 
-    //     "group" : { "$first" : "$group" }, 
-    //     "netid": { "$first": "$netid" }, 
-    //     "name": { "$first": "$name" }, 
-    //     "availability": { "$first": "$availability" } } } , 
-    //     { $project: 
+    //   { "$group"  : {
+    //     "_id" : "$_id",
+    //     "group" : { "$first" : "$group" },
+    //     "netid": { "$first": "$netid" },
+    //     "name": { "$first": "$name" },
+    //     "availability": { "$first": "$availability" } } } ,
+    //     { $project:
     //       { "availability":1, "netid":1, "name":1, "group":1, "total_available_hours": {
     //         $reduce: {
     //           input: "$availability.times",
     //           initialValue: "$0",
     //           in: { $sum: [ "$$value", { $subtract: [ "$$this.end_time", "$$this.start_time" ] } ] } } } } },
     //     { $project: {"availability":1, "netid":1, "name":1, "group":1, "rank": { $cond: [ { $eq: [ "$availability.preferred_hours", 0 ] }, "NA", { $divide: [ "$total_available_hours", {$multiply: [ "$availability.preferred_hours", 3600] } ] }]}}},
-    //     { $sort: {rank: 1} }, 
+    //     { $sort: {rank: 1} },
     //     { $out: "tempUsers" }]).toArray();
 
     await usersCollection.aggregate([
-      { $match: {group: group} }, 
-      { $project: 
+      { $match: {group: group} },
+      { $project:
         { "availability":1, "netid":1, "name":1, "group":1, "total_available_hours": {
           $reduce: {
             input: "$availability.times",
             initialValue: "$0",
             in: { $sum: [ "$$value", { $subtract: [ "$$this.end_time", "$$this.start_time" ] } ] } } } } },
       { $project: {"availability":1, "netid":1, "name":1, "group":1, "rank": { $cond: [ { $eq: [ "$availability.preferred_hours", 0 ] }, "NA", { $divide: [ "$total_available_hours", {$multiply: [ "$availability.preferred_hours", 3600] } ] }]}}},
-      { $sort: {rank: 1} }, 
+      { $sort: {rank: 1} },
       { $out: "tempUsers" }]).toArray();
   } catch (err) {
     console.log(err);
@@ -137,7 +137,7 @@ exports.all_shifts = async function() {
               "from": "tempShifts",
               "let": { "start_time": '$availability.times.start_time', "end_time": '$availability.times.end_time' },
               "pipeline": [
-                  { $match: { $expr: { $and: [ 
+                  { $match: { $expr: { $and: [
                       { $eq: [ "$status", "open" ] }, // open shifts
                       { $lt: [ "$$start_time", "$end_time" ] }, // user available before shift end
                       { $gt: [ "$$end_time", "$start_time" ] } ] } } } // user available after shift start
@@ -145,7 +145,7 @@ exports.all_shifts = async function() {
               "as": "matching_shifts"}},
           { $match: {matching_shifts: {$ne: []}}}, // only those availabilities with matching shifts
           { $project: { name: 1, netid: 1, "availability.times": 1, rank: 1, matching_shifts: 1}}
-      ]).toArray(); 
+      ]).toArray();
     } catch (err) {
       console.log(err);
     }
@@ -163,7 +163,7 @@ async function splitAndAssignShifts(match, user) {
     await splitShift(match.matching_shifts[0], { "end_time": availability_start }); // create new shift before user is available
     await splitShift(match.matching_shifts[0], { "start_time": availability_end }); // create new shift after user is available
     // update shift's start and end time to match user availability, assign user to shift
-    await assignShift(match, { start_time: availability_start, end_time: availability_end, employee: user, status: "scheduled " }); 
+    await assignShift(match, { start_time: availability_start, end_time: availability_end, employee: user, status: "scheduled " });
   }
   // if shift starts before the user is available
   else if (availability_start > shift_start) {
@@ -194,7 +194,7 @@ async function splitAndAssignShifts(match, user) {
   // assign user to shift and update shift time if needed
   async function assignShift(match, newValues) {
     await tempShiftsCollection.updateOne(
-      {"_id": ObjectId(match.matching_shifts[0]._id)}, 
+      {"_id": ObjectId(match.matching_shifts[0]._id)},
       {$set: newValues}
       );
   }
@@ -212,7 +212,7 @@ async function splitAndAssignShifts(match, user) {
     $push: {previous_availability: { "start_time": shift_start, "end_time": shift_end }, // set previous availability to the shift time
       "availability.times": { "start_time": shift_end, "end_time": availability_end } // set current availability to user's availability after the shift
     }});
-    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id), "availability.times.end_time": availability_end }, 
+    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id), "availability.times.end_time": availability_end },
     { $set: { "availability.times.$.end_time": match.matching_shifts[0].start_time } }); // add to current availability: user's availability before the shift
   }
   // if user is available before the shift starts
@@ -232,7 +232,7 @@ async function splitAndAssignShifts(match, user) {
   // if user is available during the exact shift time or in the middle of the shift
   else {
     // move this availability from current to previous availability
-    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id) }, 
+    await tempUsersCollection.updateOne({ "_id": ObjectId(match._id) },
     { $push: { previous_availability: match.availability.times },
       $pull: { "availability.times": match.availability.times } });
   }
@@ -249,7 +249,7 @@ async function splitAndAssignShifts(match, user) {
         var avail_array=[];
         var early = 1607947200; // earliest start time (Dec 14 2020, 7 AM eastern)
         var avail=Math.floor(Math.random() * 5);  // random number of availabilities (0-5)
-        while(avail<5) { 
+        while(avail<5) {
           var start = early + (Math.floor(Math.random() * 40) + 4)*900; // random shift start time (7AM-5PM, 15 minute interval)
           avail_array.push({start_time: start, end_time: start + (Math.floor(Math.random() * 20) + 4)*900 }); // add availability object to array. random shift length (1-6 hours, 15 minute interval)
           early+=86400; // increase earliest start time (next day at 7AM)
@@ -257,10 +257,10 @@ async function splitAndAssignShifts(match, user) {
         }
         await usersCollection.insertOne({ // insert new user
           name: faker.name.findName(),
-          netid: faker.random.uuid(), 
+          netid: faker.random.uuid(),
           group: groups[Math.floor(Math.random() * groups.length)], // random group (Code+, CoLab, or The Link)
           // group: "Code+",
-          availability: {times: avail_array, preferred_hours: Math.floor(Math.random()*10)}, 
+          availability: {times: avail_array, preferred_hours: Math.floor(Math.random()*10)},
           rank: users // index of for loop
         });
       }
@@ -296,12 +296,12 @@ async function splitAndAssignShifts(match, user) {
     try {
       await schedulesCollection.updateOne(
         {"_id": ObjectId(id)},
-        { $set: { 
+        { $set: {
           "shifts.$[elem].employee.name" : body.user,
-          "shifts.$[elem].status": "scheduled", 
-          "shifts.$[elem].employee.netid" : body.netid, 
-          "shifts.$[elem].start_time" : parseInt(body.start_time), 
-          "shifts.$[elem].end_time" : parseInt(body.end_time) } 
+          "shifts.$[elem].status": "scheduled",
+          "shifts.$[elem].employee.netid" : body.netid,
+          "shifts.$[elem].start_time" : parseInt(body.start_time),
+          "shifts.$[elem].end_time" : parseInt(body.end_time) }
         },
         { arrayFilters: [ { "elem._id": ObjectId(body.shift_id) } ] }
       );
@@ -353,29 +353,49 @@ async function basicTestShifts() {
     }
   }
 }
-    
+
 // creates three weeks of completed shifts
 exports.hoursTestShifts = async function() {
   var employees = [
-    {name: "Anna Mollard", netid: "acm1051", email: "anna.mollard@duke.edu", role: "employee", group: ["codePlus"], hours: 8, location: ["Remote", "TEC"]}, 
-    {name: "Sunny Li", netid: "l616", email: "sunny.li@duke.edu", role: "employee", group: ["codePlus"], hours: 11, location: ["Remote", "TEC"]}, 
-    {name: "Samy Boutouis", netid: "sb590", email: "samy.boutouis@duke.edu", role: "employee", group: ["codePlus"], hours: 9, location: ["Remote", "TEC"]}, 
+    {name: "Anna Mollard", netid: "acm1051", email: "anna.mollard@duke.edu", role: "employee", group: ["codePlus"], hours: 8, location: ["Remote", "TEC"]},
+    {name: "Sunny Li", netid: "l616", email: "sunny.li@duke.edu", role: "employee", group: ["codePlus"], hours: 11, location: ["Remote", "TEC"]},
+    {name: "Samy Boutouis", netid: "sb590", email: "samy.boutouis@duke.edu", role: "employee", group: ["codePlus"], hours: 9, location: ["Remote", "TEC"]},
     {name: "Ryleigh Byrne", netid: "rmb96", email: "ryleigh.byrne@duke.edu", role: "employee", group: ["codePlus"], hours: 5, location: ["Remote", "TEC"]},
-    {name: "Vaishvi Patel", netid: "vkp3", email: "vaishvi.patel@duke.edu", role: "employee", group: ["codePlus"], hours: 10, location: ["Remote", "TEC"]}, 
-    {name: "Elizabeth Zhang", netid: "eyz3", email: "elizabeth.zhang@duke.edu", role: "employee", group: ["codePlus"], hours: 7, location: ["Remote", "TEC"]}, 
-    {name: "Maryam Shahid", netid: "ms858", email: "maryam.shahid@duke.edu", role: "employee", group: ["codePlus"], hours: 6, location: ["Remote", "TEC"]}, 
+    {name: "Vaishvi Patel", netid: "vkp3", email: "vaishvi.patel@duke.edu", role: "employee", group: ["codePlus"], hours: 10, location: ["Remote", "TEC"]},
+    {name: "Elizabeth Zhang", netid: "eyz3", email: "elizabeth.zhang@duke.edu", role: "employee", group: ["codePlus"], hours: 7, location: ["Remote", "TEC"]},
+    {name: "Maryam Shahid", netid: "ms858", email: "maryam.shahid@duke.edu", role: "employee", group: ["codePlus"], hours: 6, location: ["Remote", "TEC"]},
   ]
-  var groups = ["mps","services","designhub"]
-  for (var i=0; i<100; i++) {
-    var first_name = faker.name.firstName()
-    var last_name = faker.name.lastName()
+  // var start = 1610719200; //Jan 15, 8AM est THIS IS WRONG, I DONT REMEMBER THE DATES WE WANT THIS FOR ;-;
+  // for(var day=0; day<5; day++) { // loop through weekday (Jan 15-20, 2021)
+  //   for(var hour=0; hour<8; hour++) { // loop through workday (9AM-5PM eastern)
+  //     // insert new 1 hour open shift for each group
+  //     await shiftsCollection.insertOne({start_time: start, end_time: start+3600, group: "Code+", status: "open"});
+  //     await shiftsCollection.insertOne({start_time: start, end_time: start+3600, group: "CoLab", status: "open"});
+  //     await shiftsCollection.insertOne({start_time: start, end_time: start+3600, group: "The Link", status: "open"});
+  //     start+=3600;
+  //   }
+  //   start+=57600;
+  // }
+  // var groups = ["mps","services","designhub"]
+  // for (var i=0; i<100; i++) {
+  //   var first_name = faker.name.firstName()
+  //   var last_name = faker.name.lastName()
+  //   var large_avail_array=[];
+  //   var early = 1610712000; // earliest start time (Jan 15 2021, 7 AM eastern)
+  //   var avail=Math.floor(Math.random() * 5);  // random number of availabilities (0-5)
+  //   while(avail<5) {
+  //     var start = early + (Math.floor(Math.random() * 40) + 4)*900; // random shift start time (7AM-5PM, 15 minute interval)
+  //     large_avail_array.push({start_time: start, end_time: start + (Math.floor(Math.random() * 20) + 4)*900 }); // add availability object to array. random shift length (1-6 hours, 15 minute interval)
+  //     early+=86400; // increase earliest start time (next day at 7AM)
+  //     avail++;
+  //   }
     await usersCollection.insertOne({
       name: first_name+" "+last_name,
       netid: first_name.substring(0,2).toLowerCase() + last_name.substring(0,1).toLowerCase() + "" + (Math.floor(Math.random() * 900) + 100),
       email: first_name.toLowerCase() + "." + last_name.toLowerCase() + "@duke.edu",
       role: "employee",
       group: groups[Math.floor(Math.random() * groups.length)],
-      availability: {preferred_hours: Math.floor(Math.random() * 20) + 2}
+      availability: {preferred_hours: Math.floor(Math.random() * 20) + 2} //times: large_avail_array, 
     })
   }
   await usersCollection.insertOne({
@@ -408,34 +428,34 @@ exports.hoursTestShifts = async function() {
       var time = start
       for (var i = 0; i < 8; i++) {
         var emp = employees[Math.floor(Math.random() * employees.length)]
-        await shiftsCollection.insertOne({ 
-          employee: emp, 
-          start_time: time, 
-          clocked_in: time+(Math.floor(Math.random() * 14)-7)*60, 
-          end_time: time+3600, 
-          clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60, 
-          group: "codePlus", 
+        await shiftsCollection.insertOne({
+          employee: emp,
+          start_time: time,
+          clocked_in: time+(Math.floor(Math.random() * 14)-7)*60,
+          end_time: time+3600,
+          clocked_out: time+3600+(Math.floor(Math.random() * 14)-7)*60,
+          group: "codePlus",
           location: "TEC",
           status: "completed"
         });
         time += 3600
       }
-     } 
+     }
      else {
       for (var e = 0; e < employees.length; e++) {
         var first = start + (Math.floor(Math.random() * 20) + 4)*900;
         var last = first + (Math.floor(Math.random() * 10) + 4)*900;
         await usersCollection.updateOne(
-          {netid: employees[e].netid}, 
+          {netid: employees[e].netid},
           {$push: {"availability.times" : {"start_time": first, "end_time": last }}});
       }
-      await shiftsCollection.insertOne({ 
-        start_time: start, 
-        end_time: start+28800, 
-        group: "codePlus", 
+      await shiftsCollection.insertOne({
+        start_time: start,
+        end_time: start+28800,
+        group: "codePlus",
         location: "TEC",
         status: "open"
-      });      
+      });
     }
     if((day+1)%5 === 0) {
       start += 259200;
