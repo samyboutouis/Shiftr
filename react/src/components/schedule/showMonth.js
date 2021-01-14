@@ -66,10 +66,10 @@ class ShowMonth extends Component {
       // let shift = this.state.activeItem
       if (shift.employee === undefined) {
         return(
-          <p>Employee Assigned: None</p>)}
+          <p><span className="bold">Employee Assigned:</span> None</p>)}
       else {
         return(
-        <p>Employee Assigned: {shift.employee.name}</p>)}
+        <p><span className="bold">Employee Assigned:</span> {shift.employee.name}</p>)}
       }
     }
 
@@ -91,12 +91,11 @@ class ShowMonth extends Component {
                 />
               </header>
               <section className="modal-card-body">
-                  <p className="bold">{this.state.activeItem.group}  || {this.state.activeItem.location}</p>
+              <p><span className="bold">Group: </span>{this.state.activeItem.group}</p>
+                    <p> <span className="bold">Location:</span> {this.state.activeItem.location}</p>
                   <br/>
-                  <p>Current Shift Status: {this.state.activeItem.status}</p>
+                  <p><span className="bold">Current Shift Status:</span> {this.state.activeItem.status}</p>
                   <div>{this.getEmployee(this.state.activeItem)}</div>
-                  <br/>
-                  <p>Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
               </section>
               <footer className="modal-card-foot"></footer>
             </div>
@@ -118,8 +117,8 @@ class ShowMonth extends Component {
             </header>
             <section className="modal-card-body">
                 <p>{this.state.activeItem.group}</p>
-                <p>Location : {this.state.activeItem.location}</p>
-                <p>Current Shift Status: {this.state.activeItem.status}</p>
+                <p><span className="bold">Location :</span> {this.state.activeItem.location}</p>
+                <p><span className="bold">Current Shift Status:</span> {this.state.activeItem.status}</p>
                 <br/>
                 <p>If shift status is open, there is no one currently scheduled to work this shift!</p>
             </section>

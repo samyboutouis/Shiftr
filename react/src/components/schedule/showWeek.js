@@ -100,19 +100,15 @@ class ShowWeek extends Component {
       if (shift.employee === undefined) {
         return(
           <div>
-            <p> Current Shift Status : {this.state.activeItem.status}</p>
-            <p> Employee Assigned : None</p>
-            <br/>
-            <p> Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+            <p> <span className="bold">Current Shift Status:</span> {this.state.activeItem.status}</p>
+            <p> <span className="bold">Employee Assigned:</span> None</p>
           </div>
         )}
       else {
         return(
           <div>
-            <p>Current Shift Status : {this.state.activeItem.status}</p>
-            <p>Employee Assigned : {shift.employee.name}</p>
-            <br/>
-            <p>  Notes for this shift : {this.state.activeItem.note} ~Have a great shift!</p>
+            <p><span className="bold">Current Shift Status:</span> {this.state.activeItem.status}</p>
+            <p><span className="bold">Employee Assigned:</span> {shift.employee.name}</p>
           </div>)}
       }
     }
@@ -191,7 +187,8 @@ class ShowWeek extends Component {
                   />
                 </header>
                 <section className="modal-card-body">
-                    <p className="bold">{this.state.activeItem.group}  ||  {this.state.activeItem.location}</p>
+                    <p><span className="bold">Group: </span>{this.state.activeItem.group}</p>
+                    <p> <span className="bold">Location:</span> {this.state.activeItem.location}</p>
                     <br/>
                     <div>{this.getEmployee(this.state.activeItem)}</div>
                 </section>
