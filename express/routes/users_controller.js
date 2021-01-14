@@ -113,7 +113,7 @@ router.get('/find/:netid' , (req, res) => {
 router.put('/delete_availability/:start/:end', (req, res) => {
   let token = req.cookies["shiftr-saml"];
   let attributes = jwt.verify(token, "make-a-real-secret");
-  let user = User.findByNetID(attributes.netid, req.params.start, req.params.end);
+  let user = User.deleteAvailability(attributes.netid, req.params.start, req.params.end);
   user.then(result => res.json(result));
 });
 

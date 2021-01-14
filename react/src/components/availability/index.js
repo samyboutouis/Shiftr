@@ -18,7 +18,14 @@ class AvailabilityIndex extends Component {
 
   getTimes = () => {
     let self = this;
-    axios.get("http://localhost:8080/users/get_availability/").then( (response) => { //need to change this 
+    axios.get("http://localhost:8080/users/get_availability/").then( (response) => { 
+      response.data.availability.times.sort((a, b) => {
+        if (a.start_time < b.start_time || (a.start_time === b.start_time && a.end_time < b.end_time))
+          return -1;
+        if (a.start_time > b.start_time || (a.start_time === b.start_time && a.end_time > b.end_time))
+          return 1;
+        return 0;
+      });
       self.setState({data: response.data});
     }).catch( (error) => {
       console.log(error)
@@ -66,10 +73,7 @@ class AvailabilityIndex extends Component {
 
   deleteTime = (time) => {
     if(window.confirm('Are you sure you want to delete this availability?')){
-      console.log(time.start_time);
-      console.log(time.end_time);
       axios.put("http://localhost:8080/users/delete_availability/" + time.start_time + "/" + time.end_time).then((response) => {
-        console.log(response);
         this.getTimes();
       }).catch((error) => {
         console.log(error);

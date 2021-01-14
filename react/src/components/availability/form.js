@@ -17,8 +17,6 @@ class AvailabilityForm extends Component {
       var end_parts = this.state.end_time.split(":")
       var start = toDate(new Date(date_parts[0], date_parts[1]-1, date_parts[2], start_parts[0], start_parts[1], 0))
       var end = toDate(new Date(date_parts[0], date_parts[1]-1, date_parts[2], end_parts[0], end_parts[1], 0))
-      console.log(getUnixTime(start))
-      console.log(getUnixTime(end))
 
       let form_data = new FormData();
       form_data.append("start_time", getUnixTime(start))
@@ -42,12 +40,10 @@ class AvailabilityForm extends Component {
    
   changeHandler = (event) => {
     const name = event.target.name;
-    console.log(name);
     const value = event.target.value;
     this.setState({
-        [name]: value
+      [name]: value
     }); 
-    console.log(this.state.value);
   }
   
   
