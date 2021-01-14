@@ -181,13 +181,9 @@ class User {
 
   static deleteAvailability = async (netid, start, end) => {
     try {
-      let user = await usersCollection.update(
-        {
-          netid: netid
-        },
-        {
-          $pull: {}
-        }
+      return await usersCollection.update(
+        { netid: netid},
+        { $pull: {'availability.$.times': {start_time: parseInt(start), end_time: parseInt(end)}}}
       );
     } catch (err) {
       console.log(err);
